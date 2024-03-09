@@ -1,0 +1,25 @@
+#POSTGRES 16 WITH ALPINE DISTRO
+# docker-compose up -d
+# docker-compose down
+version: "3.5"
+
+volumes:
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/debian/database
+
+services:
+  postgres:
+    image: postgres:16.2-alpine3.19
+    container_name: postgres
+    environment:
+      POSTGRES_USER: imgui
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: project
+    ports:
+      - 5432:5432
+    volumes:
+      - database:/var/lib/postgresql/data

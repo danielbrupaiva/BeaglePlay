@@ -1,0 +1,87 @@
+
+/_build*/
+/_sysroot/
+/_toolchain/
+/vendor/
+
+# Compacted files
+*.zip
+*.tar.gz
+*.tar.bz2
+*.rar
+*.7z
+
+# CLion files
+.idea/
+*.iml
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+*.app
+
+# CMake build directory
+/CMakeFiles/
+/CMakeCache.txt
+/CMakeScripts/
+/CMakeSettings.json
+/CMakeSettings.json.orig
+/CMakeLists.txt.user
+/*.cmake
+/*.cbp
+/*.vcxproj
+/*.vcxproj.filters
+/*.vcxproj.user
+/*.sln
+/*.suo
+/*.dsp
+/*.dsw
+
+# Qt Creator files
+*.pro.user
+*.pro.user.*
+*.qmlproject.user
+*.qmlproject.user.*
+*.qmlproject.user.*
+
+# Visual Studio Code files
+.vscode/
+
+# Xcode files
+*.xcworkspace/
+*.xcodeproj/
+
+# Sublime Text files
+*.sublime-project
+*.sublime-workspace
+
+# Eclipse files
+.metadata/
+bin/
+tmp/
+
+# Linux-specific files and directories
+build/
+Makefile
+*.ko
+*.mod.c
+modules.order
+Module.symvers
+*.cmd
+.tmp_versions/
+*.swp
