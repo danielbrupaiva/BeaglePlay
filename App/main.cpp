@@ -4,7 +4,7 @@ int main(int argc, char* argv[])
 {
     const static std::string TAG = "Main";
     logger.info(TAG,"APP start");
-    Application::UI app{ImVec2(1280, 720), "ImGUI APP", Application::UI::BACKEND::SDL2};
+    Application::UI app{ImVec2(1280, 720), "ImGUI APP", Application::UI::BACKEND::SDL3};
 
     // Start backend
     bool show_demo_window = true;
