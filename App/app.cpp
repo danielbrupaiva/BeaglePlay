@@ -14,11 +14,11 @@ Application::UI::UI(ImVec2 _size, std::string _title, Application::UI::BACKEND _
 Application::UI::~UI()
 {
     //Imgui cleanup
-    ImGui_ImplSDLRenderer2_Shutdown();
-    ImGui_ImplSDL2_Shutdown();
+    ImGui_ImplSDLRenderer3_Shutdown();
+    ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();
     //SDL cleanup
-//    IMG_Quit();
+    IMG_Quit();
     SDL_DestroyTexture(m_SDL_logo_texture);
     SDL_DestroyRenderer(m_SDL_renderer);
     SDL_DestroyWindow(m_SDL_window);
@@ -26,18 +26,16 @@ Application::UI::~UI()
 }
 bool Application::UI::setup_backend(Application::UI::BACKEND _backend)
 {// Setup SDL
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMEPAD) != 0)
     {
         printf("Error: %s\n", SDL_GetError());
         return EXIT_FAILURE;
     }
     // Enable native IME.
-#ifdef SDL_HINT_IME_SHOW_UI
     SDL_SetHint(SDL_HINT_IME_SHOW_UI, "1");
-#endif
     // Create window with SDL_Renderer graphics context
-    m_SDL_window_flags = (SDL_WindowFlags)( SDL_WINDOW_OPENGL | SDL_WINDOW_ALWAYS_ON_TOP | SDL_WINDOW_BORDERLESS );
-    m_SDL_window = SDL_CreateWindow(m_title.c_str(),SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_size.x, m_size.y, m_SDL_window_flags);
+    m_SDL_window_flags = ( SDL_WINDOW_OPENGL | SDL_WINDOW_ALWAYS_ON_TOP | SDL_WINDOW_BORDERLESS );
+    m_SDL_window = SDL_CreateWindow(m_title.c_str(), m_size.x, m_size.y, m_SDL_window_flags);
     if (m_SDL_window == nullptr)
     {
         printf("Error: SDL_CreateWindow(): %s\n", SDL_GetError());
@@ -61,33 +59,30 @@ bool Application::UI::setup_backend(Application::UI::BACKEND _backend)
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsLight();
     // Setup Platform/Renderer backends
-    ImGui_ImplSDL2_InitForSDLRenderer(m_SDL_window, m_SDL_renderer);
-    ImGui_ImplSDLRenderer2_Init(m_SDL_renderer);
+    ImGui_ImplSDL3_InitForSDLRenderer(m_SDL_window, m_SDL_renderer);
+    ImGui_ImplSDLRenderer3_Init(m_SDL_renderer);
 
     return EXIT_SUCCESS;
 }
 void Application::UI::event_handler()
 {
     SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        ImGui_ImplSDL2_ProcessEvent(&event);
-        if (event.type == SDL_QUIT) {
+    while (SDL_PollEvent(&event))
+    {
+        ImGui_ImplSDL3_ProcessEvent(&event);
+        if (event.type == SDL_EVENT_QUIT)
             m_is_app_done = true;
-        }
-        if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE
-            && event.window.windowID == SDL_GetWindowID(m_SDL_window)) {
+        if (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED && event.window.windowID == SDL_GetWindowID(m_SDL_window))
             m_is_app_done = true;
-        }
-        //mouse_handler(100.0);
     }
+    //mouse_handler(100.0);
 }
-
 void Application::UI::begin()
 {
     event_handler();
     // Start the Dear ImGui frame
-    ImGui_ImplSDLRenderer2_NewFrame();
-    ImGui_ImplSDL2_NewFrame();
+    ImGui_ImplSDLRenderer3_NewFrame();
+    ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
     set_app_style();
 }
@@ -105,7 +100,7 @@ void Application::UI::render()
     //SDL_Rect rectangle = {(1280-1089)/2,0,1089,720};
     //SDL_RenderCopy(m_SDL_renderer,m_SDL_logoTexture,NULL,&rectangle);
     // Apply render
-    ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+    ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData());
     SDL_RenderPresent(m_SDL_renderer);
 }
 
@@ -128,7 +123,7 @@ bool Application::UI::load_texture_from_file(const char *_filename, SDL_Texture 
         fprintf(stderr, "Failed to create SDL texture: %s\n", SDL_GetError());
         return EXIT_FAILURE;
     }
-    delete (_surface);
+    SDL_DestroySurface(_surface);
     return EXIT_SUCCESS;
 }
 void screen1_render(Application::UI& app)
@@ -256,7 +251,7 @@ void screen2_render(Application::UI& app)
         ImGui::SeparatorText("CRUD");
         if( Global::system_user.get_is_logged() &&
             (Global::system_user.get_security_level() == Core::User::eSecurity_level::SUPERVISOR
-             || Global::system_user.get_security_level() == Core::User::eSecurity_level::ADMIN ) )
+                || Global::system_user.get_security_level() == Core::User::eSecurity_level::ADMIN ) )
         {
             if(ImGui::Button("Create")){
                 PRINT("Create button pressed");

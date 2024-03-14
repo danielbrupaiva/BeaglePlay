@@ -1,5 +1,7 @@
 #---------------------------------------------------------------------------------------------
+message("${BoldYellow}-- SPDLOG${ColourReset}")
 if(BUILD_FROM_SRC)
+    message("${BoldYellow}-- BUILDING FROM SRC${ColourReset}")
     include(FetchContent)
     FetchContent_Declare(
             spdlog

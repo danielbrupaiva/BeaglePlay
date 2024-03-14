@@ -1,7 +1,9 @@
 set(SKIP_BUILD_TEST ON)
 set(INSTALL_TEST OFF)
 #---------------------------------------------------------------------------------------------
+message("${BoldYellow}-- PQXX${ColourReset}")
 if(BUILD_FROM_SRC)
+    message("${BoldYellow}-- BUILDING FROM SRC${ColourReset}")
     include(FetchContent)
     FetchContent_Declare(
             pqxx
@@ -10,8 +12,9 @@ if(BUILD_FROM_SRC)
     )
     FetchContent_MakeAvailable(pqxx)
     FetchContent_GetProperties(pqxx)
+    target_link_libraries(${PROJECT_NAME} PUBLIC pqxx)
 else ()
     find_package(libpqxx REQUIRED)
+    target_link_libraries(${PROJECT_NAME} PUBLIC libpqxx::pqxx)
 endif ()
 #---------------------------------------------------------------------------------------------
-target_link_libraries(${PROJECT_NAME} PUBLIC libpqxx::pqxx)
