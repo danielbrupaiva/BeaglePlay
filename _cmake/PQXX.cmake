@@ -1,8 +1,8 @@
-include(FetchContent)
 set(SKIP_BUILD_TEST ON)
 set(INSTALL_TEST OFF)
 #---------------------------------------------------------------------------------------------
 if(BUILD_FROM_SRC)
+    include(FetchContent)
     FetchContent_Declare(
             pqxx
             GIT_REPOSITORY https://github.com/jtv/libpqxx.git
