@@ -5,7 +5,7 @@ if(CMAKE_BINARY_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
 endif()
 #---------------------------------------------------------------------------------------------
 set(PROJECT_NAME Core)
-project(${PROJECT_NAME} )
+project(${PROJECT_NAME})
 message("${BoldGreen}-- ${PROJECT_NAME} BUILD ${ColourReset}")
 #---------------------------------------------------------------------------------------------
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
