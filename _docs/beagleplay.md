@@ -97,6 +97,18 @@ https://docs.beagleboard.org/latest/boards/beagleplay/demos-and-tutorials/connec
         $ cd libpqxx
         $ cmake -S . -B build -DBUILD_DOC=OFF -DBUILD_TEST=OFF -DSKIP_BUILD_TEST=ON && cmake --build build && sudo cmake --install build
 
+- SPDLOG
+  
+        $ git clone -b v1.13.0 https://github.com/gabime/spdlog.git
+        $ cd spdlog
+        $ cmake -S . -B build && cmake --build build && sudo cmake --install build
+  
+- CATCH2
+  
+        $ git clone -b v3.4.0 https://github.com/catchorg/Catch2.git
+        $ cd Catch2
+        $ cmake -S . -B build && cmake --build build && sudo cmake --install build
+  
 ##  [TODO] PREEMPT_RT
 https://bootlin.com/doc/training/preempt-rt/preempt-rt-slides.pdf
 
