@@ -1,5 +1,7 @@
-# /etc/systemd/system/docker-compose-database.service
+# sudo nano /etc/systemd/system/docker-compose-database.service
 # sudo systemctl enable docker-compose-database
+# sudo iptables -I INPUT 1 -p tcp --dport 5432 -j ACCEPT
+
 
 [Unit]
 Description=Docker Compose PostgreSQL database
