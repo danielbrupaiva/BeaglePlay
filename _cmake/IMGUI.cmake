@@ -9,4 +9,4 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(imgui)
 FetchContent_GetProperties(imgui)
 #---------------------------------------------------------------------------------------------
-target_link_libraries(${PROJECT_NAME} PUBLIC imgui)
+target_link_libraries(${PROJECT_NAME} PRIVATE imgui)

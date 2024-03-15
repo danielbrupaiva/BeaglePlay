@@ -4,32 +4,28 @@
 #include <string>
 #include <memory>
 #include <numeric>
-#include <cstdio>
 
 #include "globals.hpp"
 
 #include "imgui.h"
 #include "imgui_stdlib.h"
-#include "imgui_impl_sdl2.h"
-#include "imgui_impl_sdlrenderer2.h"
-#include <SDL.h>
+#include "imgui_impl_sdl3.h"
+#include "imgui_impl_sdlrenderer3.h"
+#include <SDL3/SDL.h>
 #if defined(IMGUI_IMPL_OPENGL_ES2)
-#include <SDL2/SDL_opengles2.h>
+#include <SDL3/SDL_opengles2.h>
 #else
-#include <SDL_opengl.h>
+#include <SDL3/SDL_opengl.h>
 #endif
-#include <SDL_image.h>
+#include <SDL3_image/SDL_image.h>
 
-#if !SDL_VERSION_ATLEAST(2,0,17)
-#error This backend requires SDL 2.0.17+ because of SDL_RenderGeometry() function
-#endif
 
 namespace Application {
 class UI
 {
 public:
     // TODO: implement others backends
-    enum class BACKEND { SDL2 };
+    enum class BACKEND { SDL3 };
 public:
     UI(ImVec2 _size, const std::string _title, BACKEND _backend);
     ~UI();
