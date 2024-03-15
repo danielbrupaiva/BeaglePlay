@@ -1,6 +1,7 @@
 # Setup environment
-- [ ] Configure toolchain
+- [ ] Convert project to Vulkan and GLFW
 - [ ] Create script to sync. sysroot on demand
+- [ ] Configure toolchain
 - [ ] Configure remote deploy
-- [ ] Configure automatic database deploy 
-- [ ] Create a script to setup compile environment
+- [ ] Create script to setup postgres container and automatic deploy it
+- [ ] Create script to configure project database 
