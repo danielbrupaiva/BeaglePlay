@@ -16,16 +16,17 @@ https://docs.beagleboard.org/latest/boards/beagleplay/demos-and-tutorials/connec
 
 ## SSH
 - default username:password is [debian:temppwd]
-  $ ssh debian@BeaglePlay.local
+
+      $ ssh debian@BeaglePlay.local
 
   [TARGET]
 
-  $ sudo apt install openssh-server
+      $ sudo apt install openssh-server
 
   [HOST]
 
-  $ ssh-keygen -> configure as you want. 
-  $ ssh-copy-id -i [/home/daniel/.ssh/beagle.pub] [username]@[IP]
+      $ ssh-keygen -> configure as you want. 
+      $ ssh-copy-id -i [/home/daniel/.ssh/beagle.pub] [username]@[IP]
 
 
 ## Install project dependencies
