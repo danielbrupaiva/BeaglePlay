@@ -1,3 +1,11 @@
+if(CROSS_COMPILER)
+    message("${BoldYellow}-- CROSS_COMPILER: ${CROSS_COMPILER}${ColourReset}")
+    set(CMAKE_THREAD_LIBS_INIT "-lpthread")
+    set(CMAKE_HAVE_THREADS_LIBRARY ON)
+    set(CMAKE_USE_WIN32_THREADS_INIT OFF)
+    set(CMAKE_USE_PTHREADS_INIT ON)
+    set(THREADS_PREFER_PTHREAD_FLAG ON)
+endif ()
 #---------------------------------------------------------------------------------------------
 message("${BoldYellow}-- SPDLOG${ColourReset}")
 if(BUILD_FROM_SRC)

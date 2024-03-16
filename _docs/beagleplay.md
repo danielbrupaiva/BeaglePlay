@@ -16,8 +16,17 @@ https://docs.beagleboard.org/latest/boards/beagleplay/demos-and-tutorials/connec
 
 ## SSH
 - default username:password is [debian:temppwd]
-- [//]: # (  TODO: create a ssh  key)
-      $ ssh debian@BeaglePlay
+  $ ssh debian@BeaglePlay.local
+
+  [TARGET]
+
+  $ sudo apt install openssh-server
+
+  [HOST]
+
+  $ ssh-keygen -> configure as you want. 
+  $ ssh-copy-id -i [/home/daniel/.ssh/beagle.pub] [username]@[IP]
+
 
 ## Install project dependencies
 
@@ -26,6 +35,9 @@ https://docs.beagleboard.org/latest/boards/beagleplay/demos-and-tutorials/connec
     $ sudo apt install -y libtool pkg-config build-essential autoconf automake make ninja-build cmake gcc git bison python3 libreadline-dev gawk texinfo bison file wget libssl-dev curl xorg-dev libwayland-dev libxkbcommon-dev wayland-protocols extra-cmake-modules libglm-dev
 
 - OpenGL
+
+      $ sudo apt-get install libgl1-mesa-dev
+
 - Vulkan
 
         $ sudo apt install libvulkan1 mesa-vulkan-drivers vulkan-tools vulkan-validationlayers-dev spirv-tools
@@ -125,19 +137,30 @@ https://wiki.archlinux.org/title/Zram
 [NOTE install all dependencies needed]
 1 - RSYNC SYSROOT FROM TARGET
 
-    $ mkdir sysroot sysroot/usr sysroot/opt
+    $ mkdir _sysroot _sysroot/beagleplay
     
-    $ cd sysroot   
-    sudo rsync -avzS --rsync-path="rsync" --delete debian@BeaglePlay.local:/usr/local ./usr
-    sudo rsync -avzS --rsync-path="rsync" --delete debian@BeaglePlay.local:/usr/include ./usr
-    sudo rsync -avzS --rsync-path="rsync" --delete debian@BeaglePlay.local:/usr/lib ./usr
-    sudo rsync -avzS --rsync-path="rsync" --delete debian@BeaglePlay.local:/lib .
-    sudo rsync -avzS --rsync-path="rsync" --delete debian@BeaglePlay.local:/opt .
+    $ cd _sysroot/beagleplay   
+    $ rsync -avzS --rsync-path="rsync" --delete debian@BeaglePlay:/usr/local ./usr && \
+    rsync -avzS --rsync-path="rsync" --delete debian@BeaglePlay:/usr/include ./usr && \
+    rsync -avzS --rsync-path="rsync" --delete debian@BeaglePlay:/usr/lib ./usr && \
+    rsync -avzS --rsync-path="rsync" --delete debian@BeaglePlay:/lib . && \
+    rsync -avzS --rsync-path="rsync" --delete debian@BeaglePlay:/opt .
 
 2 - Fix symbolic links
 
     $ sudo apt install symlinks
-    $ cd ..
-    $ symlinks -rc sysroot
+    $ cd _sysroot/ 
+    $ symlinks -rc beagleplay
 
 ## [TODO] Create a Target TOOLCHAIN
+## [TODO] Create a custom linux with Yocto
+### Layers in interest
+   1. [ ] meta
+   2. [ ] meta-poky
+   3. [ ] meta-yocto-bsp
+   4. [ ] meta-arm/meta-arm-toolchain
+   5. [ ] meta-arm/meta-arm
+   6. [ ] meta-ti/meta-ti-bsp
+   7. [ ] meta-ti/meta-ti-extras
+   8. [ ] wayland
+   9. [ ] weston
