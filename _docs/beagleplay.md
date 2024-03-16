@@ -108,7 +108,7 @@ https://docs.beagleboard.org/latest/boards/beagleplay/demos-and-tutorials/connec
 
         $ git clone -b 7.8.1 https://github.com/jtv/libpqxx.git
         $ cd libpqxx
-        $ cmake -S . -B build -DBUILD_DOC=OFF -DBUILD_TEST=OFF -DSKIP_BUILD_TEST=ON && cmake --build build && sudo cmake --install build
+        $ cmake -S . -B build -DCMAKE_CXX_STANDARD=20 -DBUILD_DOC=OFF -DBUILD_TEST=OFF -DSKIP_BUILD_TEST=ON && cmake --build build && sudo cmake --install build
 
 - SPDLOG
   
