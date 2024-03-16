@@ -6,6 +6,7 @@ endif()
 #---------------------------------------------------------------------------------------------
 set(PROJECT_NAME Core)
 project(${PROJECT_NAME} C CXX)
+set(CMAKE_CXX_STANDARD 20)
 message("${BoldGreen}-- ${PROJECT_NAME} BUILD ${ColourReset}")
 #---------------------------------------------------------------------------------------------
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
