@@ -39,10 +39,13 @@ https://docs.beagleboard.org/latest/boards/beagleplay/demos-and-tutorials/connec
 
       $ sudo apt-get install libgl1-mesa-dev
 
-- Vulkan
+  - Vulkan
 
-        $ sudo apt install libvulkan1 mesa-vulkan-drivers vulkan-tools vulkan-validationlayers-dev spirv-tools
-
+          $ sudo apt install libvulkan1 mesa-vulkan-drivers vulkan-tools vulkan-validationlayers-dev spirv-tools
+          $ git clone https://github.com/KhronosGroup/Vulkan-Headers.git
+          $ cd Vulkan-Headers
+          $ cmake -S . -B build && cmake --build build && sudo cmake --install build
+  
 - GLFW3
   https://www.glfw.org/docs/3.3/build_guide.html
 
