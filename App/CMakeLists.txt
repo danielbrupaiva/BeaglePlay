@@ -22,3 +22,4 @@ add_executable(${PROJECT_NAME}
 include(Core)
 include(IMGUI)
 #---------------------------------------------------------------------------------------------
+include_directories(/home/daniel/CLionProjects/BeaglePlay/vendor/glfwpp/include)

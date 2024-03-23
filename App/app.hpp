@@ -1,68 +1,207 @@
 #pragma once
-#include <cstdint>
+
 #include <iostream>
-#include <string>
+#include <cstdio>
 #include <memory>
-#include <numeric>
 
-#include "globals.hpp"
-
+#include "GLFW/glfw3.h"
 #include "imgui.h"
-#include "imgui_stdlib.h"
-#include "imgui_impl_sdl3.h"
-#include "imgui_impl_sdlrenderer3.h"
-#include <SDL3/SDL.h>
-#if defined(IMGUI_IMPL_OPENGL_ES2)
-#include <SDL3/SDL_opengles2.h>
-#else
-#include <SDL3/SDL_opengl.h>
-#endif
-#include <SDL3_image/SDL_image.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
+#include "logger.hpp"
 
-namespace Application {
-class UI
-{
-public:
-    // TODO: implement others backends
-    enum class BACKEND { SDL3 };
-public:
-    UI(ImVec2 _size, const std::string _title, BACKEND _backend);
-    ~UI();
-private:
-    bool m_is_app_done;
-    bool m_is_drag_state;
-    const std::string m_title;
-    ImVec2 m_size;
-    /**  Setup backend **/
-    BACKEND m_backend;
-    /** SDL2 members variables **/
-    uint32_t m_SDL_window_flags;
-    SDL_Window* m_SDL_window = nullptr;
-    SDL_Renderer* m_SDL_renderer = nullptr;
-    /** SDL surface (logo) **/
-    ImVec2 m_logo_size;
-    SDL_Texture* m_SDL_logo_texture = nullptr;
-    ImVec4 m_clear_color = ImVec4(0.15f, 0.15f, 0.15f, 0.0f);
-public: // methods
-    bool setup_backend(BACKEND _backend);
-    bool load_texture_from_file(const char *_filename, SDL_Texture **_texture_ptr, float &_width, float &_height, SDL_Renderer *_renderer);
-    void event_handler();
-    void begin();
-    void render();
-    void pop_window_log(const std::string& _msg, ImGuiWindowFlags_ flags);
-    void draw_grid(float scale, const ImVec4 &color, bool filled);
-    void mouse_handler(float threshold);
-    void set_app_style();
-    void debug_screen(UI& app);
-public:/**Getter and Setters **/
-    inline bool get_is_app_done() const { return (m_is_app_done); }
-    inline void set_app_done(bool appDone) { m_is_app_done = appDone; }
-    inline ImVec2 get_logo_size() const { return m_logo_size; }
-    inline void set_logo_size(const ImVec2 &newLogo_size) { m_logo_size = newLogo_size; }
-    inline SDL_Texture* get_SDL_logo_texture() const { return m_SDL_logo_texture; }
-    inline void set_SDL_logo_texture(SDL_Texture *newSDL_logo_texture) { m_SDL_logo_texture = newSDL_logo_texture; }
-    inline ImVec4 get_clear_color() const { return m_clear_color; }
-    inline void set_clear_color(const ImVec4 &newClear_color) { m_clear_color = newClear_color; }
+namespace App{
+
+enum class eBACKEND{OPENGL3, VULKAN};
+enum class eGRAPHIC_API{GLFW3, SDL3};
+// Application specifications
+struct Spec{
+    std::string title;
+    ImVec2 window_size;
+    ImVec4 bg_color;
+    eBACKEND backend;
+    eGRAPHIC_API api;
+    std::string glsl_version;
+    uint8_t enable_vsync;
 };
-} // namespace Application
+// Custom deleter for GLFWwindow
+struct GLFWwindowDeleter {
+    void operator()(GLFWwindow* window) const {
+        glfwDestroyWindow(window);
+    }
+};
+
+class IGraphicApi{
+    virtual error_t shutdown() = 0;
+    virtual error_t init(App::Spec& spec) = 0;
+    virtual std::unique_ptr<GLFWwindow,GLFWwindowDeleter> &window() = 0;
+};
+
+//TODO: Create interfaces to extend backend api classes
+class GLFW : IGraphicApi {
+    App::Spec& m_spec;
+    static std::unique_ptr<GLFWwindow,GLFWwindowDeleter> m_window;
+    //TODO: Add Error handler from GLFWPP lib
+    static void glfw_error_callback(int error, const char* description)
+    {
+        fprintf(stderr, "GLFW Error %d: %s\n", error, description);
+    }
+    //TODO: Remove version hard coded
+    //TODO: Add WindowHint from GLFWPP lib
+    static void set_version(App::Spec& spec)
+    {
+        // Decide GL+GLSL versions
+#if defined(IMGUI_IMPL_OPENGL_ES2)
+        // GL ES 2.0 + GLSL 100
+        spec.glsl_version = "#version 100";
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
+#else
+        // GL 3.0 + GLSL 130
+        spec.glsl_version = "#version 130";
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+#endif
+    };
+
+    static std::unique_ptr<GLFWwindow,GLFWwindowDeleter> create_window(App::Spec& spec){
+        return std::unique_ptr<GLFWwindow,GLFWwindowDeleter>( glfwCreateWindow(spec.window_size.x, spec.window_size.y, spec.title.c_str(), nullptr, nullptr) ,GLFWwindowDeleter() );
+    };
+
+    error_t shutdown() override {
+        if(m_window) { glfwDestroyWindow( m_window.get() ); }
+        glfwTerminate();
+        return EXIT_SUCCESS;
+    };
+
+public:
+    ~GLFW() { assert( shutdown() ); }
+    explicit GLFW(App::Spec& spec) : m_spec{spec} {};
+    // Prevent copying
+    GLFW(const GLFW &) = delete;
+    GLFW &operator=(const GLFW &) = delete;
+
+    error_t init(App::Spec& spec) override
+    {
+
+        glfwSetErrorCallback(glfw_error_callback);
+
+        assert( glfwInit() );
+
+        set_version( spec );
+
+        m_window = create_window( spec );
+
+        glfwMakeContextCurrent( m_window.get() );
+
+        glfwSwapInterval( spec.enable_vsync ); // Enable vsync
+
+        return EXIT_SUCCESS;
+    };
+
+    inline std::unique_ptr<GLFWwindow,GLFWwindowDeleter> &window() override { return m_window; }
+    inline void set_spec(App::Spec& spec){ m_spec = spec;};
+};
+
+class IMGUI{
+    App::Spec& m_spec;
+    std::unique_ptr<GLFW> m_api;
+
+    static void set_style()
+    {
+        // Setup Dear ImGui style
+        ImGui::StyleColorsDark();
+        // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+        ImGuiStyle& style = ImGui::GetStyle();
+        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            style.WindowRounding = 0.0f;
+            style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+        }
+    };
+
+    error_t setup_render_backend()
+    {
+        // Setup Platform/Renderer backends
+        ImGui_ImplGlfw_InitForOpenGL( m_api->window().get(), true );
+        ImGui_ImplOpenGL3_Init( m_spec.glsl_version.c_str() );
+        return EXIT_SUCCESS;
+    }
+
+    error_t init()
+    {
+        m_api = std::make_unique<GLFW>(m_spec);
+        m_api->init( m_spec );
+
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+        set_style();
+
+        setup_render_backend();
+
+        return EXIT_SUCCESS;
+    };
+
+    static void shutdown()
+    {
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui_ImplGlfw_Shutdown();
+        ImGui::DestroyContext();
+    };
+
+public:
+    ~IMGUI() { shutdown(); };
+    explicit IMGUI(App::Spec& spec) : m_spec{spec}{
+        assert( init() );
+    };
+    // Prevent copying
+    IMGUI(const IMGUI &) = delete;
+    IMGUI &operator=(const IMGUI &) = delete;
+
+    template<typename Func>
+    void render(Func&& Render)
+    {
+        glfwPollEvents();
+        // Start the Dear ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        Render();
+        // Rendering
+        ImGui::Render();
+        int display_w, display_h;
+        glfwGetFramebufferSize(m_api->window().get(), &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+        glClearColor(m_spec.bg_color.x * m_spec.bg_color.w,
+                     m_spec.bg_color.y * m_spec.bg_color.w,
+                     m_spec.bg_color.z * m_spec.bg_color.w,
+                     m_spec.bg_color.w);
+
+        glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
+
+        glfwSwapBuffers( m_api->window().get() );
+    };
+    /*Getter and Setters*/
+    [[nodiscard]] inline bool is_close() const { return glfwWindowShouldClose( m_api->window().get() ); }
+};
+
+} // namespace App
+
