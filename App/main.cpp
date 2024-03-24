@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     logger.info(TAG,"APP start");
 
     App::Spec spec = {
-        .title = "IMGUI",
+        .title = "IMGUI APP OpenGL3 / GLFW3",
         .window_size = ImVec2(1280,720),
         .bg_color = ImVec4(0.15f, 0.15f, 0.15f, 0.0f),
         .backend = App::eBACKEND::OPENGL3,

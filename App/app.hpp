@@ -26,39 +26,36 @@ struct Spec{
     std::string glsl_version;
     uint8_t enable_vsync;
 };
+
 // Custom deleter for GLFWwindow
-struct GLFWwindowDeleter {
+struct WindowDeleter {
     void operator()(GLFWwindow* window) const {
         glfwDestroyWindow(window);
-    }
+    };
 };
 
 class GraphicApi{
 public:
     virtual void shutdown() = 0;
     virtual int8_t init() = 0;
+    virtual GLFWwindow * get_window() = 0;
+    virtual bool is_close() = 0;
 };
 
 class GLFW : public GraphicApi {
-public:
+
     App::Spec& m_spec;
-    std::unique_ptr<GLFWwindow,GLFWwindowDeleter> m_window;
-
-
-    ~GLFW(){ shutdown();}
-    explicit GLFW(App::Spec& spec) : m_spec{spec}, m_window{nullptr} { init(); };
-    // Prevent copying
-    GLFW(const GLFW &) = delete;
-    GLFW &operator=(const GLFW &) = delete;
+    std::unique_ptr<GLFWwindow,WindowDeleter> m_window;
 
     int8_t init() override {
+
         glfwSetErrorCallback(glfw_error_callback);
 
         if ( !glfwInit() ) { return EXIT_FAILURE; }
 
         set_opengl_version();
 
-        m_window = std::unique_ptr<GLFWwindow,GLFWwindowDeleter>(glfwCreateWindow((int32_t) m_spec.window_size.x, (int32_t) m_spec.window_size.y, m_spec.title.c_str(), nullptr, nullptr), GLFWwindowDeleter());
+        m_window = std::unique_ptr<GLFWwindow,WindowDeleter>(glfwCreateWindow((int32_t) m_spec.window_size.x, (int32_t) m_spec.window_size.y, m_spec.title.c_str(), nullptr, nullptr), WindowDeleter());
         if( nullptr == m_window ){ return EXIT_FAILURE; }
 
         glfwMakeContextCurrent( m_window.get() );
@@ -71,11 +68,6 @@ public:
     void shutdown() override {
         if(m_window) { glfwDestroyWindow( m_window.get() ); }
         glfwTerminate();
-    };
-
-    //TODO: Add Error handler from GLFWPP lib
-    static void glfw_error_callback(int error, const char* description){
-        fprintf(stderr, "GLFW Error %d: %s\n", error, description);
     };
 
     //TODO: Remove version hard coded
@@ -95,12 +87,29 @@ public:
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 #endif
     };
+
+    //TODO: Add Error handler from GLFWPP lib
+    static void glfw_error_callback(int error, const char* description){
+
+        fprintf(stderr, "GLFW Error %d: %s\n", error, description);
+    };
+
+
+public:
+    ~GLFW(){ shutdown();}
+    explicit GLFW(App::Spec& spec) : m_spec{spec}, m_window{nullptr} { init(); };
+    // Prevent copying
+    GLFW(const GLFW &) = delete;
+    GLFW &operator=(const GLFW &) = delete;
+
+    GLFWwindow* get_window() override { return m_window.get(); }
+    bool is_close() override{ return glfwWindowShouldClose( m_window.get() );};
 };
 
 class IMGUI{
 
     App::Spec& m_spec;
-    std::unique_ptr<App::GLFW> m_api;
+    std::unique_ptr<App::GraphicApi> m_api;
 
 public:
     ~IMGUI() { shutdown(); };
@@ -121,7 +130,7 @@ public:
         // Rendering
         ImGui::Render();
         int display_w, display_h;
-        glfwGetFramebufferSize(m_api->m_window.get(), &display_w, &display_h);
+        glfwGetFramebufferSize(m_api->get_window(), &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
         glClearColor(m_spec.bg_color.x * m_spec.bg_color.w,
                      m_spec.bg_color.y * m_spec.bg_color.w,
@@ -139,10 +148,10 @@ public:
             glfwMakeContextCurrent(backup_current_context);
         }
 
-        glfwSwapBuffers( m_api->m_window.get() );
+        glfwSwapBuffers( m_api->get_window() );
     };
     /*Getter and Setters*/
-    inline bool is_close() const { return glfwWindowShouldClose( m_api->m_window.get() ); }
+    inline bool is_close() const { return m_api->is_close(); }
 
 private:
     int8_t init()
@@ -187,7 +196,7 @@ private:
     int8_t setup_render_backend()
     {
         // Setup Platform/Renderer backends
-        ImGui_ImplGlfw_InitForOpenGL( m_api->m_window.get(), true );
+        ImGui_ImplGlfw_InitForOpenGL( m_api->get_window(), true );
         ImGui_ImplOpenGL3_Init( m_spec.glsl_version.c_str() );
         return EXIT_SUCCESS;
     }
