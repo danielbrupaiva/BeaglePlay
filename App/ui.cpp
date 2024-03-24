@@ -1,8 +1,9 @@
 #include "ui.hpp"
 
 int8_t App::UI::init(){
+
     if(!m_api)
-        return EXIT_FAILURE;
+        return throw std::runtime_error("No API avaiable! Could not initialize IMGUI");;
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();

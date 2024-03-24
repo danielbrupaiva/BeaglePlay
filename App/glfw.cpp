@@ -215,7 +215,7 @@ int8_t App::GLFW::init()
 
     glfwSetErrorCallback(glfw_error_callback);
 
-    if (!glfwInit()) { throw std::runtime_error("Could not initialize GLFW"); }
+    if (!glfwInit()) { throw GLFW::Error("Could not initialize GLFW"); }
 
     WindowHints hints;
     hints.clientApi = ClientApi::OpenGl;
