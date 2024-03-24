@@ -1,6 +1,5 @@
 #include "logger.hpp"
-#include "app.hpp"
-
+#include "ui.hpp"
 
 static const std::string TAG = "Main";
 
@@ -14,13 +13,14 @@ int main(int argc, char* argv[])
         .bg_color = ImVec4(0.15f, 0.15f, 0.15f, 0.0f),
         .backend = App::eBACKEND::OPENGL3,
         .api = App::eGRAPHIC_API::GLFW3,
+        .glsl_version = "#version 130",
         .enable_vsync = 1
     };
 
-    App::IMGUI UI{spec};
-    while(!UI.is_close())
+    App::UI app{spec};
+    while(!app.is_close())
     {
-        UI.render([]() {
+        app.Run([]() {
             ImGui::ShowDemoWindow();
         });
     }
