@@ -1,27 +1,28 @@
-#include "app.hpp"
+#include "logger.hpp"
+#include "ui.hpp"
+
+static const std::string TAG = "Main";
 
 int main(int argc, char* argv[])
 {
-    const static std::string TAG = "Main";
     logger.info(TAG,"APP start");
-    Application::UI app{ImVec2(1280, 720), "ImGUI APP", Application::UI::BACKEND::SDL3};
 
-    // Start backend
-    bool show_demo_window = true;
-    logger.info(TAG,"Do-While");
-    do
-    { // IMGUI code
-        app.begin();
-        {
-            Global::StateMachine[static_cast<int>(Global::current_state)].pfHandler(app);
-            //ImGui::ShowDemoWindow(&show_demo_window);
-        }
-        app.render();
+    App::Spec spec = {
+        .title = "IMGUI APP OpenGL3 / GLFW3",
+        .window_size = ImVec2(1280,720),
+        .bg_color = ImVec4(0.15f, 0.15f, 0.15f, 0.0f),
+        .backend = App::eBACKEND::OPENGL3,
+        .api = App::eGRAPHIC_API::GLFW3,
+        .glsl_version = "#version 130",
+        .enable_vsync = 1
+    };
 
-    } while (!app.get_is_app_done());
-
-    logger.info(TAG,"APP stop");
-
-
-    return 0;
+    App::UI app{spec};
+    while(!app.is_close())
+    {
+        app.Run([]() {
+            ImGui::ShowDemoWindow();
+        });
+    }
+    return EXIT_SUCCESS;
 }

@@ -17,8 +17,11 @@ add_executable(${PROJECT_NAME}
         globals.hpp
         FSM.hpp
         app.hpp app.cpp
+        glfw.hpp glfw.cpp
+        ui.hpp ui.cpp
 )
 #---------------------------------------------------------------------------------------------
 include(Core)
 include(IMGUI)
 #---------------------------------------------------------------------------------------------
+include_directories(/home/daniel/CLionProjects/BeaglePlay/vendor/glfwpp/include)
