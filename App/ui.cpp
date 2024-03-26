@@ -3,7 +3,7 @@
 int8_t App::UI::init(){
 
     if(!m_api)
-        return throw std::runtime_error("No API avaiable! Could not initialize IMGUI");;
+        throw std::runtime_error("No API avaiable! Could not initialize IMGUI");;
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
