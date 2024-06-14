@@ -1,0 +1,20 @@
+# sudo nano /etc/systemd/system/docker-compose-database.service
+# sudo systemctl enable docker-compose-database
+# sudo iptables -I INPUT 1 -p tcp --dport 5432 -j ACCEPT
+
+
+[Unit]
+Description=Docker Compose PostgreSQL database
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/home/debian/
+ExecStart=docker-compose up -d
+ExecStop=docker-compose down
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target
