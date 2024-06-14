@@ -28,5 +28,5 @@ include(IMGUI)
 #---------------------------------------------------------------------------------------------
 #include_directories(/home/daniel/CLionProjects/BeaglePlay/vendor/glfwpp/include)
 target_include_directories(${PROJECT_NAME} PUBLIC
-        ../vendor/stb
+        ../../vendors/stb
 )
