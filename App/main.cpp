@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     while(!app.is_close())
     {
         app.Run([]() {
-            //Global::StateMachine[static_cast<int>(Global::current_state)].pfHandler();
+            Global::StateMachine[static_cast<int>(Global::current_state)].pfHandler();
             ImGui::Begin("OpenGL Texture", NULL, ImGuiWindowFlags_NoDecoration );
             ImGui::Image((void*)(intptr_t)Global::GL_textures_resources["logo"], ImVec2(1089,720));
             ImGui::End();

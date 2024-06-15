@@ -3,15 +3,17 @@
 #include <vector>
 
 #include "imgui.h"
-
+static bool show_demo_window = false;
 extern void screen1_render()
 {
-//    ImGui::ShowDemoWindow();
+    if (show_demo_window)
+        ImGui::ShowDemoWindow(&show_demo_window);
+
     // Create a simple button
     ImGui::Begin("Debug");{
         if(ImGui::Button("SCREEN1"))
         {
-
+            show_demo_window = ! show_demo_window;
         }ImGui::SameLine();
         if(ImGui::Button("SCREEN2"))
         {
