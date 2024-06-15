@@ -26,7 +26,7 @@ add_executable(${PROJECT_NAME}
 include(Core)
 include(IMGUI)
 #---------------------------------------------------------------------------------------------
-#include_directories(/home/daniel/CLionProjects/BeaglePlay/vendor/glfwpp/include)
 target_include_directories(${PROJECT_NAME} PUBLIC
-        ../../vendors/stb
+        ../vendor/stb
 )
+

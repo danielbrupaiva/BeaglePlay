@@ -2,7 +2,6 @@
 /_build*/
 /_sysroot/
 /_toolchain/
-/vendor/
 
 # Compacted files
 *.zip
