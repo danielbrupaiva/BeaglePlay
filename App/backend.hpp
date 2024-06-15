@@ -9,7 +9,7 @@
 namespace App
 {
 
-enum class eGraphicAPI{ GLFW }; //TODO: Implement SDL2, SDL3
+enum class eGraphicAPI{ GLFW };
 enum class eBackend{ OPENGL, OPENGLES }; //TODO:: Implement VULKAN
 
 class Backend

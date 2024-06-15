@@ -218,7 +218,8 @@ int8_t App::GLFW::init()
     if (!glfwInit()) { throw GLFW::Error("Could not initialize GLFW"); }
 
     WindowHints hints;
-    hints.clientApi = ClientApi::OpenGl;
+    hints.clientApi = ClientApi::OpenGles;
+    hints.contextCreationApi = ContextCreationApi::Native;
     hints.contextVersionMajor = 3;
     hints.contextVersionMinor = 0;
     hints.apply();

@@ -3,6 +3,7 @@
 #include <memory>
 #include "imgui.h"
 #include "GLFW/glfw3.h"
+#include "GLFW/glfw3native.h"
 #include "igraphicAPI.hpp"
 
 namespace App{

@@ -1,5 +1,11 @@
 # Setup environment
-- [ ] Convert project to Vulkan and GLFW
+- [ ] Review GLFW hint to be more flexible
+- [ ] Review state machine (FSM.hpp) 
+- [ ] Analyze Ubuntu Core IoT
+- [ ] Fix deploy at target with beagleplay OS
+- [ ] Update README
+- [ ] Remove SDL2 and SDL3 references
+- [ ] Add Vulkan backend to the project
 - [ ] Create script to sync. sysroot on demand
 - [ ] Configure toolchain
 - [ ] Configure remote deploy
