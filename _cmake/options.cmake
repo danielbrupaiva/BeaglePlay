@@ -19,9 +19,6 @@ if(NOT WIN32)
   set(BoldWhite   "${Esc}[1;37m")
 endif()
 #---------------------------------------------------------------------------------------------
-set(ENV{DEPENDENCIES_FOLDER} ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
-message("${BoldYellow}-- Dependencies folder: $ENV{DEPENDENCIES_FOLDER}${ColourReset}")
-#---------------------------------------------------------------------------------------------
 set(ENV{APP_FOLDER} ${CMAKE_CURRENT_SOURCE_DIR}/App)
 message("${BoldYellow}-- App folder: $ENV{APP_FOLDER}${ColourReset}")
 #---------------------------------------------------------------------------------------------

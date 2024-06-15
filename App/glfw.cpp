@@ -220,7 +220,6 @@ int8_t App::GLFW::init()
     WindowHints hints;
     hints.clientApi = ClientApi::OpenGles;
     hints.contextCreationApi = ContextCreationApi::Native;
-    hints.openglProfile = OpenGlProfile::Core;
     hints.contextVersionMajor = 3;
     hints.contextVersionMinor = 0;
     hints.apply();
@@ -228,7 +227,7 @@ int8_t App::GLFW::init()
     m_window = std::unique_ptr<GLFWwindow, WindowDeleter>(glfwCreateWindow((int32_t) m_spec.window_size.x,
                                                                            (int32_t) m_spec.window_size.y,
                                                                            m_spec.title,
-                                                                           nullptr,
+                                                                           glfwGetPrimaryMonitor(),
                                                                            nullptr), WindowDeleter());
     if (nullptr == m_window) { throw std::runtime_error("GLFW window not created"); }
 

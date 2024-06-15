@@ -23,10 +23,12 @@ int main(int argc, char* argv[])
     {
         app.Run([]() {
             //Global::StateMachine[static_cast<int>(Global::current_state)].pfHandler();
-            ImGui::Begin("OpenGL Texture Text");
+            ImGui::Begin("OpenGL Texture", NULL, ImGuiWindowFlags_NoDecoration );
             ImGui::Image((void*)(intptr_t)Global::GL_textures_resources["logo"], ImVec2(1089,720));
             ImGui::End();
         });
+
+       std::this_thread::sleep_for(std::chrono::milliseconds(30));
     }
     return EXIT_SUCCESS;
 }
