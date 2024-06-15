@@ -220,6 +220,7 @@ int8_t App::GLFW::init()
     WindowHints hints;
     hints.clientApi = ClientApi::OpenGles;
     hints.contextCreationApi = ContextCreationApi::Native;
+    hints.openglProfile = OpenGlProfile::Core;
     hints.contextVersionMajor = 3;
     hints.contextVersionMinor = 0;
     hints.apply();
