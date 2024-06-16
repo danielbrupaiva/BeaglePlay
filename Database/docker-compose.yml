@@ -4,7 +4,7 @@
 version: "3.5"
 
 volumes:
-  database:
+  vol_database:
     driver: local
     driver_opts:
       type: none
@@ -22,4 +22,4 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - database:/var/lib/postgresql/data
+      - vol_database:/var/lib/postgresql/data
