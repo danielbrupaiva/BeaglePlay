@@ -6,7 +6,7 @@ if(CROSS_COMPILER)
     set(CMAKE_USE_PTHREADS_INIT ON)
     set(THREADS_PREFER_PTHREAD_FLAG ON)
 endif ()
-#---------------------------------------------------------------------------------------------
+#---------------------
 message("${BoldYellow}-- SPDLOG${ColourReset}")
 if(BUILD_FROM_SRC)
     message("${BoldYellow}-- BUILDING FROM SRC${ColourReset}")
@@ -21,5 +21,5 @@ if(BUILD_FROM_SRC)
 else ()
     find_package(spdlog REQUIRED)
 endif ()
-#---------------------------------------------------------------------------------------------
+#---------------------
 target_link_libraries(${PROJECT_NAME} PUBLIC spdlog::spdlog)

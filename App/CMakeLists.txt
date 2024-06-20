@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 3.22)
-#---------------------------------------------------------------------------------------------
+#---------------------
 if(CMAKE_BINARY_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
     message(FATAL_ERROR "-- In-source builds are not allowed.")
 endif()
-#---------------------------------------------------------------------------------------------
+#---------------------
 set(PROJECT_NAME App)
 project(${PROJECT_NAME} C CXX)
 message("${BoldGreen}-- ${PROJECT_NAME} BUILD ${ColourReset}")
-#---------------------------------------------------------------------------------------------
+#---------------------
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")
-#---------------------------------------------------------------------------------------------
+#---------------------
 add_executable(${PROJECT_NAME}
         main.cpp
         globals.hpp
@@ -22,10 +22,10 @@ add_executable(${PROJECT_NAME}
         igraphicAPI.hpp
         backend.hpp
 )
-#---------------------------------------------------------------------------------------------
+#---------------------
 include(Core)
 include(IMGUI)
-#---------------------------------------------------------------------------------------------
+#---------------------
 target_include_directories(${PROJECT_NAME} PUBLIC
         ../vendor/stb
 )
