@@ -33,7 +33,7 @@ public:
     template<typename Func>
     void Run(Func&& Render);
     /*Getter and Setters*/
-    inline bool is_close() const{ return m_api->is_close(); }
+    [[nodiscard]] inline bool is_close() const{ return m_api->is_close(); }
 
 private:
     int8_t init()
@@ -59,14 +59,14 @@ private:
         return EXIT_SUCCESS;
     };
 
-    void shutdown()
+    static void shutdown()
     {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     };
 
-    void set_style()
+    static void set_style()
     {
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
@@ -87,7 +87,7 @@ private:
 
         return EXIT_SUCCESS;
     };
-    inline GLFWwindow * get_glfw_window_from_api() const { return reinterpret_cast< GLFWwindow * >( m_api->get_window() );}
+    [[nodiscard]] inline GLFWwindow * get_glfw_window_from_api() const { return m_api->get_window();}
 };
 
 template<typename Func>

@@ -4,11 +4,10 @@
 #include "imgui.h"
 #include "GLFW/glfw3.h"
 #include "GLFW/glfw3native.h"
-#include "igraphicAPI.hpp"
 
 namespace App{
 
-class GLFW : public IGraphicApi{
+class GLFW {
     // Custom deleter for Window
     struct WindowDeleter{
         void operator()(GLFWwindow *window) const {
@@ -19,8 +18,8 @@ class GLFW : public IGraphicApi{
     ImGui::Spec& m_spec;
     std::unique_ptr<GLFWwindow, WindowDeleter> m_window;
 
-    int8_t init() override;
-    void shutdown() override;
+    int8_t init();
+    void shutdown();
     static void glfw_error_callback(int errorCode_, const char *what_);
 
     /*
@@ -71,8 +70,8 @@ public:
     GLFW(const GLFW &) = delete;
     GLFW &operator=(const GLFW &) = delete;
 
-    inline void * get_window() { return GLFW::m_window.get(); }
-    inline bool is_close() override { return glfwWindowShouldClose(m_window.get()); };
+    inline GLFWwindow * get_window() { return GLFW::m_window.get(); }
+    inline bool is_close() { return glfwWindowShouldClose(m_window.get()); };
 };
 
 } //App namespace
