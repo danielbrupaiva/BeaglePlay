@@ -69,6 +69,7 @@ private:
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
     };
+
     int8_t setup_render_backend()
     {
         // Setup Platform/Renderer backends
@@ -78,6 +79,7 @@ private:
 
         return EXIT_SUCCESS;
     };
+
     [[nodiscard]] inline GLFWwindow * get_glfw_window_from_api() const { return m_api->get_window();}
 };
 
