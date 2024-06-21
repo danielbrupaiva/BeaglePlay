@@ -25,3 +25,27 @@ message("${BoldYellow}-- App folder: $ENV{APP_FOLDER}${ColourReset}")
 set(ENV{CORE_FOLDER} ${CMAKE_CURRENT_SOURCE_DIR}/Core)
 message("${BoldYellow}-- Core folder: $ENV{CORE_FOLDER}${ColourReset}")
 #---------------------
+set(ENV{VENDOR_FOLDER} ${CMAKE_CURRENT_SOURCE_DIR}/vendor)
+message("${BoldYellow}-- Vendor folder: $ENV{VENDOR_FOLDER}${ColourReset}")
+#---------------------
+option(ENV{CROSS_COMPILER} "CROSS COMPILER" OFF)
+message("${BoldYellow}-- CROSS COMPILER: $ENV{CROSS_COMPILER}${ColourReset}")
+#---------------------
+option(ENV{BUILD_FROM_SRC} "BUILD FROM SOURCE" OFF)
+message("${BoldYellow}-- BUILD_FROM_SRC: $ENV{BUILD_FROM_SRC}${ColourReset}")
+#---------------------
+option(ENV{OPENGL3} "OPENGL3" ON)
+message("${BoldYellow}-- OPENGL3: $ENV{OPENGL3}${ColourReset}")
+#---------------------
+option(ENV{VULKAN} "VULKAN" OFF)
+message("${BoldYellow}-- VULKAN: $ENV{VULKAN}${ColourReset}")
+#---------------------
+option(ENV{GLFW} "GLFW" ON)
+message("${BoldYellow}-- GLFW: $ENV{GLFW}${ColourReset}")
+#---------------------
+option(ENV{SDL3} "SDL3" OFF)
+message("${BoldYellow}-- SDL3: $ENV{SDL3}${ColourReset}")
+#---------------------
+option(ENV{SDL3_image} "SDL3_image" OFF)
+message("${BoldYellow}-- SDL3_image: $ENV{SDL3_image}${ColourReset}")
+#---------------------

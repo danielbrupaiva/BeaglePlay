@@ -19,14 +19,11 @@ add_executable(${PROJECT_NAME}
         glfw.hpp glfw.cpp
         ui.hpp
         image.hpp
-        igraphicAPI.hpp
         backend.hpp
 )
 #---------------------
 include(Core)
 include(IMGUI)
-#---------------------
-target_include_directories(${PROJECT_NAME} PUBLIC
-        ../vendor/stb
-)
+include(stb)
+
 
