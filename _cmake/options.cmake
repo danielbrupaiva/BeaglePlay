@@ -28,10 +28,10 @@ message("${BoldYellow}-- Core folder: $ENV{CORE_FOLDER}${ColourReset}")
 set(ENV{VENDOR_FOLDER} ${CMAKE_CURRENT_SOURCE_DIR}/vendor)
 message("${BoldYellow}-- Vendor folder: $ENV{VENDOR_FOLDER}${ColourReset}")
 #---------------------
-option(CROSS_COMPILER OFF)
+option(CROSS_COMPILER "CROSS COMPILER" OFF)
 message("${BoldYellow}-- CROSS COMPILER: ${CROSS_COMPILER}${ColourReset}")
 #---------------------
-option(BUILD_FROM_SRC ON)
+option(BUILD_FROM_SRC "BUILD FROM SRC" ON)
 message("${BoldYellow}-- BUILD_FROM_SRC: ${BUILD_FROM_SRC}${ColourReset}")
 #---------------------
 option(OPENGL3 "OPENGL3" ON)
@@ -43,9 +43,9 @@ message("${BoldYellow}-- VULKAN: ${VULKAN}${ColourReset}")
 option(GLFW "GLFW" ON)
 message("${BoldYellow}-- GLFW: ${GLFW}${ColourReset}")
 #---------------------
-option(SDL3 "SDL3" ON)
+option(SDL3 "SDL3" OFF)
 message("${BoldYellow}-- SDL3: ${SDL3}${ColourReset}")
 #---------------------
-option(SDL3_image "SDL3_image" ON)
+option(SDL3_image "SDL3_image" OFF)
 message("${BoldYellow}-- SDL3_image: ${SDL3_image}${ColourReset}")
 #---------------------
