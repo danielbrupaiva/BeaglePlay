@@ -1,7 +1,10 @@
 if(CROSS_COMPILER)
     message("${BoldYellow}-- CROSS_COMPILER: ${CROSS_COMPILER}${ColourReset}")
     set(PostgreSQL_FOUND ON)
-    set(PostgreSQL_LIBRARY ${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu/libpq.so)
+    set(PostgreSQL_LIBRARY
+            ${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu/libpq.so
+            ${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu/libpq.a
+    )
     set(PostgreSQL_INCLUDE_DIRS ${CMAKE_SYSROOT}/usr/include/postgresql)
     set(PostgreSQL_LIBRARY_DIRS ${CMAKE_SYSROOT}/usr/lib/postgresql)
     target_include_directories(${PROJECT_NAME} PUBLIC ${PostgreSQL_INCLUDE_DIRS})
