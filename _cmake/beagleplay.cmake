@@ -5,7 +5,7 @@ message("${BoldYellow}-- TOOLCHAIN LOADED${ColourReset}")
 set(TARGET_ARCHITECTURE aarch64-linux-gnu)
 # define compilers
 set(CMAKE_C_COMPILER /usr/bin/aarch64-linux-gnu-gcc)
-set(CMAKE_C_COMPILER /usr/bin/aarch64-linux-gnu-g++)
+set(CMAKE_CXX_COMPILER /usr/bin/aarch64-linux-gnu-g++)
 # define C/CXX flags
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 set(CMAKE_CXX_FLAGS ${CMAKE_C_FLAGS})
