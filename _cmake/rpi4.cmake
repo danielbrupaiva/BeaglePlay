@@ -4,7 +4,7 @@ option(CROSS_COMPILER "Enable cross compiler?" ON)
 message("${BoldYellow}-- TOOLCHAIN LOADED${ColourReset}")
 set(TARGET_ARCHITECTURE aarch64-linux-gnu)
 # define target sysroot
-set(CMAKE_SYSROOT /home/daniel/CLionProjects/sysroots/rpi4/)
+set(CMAKE_SYSROOT /home/daniel/CLionProjects/sysroots/rpi4)
 # define compilers
 set(CMAKE_C_COMPILER /usr/bin/aarch64-linux-gnu-gcc)
 set(CMAKE_CXX_COMPILER /usr/bin/aarch64-linux-gnu-g++)
