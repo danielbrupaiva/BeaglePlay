@@ -31,13 +31,13 @@ message("${BoldYellow}-- Vendor folder: $ENV{VENDOR_FOLDER}${ColourReset}")
 option(CROSS_COMPILER "CROSS COMPILER" OFF)
 message("${BoldYellow}-- CROSS COMPILER: ${CROSS_COMPILER}${ColourReset}")
 #---------------------
-option(BUILD_FROM_SRC "BUILD FROM SRC" ON)
+option(BUILD_FROM_SRC "BUILD FROM SRC" OFF)
 message("${BoldYellow}-- BUILD_FROM_SRC: ${BUILD_FROM_SRC}${ColourReset}")
 #---------------------
 option(OPENGL3 "OPENGL3" ON)
 message("${BoldYellow}-- OPENGL3: ${OPENGL3}${ColourReset}")
 #---------------------
-option(VULKAN "VULKAN" ON)
+option(VULKAN "VULKAN" OFF)
 message("${BoldYellow}-- VULKAN: ${VULKAN}${ColourReset}")
 #---------------------
 option(GLFW "GLFW" ON)
