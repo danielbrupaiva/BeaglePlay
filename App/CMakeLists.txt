@@ -25,5 +25,3 @@ add_executable(${PROJECT_NAME}
 include(Core)
 include(IMGUI)
 include(stb)
-
-
