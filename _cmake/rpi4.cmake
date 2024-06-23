@@ -7,6 +7,7 @@ include_guard(GLOBAL)
 
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR arm)
+set(TARGET_ARCHITECTURE aarch64-linux-gnu)
 # define target sysroot
 set(TARGET_SYSROOT /home/daniel/CLionProjects/sysroots/rpi4)
 set(CMAKE_SYSROOT ${TARGET_SYSROOT})
