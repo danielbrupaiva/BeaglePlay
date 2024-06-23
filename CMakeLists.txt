@@ -19,5 +19,5 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/logo.png
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/App)
 set(FETCHCONTENT_QUIET OFF)
 #---------------------
-#enable_testing()
-#add_subdirectory(tests)
+enable_testing()
+add_subdirectory(tests)

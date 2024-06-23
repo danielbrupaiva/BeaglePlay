@@ -58,8 +58,11 @@ Key features:
 
 # Build
 
-    $ mkdir build && cd build
-    $ cmake -GNinja -DCROSS_COMPILER=ON -DCMAKE_TOOLCHAIN_FILE=../_cmake/toolchain.cmake ..
+    $ cmake -G Ninja -S /path/to/src -B /path/to/build_folder \
+                    -DCMAKE_BUILD_TYPE=Release \
+                    -DBUILD_FROM_SRC:BOOL=ON \
+                    -DBUILD_FROM_SRC:BOOL=ON \
+                    -DCMAKE_TOOLCHAIN_FILE=_cmake/rpi4.cmake                    
     $ ninja
 
 # References
