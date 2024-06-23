@@ -8,10 +8,6 @@ set(PROJECT_NAME Core)
 project(${PROJECT_NAME} C CXX)
 message("${BoldGreen}-- ${PROJECT_NAME} BUILD ${ColourReset}")
 #---------------------
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")
-#---------------------
 set(SOURCES
         database.hpp database.cpp
         user.hpp

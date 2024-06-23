@@ -8,10 +8,6 @@ set(PROJECT_NAME App)
 project(${PROJECT_NAME} C CXX)
 message("${BoldGreen}-- ${PROJECT_NAME} BUILD ${ColourReset}")
 #---------------------
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")
-#---------------------
 add_executable(${PROJECT_NAME}
         main.cpp
         globals.hpp

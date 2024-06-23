@@ -1,4 +1,6 @@
+#include <iostream>
 #include <thread>
+
 #include "globals.hpp"
 #include "ui.hpp"
 
@@ -30,5 +32,5 @@ int main(int argc, char* argv[])
 
        std::this_thread::sleep_for(std::chrono::milliseconds(30));
     }
-    return EXIT_SUCCESS;
+    return 0;
 }

@@ -5,19 +5,13 @@ if(CMAKE_BINARY_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
 endif()
 #---------------------
 set(PROJECT_NAME BeaglePlay)
+set(CMAKE_CXX_STANDARD 20)
 project(${PROJECT_NAME} C CXX)
 message("${BoldGreen}-- ${PROJECT_NAME} BUILD ${ColourReset}")
-#---------------------
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")
 #---------------------
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/_cmake)
 include(options)
 #---------------------
-include(GNUInstallDirs)
-# PKG CONFIG
-find_package(PkgConfig REQUIRED)
-
 message("${BoldGreen}-- Copy external resources to build folder ${ColourReset}")
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/logo.png
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/App/resources )
