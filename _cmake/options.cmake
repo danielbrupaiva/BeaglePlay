@@ -43,9 +43,3 @@ message("${BoldYellow}-- VULKAN: ${VULKAN}${ColourReset}")
 option(GLFW "GLFW" ON)
 message("${BoldYellow}-- GLFW: ${GLFW}${ColourReset}")
 #---------------------
-option(SDL3 "SDL3" OFF)
-message("${BoldYellow}-- SDL3: ${SDL3}${ColourReset}")
-#---------------------
-option(SDL3_image "SDL3_image" OFF)
-message("${BoldYellow}-- SDL3_image: ${SDL3_image}${ColourReset}")
-#---------------------
