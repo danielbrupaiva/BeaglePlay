@@ -11,7 +11,6 @@ message("${BoldGreen}-- ${PROJECT_NAME} BUILD ${ColourReset}")
 add_executable(${PROJECT_NAME}
         main.cpp
         globals.hpp
-        FSM.hpp
         glfw.hpp glfw.cpp
         ui.hpp
         image.hpp
