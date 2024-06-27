@@ -11,7 +11,7 @@
 namespace App{
 
 class UI{
-    ImGui::Spec& m_spec;
+    App::Spec& m_spec;
     std::unique_ptr<GLFW> m_api;
     std::unique_ptr<Backend> m_backend;
 
@@ -19,7 +19,7 @@ public:
     ~UI(){
         shutdown();
     };
-    explicit UI(ImGui::Spec &spec, const eBackend backend, const std::string& shader_version) :
+    explicit UI(App::Spec &spec, const eBackend backend, const std::string& shader_version) :
         m_spec{spec},
         m_api{std::make_unique<GLFW>(m_spec)},
         m_backend{std::make_unique<Backend>(backend, shader_version)}
@@ -34,6 +34,7 @@ public:
     void Run(Func&& Render);
     /*Getter and Setters*/
     [[nodiscard]] inline bool is_close() const{ return m_api->is_close(); }
+    inline void close() { m_api->close(); }
 
 private:
     int8_t init()
