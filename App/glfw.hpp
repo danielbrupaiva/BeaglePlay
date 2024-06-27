@@ -7,6 +7,13 @@
 
 namespace App{
 
+struct Spec{
+    char* title;
+    ImVec2 window_size;
+    ImVec4 bg_color;
+    int enable_vsync;
+};
+
 class GLFW {
     // Custom deleter for Window
     struct WindowDeleter{
@@ -15,7 +22,7 @@ class GLFW {
         };
     };
 
-    ImGui::Spec& m_spec;
+    App::Spec& m_spec;
     std::unique_ptr<GLFWwindow, WindowDeleter> m_window;
 
     int8_t init();
@@ -62,7 +69,7 @@ public:
     {
         shutdown();
     }
-    explicit GLFW(ImGui::Spec& spec): m_spec{spec}, m_window{nullptr}
+    explicit GLFW(App::Spec& spec): m_spec{spec}, m_window{nullptr}
     {
         init();
     }
@@ -72,6 +79,7 @@ public:
 
     inline GLFWwindow * get_window() { return GLFW::m_window.get(); }
     inline bool is_close() { return glfwWindowShouldClose(m_window.get()); };
+    inline void close() { glfwSetWindowShouldClose(m_window.get(), GLFW_TRUE); };
 };
 
 } //App namespace
