@@ -4,7 +4,15 @@
 #include "database.hpp"
 #include "image.hpp"
 
+#include "imgui.h"
+
 static Core::Logger logger{"App",spdlog::level::debug};
+
+extern void screen1_render();
+extern void screen2_render();
+extern void screen3_render();
+extern void screen4_render();
+extern void screen5_render();
 
 namespace Global {
 /*GLOBAL VARIABLES*/
@@ -26,12 +34,6 @@ struct SystemState_t {
     unsigned int delayTime = 0U;
 };
 
-void screen1_render();
-void screen2_render();
-void screen3_render();
-void screen4_render();
-void screen5_render();
-
 std::vector<SystemState_t> FSM = {
     { eSystemState::SCREEN1, &isTransition[static_cast<int>(eSystemState::SCREEN1)], {eSystemState::SCREEN2, eSystemState::SCREEN5}, &screen1_render, 0U },
     { eSystemState::SCREEN2, &isTransition[static_cast<int>(eSystemState::SCREEN2)], {eSystemState::SCREEN3, eSystemState::SCREEN1}, &screen2_render, 0U },
@@ -42,24 +44,3 @@ std::vector<SystemState_t> FSM = {
 
 
 };//namespace Global
-
-void Global::screen1_render()
-{
-
-}
-void Global::screen2_render()
-{
-
-}
-void Global::screen3_render()
-{
-
-}
-void Global::screen4_render()
-{
-
-}
-void Global::screen5_render()
-{
-
-};

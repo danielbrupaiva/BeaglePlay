@@ -12,9 +12,10 @@ add_executable(${PROJECT_NAME}
         main.cpp
         globals.hpp
         glfw.hpp glfw.cpp
-        ui.hpp
-        image.hpp
         backend.hpp
+        image.hpp
+        ui.hpp
+        screen_1.hpp screen_1.cpp
 )
 #---------------------
 include(Core)
