@@ -31,7 +31,7 @@ public:
     UI &operator=(const UI &) = delete;
     // Render method
     template<typename Func>
-    void Run(Func&& Render);
+    void run(Func&& Render);
     /*Getter and Setters*/
     [[nodiscard]] inline bool is_close() const{ return m_api->is_close(); }
     inline void close() { m_api->close(); }
@@ -85,7 +85,7 @@ private:
 };
 
 template<typename Func>
-void UI::Run(Func&& Render) {
+void UI::run(Func&& Render) {
     glfwPollEvents();
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
@@ -95,7 +95,7 @@ void UI::Run(Func&& Render) {
     Render();
     // Rendering
     ImGui::Render();
-    int display_w, display_h;
+    int32_t display_w, display_h;
     glfwGetFramebufferSize( get_glfw_window_from_api(), &display_w, &display_h);
     glViewport(0, 0, display_w, display_h);
     glClearColor(m_spec.bg_color.x * m_spec.bg_color.w,

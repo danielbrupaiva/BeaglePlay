@@ -3,7 +3,6 @@
 
 #include "globals.hpp"
 #include "ui.hpp"
-#include "screen_1.hpp"
 
 static const std::string TAG = "Main";
 static void debug_screen(App::UI& app);
@@ -20,13 +19,13 @@ int main(int argc, char* argv[])
     };
 
     static App::UI app{spec, App::eBackend::OPENGLES, "ES 3.0"};
-    static std::unique_ptr<IScreen> screen1 = std::make_unique<Screen1>(app, "Screen1", ImVec2(1024,720), ImVec4(0,0,0,0));
+    static std::unique_ptr<IScreen> screen1 = std::make_unique<Screen1>("Screen1", ImVec2(1024,720), ImVec4(0,0,0,0));
     // Load GL textures resources
     Global::GL_textures_resources.insert({"logo", App::Image::LoadTextureFromFile("./resources/logo.png")});
 
     while(!app.is_close())
     {
-        app.Run([&]() {
+        app.run([&]() {
             Global::FSM[static_cast<int>(Global::current_state)].pfHandler(app);
             debug_screen(app);
         });
@@ -44,7 +43,6 @@ void debug_screen(App::UI& app){
     ImGui::Begin("OpenGL Texture", NULL, ImGuiWindowFlags_NoDecoration);
     ImGui::Image((void *) (intptr_t) Global::GL_textures_resources["logo"], ImVec2(1089, 720));
     ImGui::End();
-
 
     ImGui::Begin("Debug");
     {
