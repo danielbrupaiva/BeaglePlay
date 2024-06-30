@@ -7,7 +7,6 @@
 
 static const std::string TAG = "Main";
 static void debug_screen(App::UI& app);
-static std::unique_ptr<IScreen> screen1 = std::make_unique<Screen1>("Screen1", ImVec2(1024,720), ImVec4(0,0,0,0));
 
 int main(int argc, char* argv[])
 {
@@ -21,13 +20,14 @@ int main(int argc, char* argv[])
     };
 
     static App::UI app{spec, App::eBackend::OPENGLES, "ES 3.0"};
+    static std::unique_ptr<IScreen> screen1 = std::make_unique<Screen1>(app, "Screen1", ImVec2(1024,720), ImVec4(0,0,0,0));
     // Load GL textures resources
     Global::GL_textures_resources.insert({"logo", App::Image::LoadTextureFromFile("./resources/logo.png")});
 
     while(!app.is_close())
     {
         app.Run([&]() {
-            Global::FSM[static_cast<int>(Global::current_state)].pfHandler();
+            Global::FSM[static_cast<int>(Global::current_state)].pfHandler(app);
             debug_screen(app);
         });
         //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
