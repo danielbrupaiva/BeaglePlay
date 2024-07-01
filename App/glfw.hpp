@@ -18,7 +18,8 @@ class GLFW {
     // Custom deleter for Window
     struct WindowDeleter{
         void operator()(GLFWwindow *window) const {
-            glfwDestroyWindow(window);
+            if (window) { glfwDestroyWindow(window); }
+            glfwTerminate();
         };
     };
 
@@ -65,10 +66,6 @@ class GLFW {
     struct WindowHints;
 
 public:
-    ~GLFW()
-    {
-        shutdown();
-    }
     explicit GLFW(App::Spec& spec): m_spec{spec}, m_window{nullptr}
     {
         init();

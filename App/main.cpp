@@ -3,6 +3,12 @@
 
 #include "globals.hpp"
 
+#include "screen_1.hpp"
+#include "screen_2.hpp"
+#include "screen_3.hpp"
+#include "screen_4.hpp"
+#include "screen_5.hpp"
+
 static const std::string TAG = "Main";
 static void debug_screen(App::UI& app);
 

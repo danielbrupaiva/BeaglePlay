@@ -6,21 +6,15 @@
 #include "image.hpp"
 
 #include "ui.hpp"
-
-#include "screen_1.hpp"
-#include "screen_2.hpp"
-#include "screen_3.hpp"
-#include "screen_4.hpp"
-#include "screen_5.hpp"
+#include "IScreen.hpp"
 
 static Core::Logger logger{"App", spdlog::level::debug};
 
 namespace Global {
-/*GLOBAL VARIABLES*/
+//GLOBAL VARIABLES
 static std::shared_ptr<Core::Database> db = Core::Database::create("localhost", "5432", "imgui", "1234", "project");
 static Core::User system_user;
 static std::map< std::string, GLuint > GL_textures_resources;
-
 //FSM definition
 enum class eSystemState { SCREEN1, SCREEN2, SCREEN3, SCREEN4, SCREEN5 };
 static eSystemState current_state = eSystemState::SCREEN1;
