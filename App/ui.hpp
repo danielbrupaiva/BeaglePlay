@@ -68,18 +68,14 @@ private:
     };
 
     static void set_style()
-    {
-        // Setup Dear ImGui style
+    {   // Setup Dear ImGui style
         ImGui::StyleColorsDark();
     };
 
     int8_t setup_render_backend()
-    {
-        // Setup Platform/Renderer backends
-
+    {   // Setup Platform/Renderer backends
         ImGui_ImplGlfw_InitForOpenGL( get_glfw_window_from_api(), true );
         ImGui_ImplOpenGL3_Init( m_backend->get_version().c_str() );
-
         return EXIT_SUCCESS;
     };
 
@@ -94,9 +90,9 @@ void UI::run(Func&& Render) {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    const ImGuiViewport *viewport = ImGui::GetMainViewport();
-    ImGui::SetNextWindowPos(m_entire_viewport ? viewport->WorkPos : viewport->Pos);
-    ImGui::SetNextWindowSize(m_entire_viewport ? viewport->WorkSize : viewport->Size);
+//    const ImGuiViewport *viewport = ImGui::GetMainViewport();
+//    ImGui::SetNextWindowPos(m_entire_viewport ? viewport->WorkPos : viewport->Pos);
+//    ImGui::SetNextWindowSize(m_entire_viewport ? viewport->WorkSize : viewport->Size);
 
     if (ImGui::Begin("MAIN", m_open.get(), m_flags)) {
         Render();
