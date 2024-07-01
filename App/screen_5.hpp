@@ -6,15 +6,15 @@
 
 using namespace std;
 
-class Screen1 : private IScreen{
+class Screen5 : private IScreen{
 public:
-    Screen1(std::string_view name, const ImVec2 &size, const ImVec4 &bg_color)
+    Screen5(std::string_view name, const ImVec2 &size, const ImVec4 &bg_color)
         : IScreen{name, size, bg_color}
     {}
 
     static void render(App::UI& app)
     {
-        if (ImGui::Button("SCREEN1"))
+        if (ImGui::Button("SCREEN5"))
         {
             app.close();
         }

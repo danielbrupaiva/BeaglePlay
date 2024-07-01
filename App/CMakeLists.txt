@@ -15,7 +15,11 @@ add_executable(${PROJECT_NAME}
         backend.hpp
         image.hpp
         ui.hpp
-        screen_1.hpp screen_1.cpp
+        screen_1.hpp
+        screen_2.hpp
+        screen_3.hpp
+        screen_4.hpp
+        screen_5.hpp
 )
 #---------------------
 include(Core)

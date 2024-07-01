@@ -14,7 +14,9 @@ class UI{
     App::Spec& m_spec;
     std::unique_ptr<GLFW> m_api;
     std::unique_ptr<Backend> m_backend;
-
+    bool m_entire_viewport = true;
+    std::unique_ptr<bool> m_open = nullptr;
+    ImGuiWindowFlags m_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
 public:
     ~UI(){
         shutdown();
@@ -92,7 +94,13 @@ void UI::run(Func&& Render) {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    Render();
+    const ImGuiViewport *viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(m_entire_viewport ? viewport->WorkPos : viewport->Pos);
+    ImGui::SetNextWindowSize(m_entire_viewport ? viewport->WorkSize : viewport->Size);
+
+    if (ImGui::Begin("MAIN", m_open.get(), m_flags)) {
+        Render();
+    }ImGui::End();
     // Rendering
     ImGui::Render();
     int32_t display_w, display_h;
@@ -107,5 +115,4 @@ void UI::run(Func&& Render) {
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     glfwSwapBuffers( get_glfw_window_from_api() );
 };
-
 }

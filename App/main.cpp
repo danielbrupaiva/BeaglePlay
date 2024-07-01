@@ -4,7 +4,9 @@
 #include "globals.hpp"
 #include "ui.hpp"
 
-static const std::string TAG = "Main";
+using namespace std;
+
+static const string TAG = "Main";
 static void debug_screen(App::UI& app);
 
 int main(int argc, char* argv[])
@@ -19,7 +21,7 @@ int main(int argc, char* argv[])
     };
 
     static App::UI app{spec, App::eBackend::OPENGLES, "ES 3.0"};
-    static std::unique_ptr<IScreen> screen1 = std::make_unique<Screen1>("Screen1", ImVec2(1024,720), ImVec4(0,0,0,0));
+
     // Load GL textures resources
     Global::GL_textures_resources.insert({"logo", App::Image::LoadTextureFromFile("./resources/logo.png")});
 
@@ -34,8 +36,8 @@ int main(int argc, char* argv[])
     return EXIT_SUCCESS;
 }
 
-void debug_screen(App::UI& app){
-
+void debug_screen(App::UI& app)
+{
     static bool show_demo_window = false;
     if(show_demo_window)
         ImGui::ShowDemoWindow(&show_demo_window);
