@@ -12,10 +12,7 @@ public:
 
     void render(App::UI& app)
     {
-        const ImGuiViewport *viewport = ImGui::GetMainViewport();
-        viewport->Size;
-
-
+//        ImVec2(1089, 720)/
         if (ImGui::ImageButton("LOGO", Global::GL_Textures["logo"]->ID(), ImVec2(1280,720) , ImVec2(0, 0), ImVec2(1, 1), m_bg_color))
         {
             Global::current_state = Global::eSystemState::SCREEN2;
