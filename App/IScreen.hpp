@@ -1,17 +1,16 @@
 #pragma once
 
 #include <iostream>
-#include "imgui.h"
-
-using namespace std;
+#include "ui.hpp"
 
 class IScreen{
-private:
+protected:
     ImVec2 m_size;
     ImVec4 m_bg_color;
-    string m_name;
+    std::string m_name;
 public:
-    IScreen(std::string_view name, const ImVec2 &size, const ImVec4 &bg_color)
+    explicit IScreen(std::string_view name, const ImVec2 &size, const ImVec4 &bg_color)
         : m_name{name}, m_size{size}, m_bg_color{bg_color}
     {}
+    virtual void render(App::UI& app) = 0;
 };

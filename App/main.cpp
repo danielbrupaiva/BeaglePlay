@@ -2,11 +2,8 @@
 #include <thread>
 
 #include "globals.hpp"
-#include "ui.hpp"
 
-using namespace std;
-
-static const string TAG = "Main";
+static const std::string TAG = "Main";
 static void debug_screen(App::UI& app);
 
 int main(int argc, char* argv[])
@@ -21,14 +18,19 @@ int main(int argc, char* argv[])
     };
 
     static App::UI app{spec, App::eBackend::OPENGLES, "ES 3.0"};
-
     // Load GL textures resources
     Global::GL_textures_resources.insert({"logo", App::Image::LoadTextureFromFile("./resources/logo.png")});
+    // Setup FSM
+    Global::FSM.push_back(std::make_unique<Screen1>("Screen1", ImVec2(1024,720), ImVec4(0,0,0,0)));
+    Global::FSM.push_back(std::make_unique<Screen2>("Screen2", ImVec2(1024,720), ImVec4(0,0,0,0)));
+    Global::FSM.push_back(std::make_unique<Screen3>("Screen3", ImVec2(1024,720), ImVec4(0,0,0,0)));
+    Global::FSM.push_back(std::make_unique<Screen4>("Screen4", ImVec2(1024,720), ImVec4(0,0,0,0)));
+    Global::FSM.push_back(std::make_unique<Screen5>("Screen5", ImVec2(1024,720), ImVec4(0,0,0,0)));
 
     while(!app.is_close())
     {
-        app.run([&]() {
-            Global::FSM[static_cast<int>(Global::current_state)].pfHandler(app);
+        app.run([]() {
+            Global::FSM[static_cast<int>(Global::current_state)]->render(app);
             debug_screen(app);
         });
         //std::this_thread::sleep_for(std::chrono::milliseconds(1000));

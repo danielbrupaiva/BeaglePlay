@@ -4,15 +4,13 @@
 #include "ui.hpp"
 #include "IScreen.hpp"
 
-using namespace std;
-
-class Screen3 : private IScreen{
+class Screen3 : public IScreen{
 public:
     Screen3(std::string_view name, const ImVec2 &size, const ImVec4 &bg_color)
         : IScreen{name, size, bg_color}
     {}
 
-    static void render(App::UI& app)
+    void render(App::UI& app)
     {
         if (ImGui::Button("SCREEN3"))
         {
