@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     // UI instantiated
     static App::UI app{spec, App::eBackend::OPENGLES, "ES 3.0"};
     // Load GL textures resources
-    Global::GL_textures_resources.insert({"logo", App::Image::LoadTextureFromFile("./resources/logo.png")});
+    Global::GL_Textures.insert({"logo", std::make_unique<Image>("./resources/logo.png", Image::Format::None)});
     // Setup FSM
     Global::FSM.push_back(std::make_unique<Screen1>("Screen1", spec.window_size, spec.bg_color));
     Global::FSM.push_back(std::make_unique<Screen2>("Screen2", spec.window_size, spec.bg_color));
@@ -50,9 +50,7 @@ void debug_screen(App::UI& app)
     if(show_demo_window)
         ImGui::ShowDemoWindow(&show_demo_window);
 
-    ImGui::Begin("OpenGL Texture", NULL, ImGuiWindowFlags_NoDecoration);
-    ImGui::Image((void *) (intptr_t) Global::GL_textures_resources["logo"], ImVec2(1089, 720));
-    ImGui::End();
+//    ImGui::Image(Global::GL_Textures["logo"]->ID(), ImVec2(1089, 720));
 
     ImGui::Begin("Debug");
     {

@@ -12,9 +12,13 @@ public:
 
     void render(App::UI& app)
     {
-        if (ImGui::Button("SCREEN1"))
+        const ImGuiViewport *viewport = ImGui::GetMainViewport();
+        viewport->Size;
+
+
+        if (ImGui::ImageButton("LOGO", Global::GL_Textures["logo"]->ID(), ImVec2(1280,720) , ImVec2(0, 0), ImVec2(1, 1), m_bg_color))
         {
-            app.close();
+            Global::current_state = Global::eSystemState::SCREEN2;
         }
     }
 };
