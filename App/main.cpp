@@ -16,16 +16,16 @@ int main(int argc, char* argv[])
         .bg_color = ImVec4(0.15f, 0.15f, 0.15f, 0.0f),
         .enable_vsync = 1
     };
-
+    // UI instantiated
     static App::UI app{spec, App::eBackend::OPENGLES, "ES 3.0"};
     // Load GL textures resources
     Global::GL_textures_resources.insert({"logo", App::Image::LoadTextureFromFile("./resources/logo.png")});
     // Setup FSM
-    Global::FSM.push_back(std::make_unique<Screen1>("Screen1", ImVec2(1024,720), ImVec4(0,0,0,0)));
-    Global::FSM.push_back(std::make_unique<Screen2>("Screen2", ImVec2(1024,720), ImVec4(0,0,0,0)));
-    Global::FSM.push_back(std::make_unique<Screen3>("Screen3", ImVec2(1024,720), ImVec4(0,0,0,0)));
-    Global::FSM.push_back(std::make_unique<Screen4>("Screen4", ImVec2(1024,720), ImVec4(0,0,0,0)));
-    Global::FSM.push_back(std::make_unique<Screen5>("Screen5", ImVec2(1024,720), ImVec4(0,0,0,0)));
+    Global::FSM.push_back(std::make_unique<Screen1>("Screen1", spec.window_size, spec.bg_color));
+    Global::FSM.push_back(std::make_unique<Screen2>("Screen2", spec.window_size, spec.bg_color));
+    Global::FSM.push_back(std::make_unique<Screen3>("Screen3", spec.window_size, spec.bg_color));
+    Global::FSM.push_back(std::make_unique<Screen4>("Screen4", spec.window_size, spec.bg_color));
+    Global::FSM.push_back(std::make_unique<Screen5>("Screen5", spec.window_size, spec.bg_color));
 
     while(!app.is_close())
     {
