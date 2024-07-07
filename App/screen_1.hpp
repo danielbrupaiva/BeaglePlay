@@ -12,9 +12,15 @@ public:
 
     void render(App::UI& app)
     {
-//        ImVec2(1089, 720)/
-        if (ImGui::ImageButton("LOGO", Global::GL_Textures["logo"]->ID(), ImVec2(1280,720) , ImVec2(0, 0), ImVec2(1, 1), m_bg_color))
-        {
+        ImVec2 position = ImVec2(0.0f, 0.0f);
+        ImVec2 control_size = ImGui::GetContentRegionAvail();
+
+        ImVec2 size = Global::GL_Textures["logo"]->resize();
+        float x_offset = (control_size.x - size.x) * 0.5f;
+        float y_offset = (control_size.y - size.y) * 0.5f;
+
+        ImGui::SetCursorPos(ImVec2(position.x + x_offset, position.y + y_offset));
+        if(ImGui::ImageButton("LOGO", Global::GL_Textures["logo"]->ID(), Global::GL_Textures["logo"]->resize())) {
             Global::current_state = Global::eSystemState::SCREEN2;
         }
     }
