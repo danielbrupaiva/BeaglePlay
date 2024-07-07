@@ -16,7 +16,11 @@ class UI{
     std::unique_ptr<Backend> m_backend;
     bool m_entire_viewport = true;
     std::unique_ptr<bool> m_open = nullptr;
-    ImGuiWindowFlags m_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+    ImVec2 m_position = ImVec2(0,0);
+    ImGuiWindowFlags m_flags = ImGuiWindowFlags_NoDecoration
+                                | ImGuiWindowFlags_NoCollapse
+                                | ImGuiWindowFlags_NoMove;
+//                                | ImGuiWindowFlags_NoBackground;
 public:
     ~UI(){
         shutdown();
@@ -66,7 +70,7 @@ private:
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     };
-
+    //TODO: Create a project style color
     static void set_style()
     {   // Setup Dear ImGui style
         ImGui::StyleColorsDark();
@@ -89,10 +93,13 @@ void UI::run(Func&& Render) {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-
+//TODO: Create auto ajusted windows strategy
 //    const ImGuiViewport *viewport = ImGui::GetMainViewport();
 //    ImGui::SetNextWindowPos(m_entire_viewport ? viewport->WorkPos : viewport->Pos);
 //    ImGui::SetNextWindowSize(m_entire_viewport ? viewport->WorkSize : viewport->Size);
+    // Hardcoded position and window size
+    ImGui::SetNextWindowPos(m_position);
+    ImGui::SetNextWindowSize(m_spec.window_size, ImGuiCond_Always);
 
     if (ImGui::Begin("MAIN", m_open.get(), m_flags)) {
         Render();
@@ -104,8 +111,7 @@ void UI::run(Func&& Render) {
     glViewport(0, 0, display_w, display_h);
     glClearColor(m_spec.bg_color.x * m_spec.bg_color.w,
                  m_spec.bg_color.y * m_spec.bg_color.w,
-                 m_spec.bg_color.z * m_spec.bg_color.w,
-                 m_spec.bg_color.w);
+                 m_spec.bg_color.z * m_spec.bg_color.w, m_spec.bg_color.w);
 
     glClear(GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
