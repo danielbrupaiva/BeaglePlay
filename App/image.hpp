@@ -17,8 +17,8 @@ public:
 private:
     std::string m_filename;
     Format m_format = Format::None;
-    int m_width = 0;
-    int m_height = 0;
+    int32_t m_width = 0;
+    int32_t m_height = 0;
     GLuint m_textureID = 0;
 private:
 
@@ -88,6 +88,24 @@ public:
         return EXIT_SUCCESS;
     }
 
-//Getters and Setters
+    /*
+     * Getters and Setters
+     */
     inline ImTextureID ID() const { return reinterpret_cast<ImTextureID>(m_textureID); }
+    inline int32_t width() { return m_width; }
+    inline int32_t height() { return m_height; }
+    inline ImVec2 size() { return ImVec2(m_width, m_height);}
+    /*
+     * Resize image method keeping iamge aspect ratio
+     */
+    inline ImVec2 resize() {
+        // Image current ratio
+        float image_ratio = (float) m_width / (float) m_height;
+        // Maximum ratio dimensions in ImGui window
+        float max_width = ImGui::GetContentRegionAvail().x;
+        float max_height = ImGui::GetContentRegionAvail().y;
+        float max_ratio =  max_width / max_height ;
+
+        return (image_ratio > max_ratio) ?  ImVec2(max_width, (max_width / image_ratio)) : ImVec2((max_height * image_ratio), max_height);
+    }
 };
