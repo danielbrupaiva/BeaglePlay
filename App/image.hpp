@@ -91,14 +91,14 @@ public:
     /*
      * Getters and Setters
      */
-    inline ImTextureID ID() const { return reinterpret_cast<ImTextureID>(m_textureID); }
-    inline int32_t width() { return m_width; }
-    inline int32_t height() { return m_height; }
-    inline ImVec2 size() { return ImVec2(m_width, m_height);}
+    [[nodiscard]] inline ImTextureID ID() const { return reinterpret_cast<ImTextureID>(m_textureID); }
+    [[nodiscard]] inline int32_t width() const { return m_width; }
+    [[nodiscard]] inline int32_t height() const { return m_height; }
+    [[nodiscard]] inline ImVec2 size() const { return ImVec2(m_width, m_height);}
     /*
      * Resize image method keeping iamge aspect ratio
      */
-    inline ImVec2 resize(ImVec2 size) {
+    [[nodiscard]] inline ImVec2 resize(const ImVec2& size) const {
         // Image current ratio
         float image_ratio = (float) m_width / (float) m_height;
         // Maximum ratio dimensions in ImGui window
