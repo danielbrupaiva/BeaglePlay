@@ -73,8 +73,7 @@ private:
     };
     //TODO: Create a project style color
     static void set_style()
-    {   // Setup Dear ImGui style
-        ImGui::StyleColorsDark();
+    {
         ImGuiStyle* style = &ImGui::GetStyle();
         ImVec4* colors = style->Colors;
 
@@ -99,9 +98,9 @@ private:
         colors[ImGuiCol_CheckMark]              = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
         colors[ImGuiCol_SliderGrab]             = ImVec4(0.24f, 0.52f, 0.88f, 1.00f);
         colors[ImGuiCol_SliderGrabActive]       = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
-        colors[ImGuiCol_Button]                 = ImVec4(0.109f, 0.109f, 0.109f, 1.0f);
-        colors[ImGuiCol_ButtonHovered]          = ImVec4(0.173f, 0.173f, 0.173f, 1.0f);
-        colors[ImGuiCol_ButtonActive]           = ImVec4(0.173f, 0.173f, 0.173f, 1.0f);
+        colors[ImGuiCol_Button]                 = ImVec4(0.173f, 0.173f, 0.173f, 1.0f);
+        colors[ImGuiCol_ButtonHovered]          = ImVec4(0.271f, 0.271f, 0.271f, 1.0f);
+        colors[ImGuiCol_ButtonActive]           = ImVec4(0.271f, 0.271f, 0.271f, 1.0f);
         colors[ImGuiCol_Header]                 = ImVec4(0.26f, 0.59f, 0.98f, 0.31f);
         colors[ImGuiCol_HeaderHovered]          = ImVec4(0.26f, 0.59f, 0.98f, 0.80f);
         colors[ImGuiCol_HeaderActive]           = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
