@@ -12,9 +12,10 @@ public:
 
     void render(App::UI& app)
     {
-        if (ImGui::Button("SCREEN2"))
+        ImVec2 control_size = ImGui::GetContentRegionAvail();
+        if (ImGui::Button("##", control_size))
         {
-            app.close();
+            Global::current_state = Global::eSystemState::SCREEN1;
         }
     }
 };

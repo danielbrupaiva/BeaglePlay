@@ -12,23 +12,26 @@ public:
 
     void render(App::UI& app)
     {
-        ImVec2 position = ImVec2(0.0f, 0.0f);
         ImVec2 control_size = ImGui::GetContentRegionAvail();
-
-        ImVec2 size = Global::GL_Textures["logo"]->resize();
-        float x_offset = (control_size.x - size.x) * 0.5f;
-        float y_offset = (control_size.y - size.y) * 0.5f;
-
         ImGui::PushID(1);
-        ImGui::PushStyleColor(ImGuiCol_Button,          ImVec4(0.173f, 0.173f, 0.173f, 0.0f));
-        ImGui::PushStyleColor(ImGuiCol_ButtonHovered,   ImVec4(0.271f, 0.271f, 0.271f, 0.0f));
-        ImGui::PushStyleColor(ImGuiCol_ButtonActive,    ImVec4(0.271f, 0.271f, 0.271f, 0.0f));
+        {
+            ImGui::PushStyleColor(ImGuiCol_Button,          ImVec4(0.173f, 0.173f, 0.173f, 0.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered,   ImVec4(0.271f, 0.271f, 0.271f, 0.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive,    ImVec4(0.271f, 0.271f, 0.271f, 0.0f));
 
-        ImGui::SetCursorPos(ImVec2(position.x + x_offset, position.y + y_offset));
-        if(ImGui::ImageButton("LOGO", Global::GL_Textures["logo"]->ID(), Global::GL_Textures["logo"]->resize())) {
-            Global::current_state = Global::eSystemState::SCREEN2;
-        }
-        ImGui::PopStyleColor(3);
-        ImGui::PopID();
+            if(ImGui::Button("##", control_size))
+            {
+                Global::current_state = Global::eSystemState::SCREEN2;
+            }
+
+            ImGui::PopStyleColor(3);
+        }ImGui::PopID();
+
+        ImVec2 image_size = Global::GL_Textures["logo"]->resize(control_size);
+        ImVec2 position{0.0f, 0.0f};
+        ImVec2 factor{0.5f, 0.5f};
+        ImVec2 offset = ImVec2( (control_size.x - image_size.x) * factor.x, (control_size.y - image_size.y) * factor.y);
+        ImGui::SetCursorPos(ImVec2(position.x + offset.x, position.y +offset.y));
+        ImGui::Image(Global::GL_Textures["logo"]->ID(), image_size);
     }
 };
