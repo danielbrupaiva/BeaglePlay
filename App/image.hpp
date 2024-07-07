@@ -98,14 +98,11 @@ public:
     /*
      * Resize image method keeping iamge aspect ratio
      */
-    inline ImVec2 resize() {
+    inline ImVec2 resize(ImVec2 size) {
         // Image current ratio
         float image_ratio = (float) m_width / (float) m_height;
         // Maximum ratio dimensions in ImGui window
-        float max_width = ImGui::GetContentRegionAvail().x;
-        float max_height = ImGui::GetContentRegionAvail().y;
-        float max_ratio =  max_width / max_height ;
-
-        return (image_ratio > max_ratio) ?  ImVec2(max_width, (max_width / image_ratio)) : ImVec2((max_height * image_ratio), max_height);
+        float max_ratio =  size.x / size.y ;
+        return (image_ratio > max_ratio) ?  ImVec2(size.x, (size.x * image_ratio)) : ImVec2((size.y * image_ratio), size.y);
     }
 };
