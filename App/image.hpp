@@ -19,6 +19,7 @@ private:
     Format m_format = Format::None;
     int32_t m_width = 0;
     int32_t m_height = 0;
+    float m_ratio = 0.0f;
     GLuint m_textureID = 0;
 private:
 
@@ -55,6 +56,7 @@ public:
         : m_filename{filename}, m_format{format}
     {
         LoadTexture();
+        m_ratio = static_cast<float>(m_width) / static_cast<float>(m_height);
     }
     // Simple helper function to load an image into a OpenGL texture with common settings
     static bool LoadTextureFromFile(const std::string_view filename, GLuint* out_texture)
@@ -95,14 +97,20 @@ public:
     [[nodiscard]] inline int32_t width() const { return m_width; }
     [[nodiscard]] inline int32_t height() const { return m_height; }
     [[nodiscard]] inline ImVec2 size() const { return ImVec2(m_width, m_height);}
+    [[nodiscard]] inline float ratio() const { return m_ratio; }
     /*
      * Resize image method keeping iamge aspect ratio
      */
     [[nodiscard]] inline ImVec2 resize(const ImVec2& size) const {
-        // Image current ratio
-        float image_ratio = (float) m_width / (float) m_height;
-        // Maximum ratio dimensions in ImGui window
-        float max_ratio =  size.x / size.y ;
-        return (image_ratio > max_ratio) ?  ImVec2(size.x, (size.x * image_ratio)) : ImVec2((size.y * image_ratio), size.y);
+        // Calculate resize ratio
+        float width_ratio = (float) size.x / (float) m_width;
+        float height_ratio = (float) size.y / (float) m_height;
+        // Choose the smaller ratio to maintain aspect ratio
+        float resize_ratio = (width_ratio < height_ratio) ? width_ratio : height_ratio;
+        // Calculate new dimensions
+        float target_width = (float) m_width * resize_ratio;
+        float target_height = (float) m_height * resize_ratio;
+
+        return ImVec2(target_width, target_height);
     }
 };
