@@ -14,6 +14,8 @@ include(options)
 #---------------------
 message("${BoldGreen}-- Copy external resources to build folder ${ColourReset}")
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/logo.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/profile.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/settings.png
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/App/resources )
 #---------------------
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/App)
