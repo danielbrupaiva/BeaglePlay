@@ -20,13 +20,14 @@ int main(int argc, char* argv[])
         .title = (char*)"IMGUI APP OpenGL3 / GLFW3",
         .window_size = ImVec2(1280,720),
         .bg_color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f),
-//        .bg_color = ImVec4(0.109f, 0.109f, 0.109f, 1.0f),
         .enable_vsync = 1
     };
     // UI instantiated
     static App::UI app{spec, App::eBackend::OPENGLES, "ES 3.0"};
     // Load GL textures resources
     Global::GL_Textures.insert({"logo", std::make_unique<Image>("./resources/logo.png", Image::Format::None)});
+    Global::GL_Textures.insert({"profile", std::make_unique<Image>("./resources/profile.png", Image::Format::None)});
+    Global::GL_Textures.insert({"settings", std::make_unique<Image>("./resources/settings.png", Image::Format::None)});
     // Setup FSM
     Global::FSM.push_back(std::make_unique<Screen1>("Screen1", spec.window_size, spec.bg_color));
     Global::FSM.push_back(std::make_unique<Screen2>("Screen2", spec.window_size, spec.bg_color));
