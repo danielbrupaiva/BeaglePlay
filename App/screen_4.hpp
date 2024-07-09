@@ -6,8 +6,8 @@
 
 class Screen4 : public IScreen{
 public:
-    Screen4(std::string_view name, const ImVec2 &size, const ImVec4 &bg_color)
-        : IScreen{name, size, bg_color}
+    Screen4(std::string_view name, const ImVec2 &window_size    , const ImVec4 &bg_color)
+        : IScreen{name, window_size, bg_color}
     {}
 
     void render(App::UI& app)
