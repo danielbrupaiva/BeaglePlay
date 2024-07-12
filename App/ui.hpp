@@ -8,6 +8,8 @@
 #include "imgui_internal.h"
 
 #include "backend.hpp"
+// Emedded font
+#include "../resources/fonts/Roboto-Regular.embed"
 
 namespace App{
 
@@ -60,6 +62,12 @@ private:
 
         set_style();
 
+        // Load default font
+        ImFontConfig fontConfig;
+        fontConfig.FontDataOwnedByAtlas = false;
+        ImFont* robotoFont = io.Fonts->AddFontFromMemoryTTF((void*)g_RobotoRegular, sizeof(g_RobotoRegular), 22.0f, &fontConfig);
+        io.FontDefault = robotoFont;
+
         setup_render_backend();
 
         return EXIT_SUCCESS;
@@ -79,7 +87,7 @@ private:
 
         colors[ImGuiCol_Text]                   = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
         colors[ImGuiCol_TextDisabled]           = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
-        colors[ImGuiCol_WindowBg]               = ImVec4(0.109f, 0.109f, 0.109f, 1.0f);
+        colors[ImGuiCol_WindowBg]               = ImVec4(0.109f, 0.109f, 0.109f, 0.94f);
         colors[ImGuiCol_ChildBg]                = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
         colors[ImGuiCol_PopupBg]                = ImVec4(0.08f, 0.08f, 0.08f, 0.94f);
         colors[ImGuiCol_Border]                 = ImVec4(0.43f, 0.43f, 0.50f, 0.50f);
