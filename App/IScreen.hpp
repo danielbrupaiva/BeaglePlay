@@ -15,10 +15,15 @@ public:
     {}
     virtual void render(App::UI& app) = 0;
 
-    static void set_position(ImVec2 window_size, ImVec2 control_size, ImVec2 size, ImVec2 offset = {0.5f, 0.5f}, ImVec2 factor = {0.5f, 0.5f})
+    static void set_position(ImVec2 window_size, ImVec2 control_size, ImVec2 size, ImVec2 offset = {0.5f, 0.5f}, ImVec2 factor = {0.0f, 0.0f})
+    {
+        ImGui::SetCursorPos(center_position(window_size, control_size, size, offset, factor));
+    }
+
+    static ImVec2 center_position(ImVec2 window_size, ImVec2 control_size, ImVec2 size, ImVec2 offset = {0.5f, 0.5f}, ImVec2 factor = {0.0f, 0.0f})
     {
         ImVec2 position{(window_size.x - control_size.x) * factor.x + (window_size.x - size.x) * offset.x,
                         (window_size.y - control_size.y) * factor.y + (window_size.y - size.y) * offset.y};
-        ImGui::SetCursorPos(position);
+        return position;
     }
 };
