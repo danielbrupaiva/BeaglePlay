@@ -28,6 +28,8 @@ int main(int argc, char* argv[])
     Global::GL_Textures.insert({"logo", std::make_unique<Image>("./resources/logo.png", Image::Format::None)});
     Global::GL_Textures.insert({"profile", std::make_unique<Image>("./resources/profile.png", Image::Format::None)});
     Global::GL_Textures.insert({"settings", std::make_unique<Image>("./resources/settings.png", Image::Format::None)});
+    Global::GL_Textures.insert({"view_black_password", std::make_unique<Image>("./resources/view_black.png", Image::Format::None)});
+    Global::GL_Textures.insert({"hidden_black_password", std::make_unique<Image>("./resources/hidden_black.png", Image::Format::None)});
     // Setup FSM
     Global::FSM.push_back(std::make_unique<Screen1>("Screen1", spec.window_size, spec.bg_color));
     Global::FSM.push_back(std::make_unique<Screen2>("Screen2", spec.window_size, spec.bg_color));
