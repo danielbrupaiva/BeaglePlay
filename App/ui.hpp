@@ -83,6 +83,23 @@ private:
     static void set_style()
     {
         ImGuiStyle* style = &ImGui::GetStyle();
+        /* Rounding */
+        style->WindowRounding               = 12.0f;
+        style->FrameRounding                =  6.0f;
+        style->ChildRounding                =  6.0f;
+        style->PopupRounding                =  6.0f;
+        style->ScrollbarRounding            = 6.0f;
+        style->GrabRounding                 = 6.0f;
+        /* Scrollbar and Grab*/
+        style->ScrollbarSize                = 20.0f;
+        style->GrabMinSize                  = 20.0f;
+        /* Padding and Spacing*/
+        style->WindowPadding                = ImVec2(8.0f, 8.0f);
+        style->FramePadding                 = ImVec2(8.0f, 8.0f);
+        style->ItemSpacing                  = ImVec2(8.0f, 8.0f);
+        style->ItemInnerSpacing             = ImVec2(8.0f, 8.0f);
+        style->IndentSpacing                = 0.0f;
+
         ImVec4* colors = style->Colors;
 
         colors[ImGuiCol_Text]                   = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
