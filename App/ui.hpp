@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "imgui.h"
+#include "imgui_stdlib.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
@@ -85,9 +86,9 @@ private:
         ImGuiStyle* style = &ImGui::GetStyle();
         /* Rounding */
         style->WindowRounding               = 12.0f;
-        style->FrameRounding                =  6.0f;
-        style->ChildRounding                =  6.0f;
-        style->PopupRounding                =  6.0f;
+        style->FrameRounding                = 6.0f;
+        style->ChildRounding                = 6.0f;
+        style->PopupRounding                = 6.0f;
         style->ScrollbarRounding            = 6.0f;
         style->GrabRounding                 = 6.0f;
         /* Scrollbar and Grab*/
@@ -104,8 +105,8 @@ private:
         colors[ImGuiCol_Text]                   = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
         colors[ImGuiCol_TextDisabled]           = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
         colors[ImGuiCol_WindowBg]               = ImVec4(0.109f, 0.109f, 0.109f, 0.94f);
-        colors[ImGuiCol_ChildBg]                = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
-        colors[ImGuiCol_PopupBg]                = ImVec4(0.08f, 0.08f, 0.08f, 0.94f);
+        colors[ImGuiCol_ChildBg]                = ImVec4(0.109f, 0.109f, 0.109f, 0.94f);
+        colors[ImGuiCol_PopupBg]                = ImVec4(0.109f, 0.109f, 0.109f, 0.94f);
         colors[ImGuiCol_Border]                 = ImVec4(0.43f, 0.43f, 0.50f, 0.50f);
         colors[ImGuiCol_BorderShadow]           = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
         colors[ImGuiCol_FrameBg]                = ImVec4(0.173f, 0.173f, 0.173f, 1.0f);
@@ -124,7 +125,7 @@ private:
         colors[ImGuiCol_SliderGrabActive]       = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
         colors[ImGuiCol_Button]                 = ImVec4(0.173f, 0.173f, 0.173f, 1.0f);
         colors[ImGuiCol_ButtonHovered]          = ImVec4(0.271f, 0.271f, 0.271f, 1.0f);
-        colors[ImGuiCol_ButtonActive]           = ImVec4(0.271f, 0.271f, 0.271f, 1.0f);
+        colors[ImGuiCol_ButtonActive]           = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
         colors[ImGuiCol_Header]                 = ImVec4(0.26f, 0.59f, 0.98f, 0.31f);
         colors[ImGuiCol_HeaderHovered]          = ImVec4(0.26f, 0.59f, 0.98f, 0.80f);
         colors[ImGuiCol_HeaderActive]           = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
