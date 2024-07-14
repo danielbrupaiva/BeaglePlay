@@ -15,9 +15,19 @@ include(options)
 message("${BoldGreen}-- Copy external resources to build folder ${ColourReset}")
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/logo.png
         ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/profile.png
-        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/settings.png
-        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/view_black.png
-        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/hidden_black.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/restricted_person.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/verify_person.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/maintenance_person.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/add_person.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/delete_person.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/view.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/hidden.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/login.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/logout.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/hammer.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/hammer_cristal.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/hammer_red.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/close_reject.png
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/App/resources )
 #---------------------
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/App)
