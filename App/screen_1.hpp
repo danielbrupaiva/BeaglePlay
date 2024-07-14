@@ -31,52 +31,55 @@ public:
         }
         ImGui::PopStyleColor(3);
 
-        static ImVec2 login_panel_size = ImVec2(0,480);
-        ImGui::SetNextWindowSize(login_panel_size);
-
         if (ImGui::BeginPopupModal("LoginWindow", NULL, ImGuiWindowFlags_NoTitleBar
                                                         | ImGuiWindowFlags_NoMove
                                                         | ImGuiWindowFlags_AlwaysAutoResize
                                                         | ImGuiWindowFlags_NoScrollbar))
         {
             {/** User icon **/
-                static ImVec2 size{48.0f, 48.0f};
-                ImGui::SetCursorPos({ (ImGui::GetWindowWidth() - size.x) * 0.5f, ImGui::GetStyle().FramePadding.y * 5});
-                ImGui::Image(Global::GL_Textures["profile"]->ID(), size);
-            }
-            {/** Welcome textview **/
-                static std::string text = Global::system_user.get_name().empty() ? "WELCOME" : Global::system_user.get_name();
-                static ImVec2 size = ImGui::CalcTextSize(text.c_str());
+                static ImVec2 size{96.0f, 96.0f};
                 ImGui::SetCursorPosX((ImGui::GetWindowWidth() - size.x) * 0.5f);
-                ImGui::Text("%s", text.c_str());
+                ImGui::Image( Global::GL_Textures["profile"]->ID(), size);
             }
-            {/** Username textview **/
-                static std::string text = Global::system_user.get_name();
-                ImGui::Text("%s", text.c_str());
+            {/** Close / Exit button **/
+                static ImVec2 size{24.0f, 24.0f};
+                ImGui::SameLine();
+                ImGui::SetCursorPosX((ImGui::GetWindowWidth() - 2 * size.x));
+                if(ImGui::ImageButton( Global::GL_Textures["close_reject"]->ID(), size)) { ImGui::CloseCurrentPopup(); }
             }
             {/** Username InputText field **/
                 ImGui::Text("Username");
-                static std::string username;
-                username.reserve(64);
-                ImGui::InputTextWithHint("##username", "Enter your username", username.data(), username.capacity() + 1,
-                                         ImGuiInputTextFlags_CharsUppercase | ImGuiInputTextFlags_CharsNoBlank);
+                /** Username compobox **/
+                static char* usernames[] = {"ADMIN", "SUPERVISOR", "USER#1", "USER#2", "USER#3"};
+                static int32_t selected_user = -1;
+                static ImGuiComboFlags flags = ImGuiComboFlags_NoArrowButton;
+                ImGui::Combo("##", &selected_user, usernames, IM_ARRAYSIZE(usernames));
             }
             {/** Password InputText field **/
                 ImGui::Text("Password");
                 static std::string password;
-                password.reserve(64);
                 static bool isViewPass = false;
-                ImGui::InputTextWithHint("##password:", "Enter your password", password.data(), password.capacity() + 1,
+                ImGui::InputTextWithHint("##password:", "Enter your password", &password,
                                          isViewPass ? ImGuiInputTextFlags_None : ImGuiInputTextFlags_CharsUppercase | ImGuiInputTextFlags_Password);
                 ImGui::SameLine();
-                if(ImGui::ImageButton( isViewPass ? Global::GL_Textures["hidden_black_password"]->ID() : Global::GL_Textures["view_black_password"]->ID(), {24.0f, 24.0f})) { isViewPass = !isViewPass; }
+                if(ImGui::ImageButton( isViewPass ? Global::GL_Textures["hidden_password"]->ID() : Global::GL_Textures["view_password"]->ID(), {24.0f, 24.0f})) { isViewPass = !isViewPass; }
 
             }
-            {/** Login | Logout button **/
-                if(ImGui::Button(Global::system_user.get_is_logged() ? "LOGOUT" : "LOGIN", {-1.0f, 0}))
+            {/** Users states **/
+                static ImVec2 size{60.0f, 60.0f};
+                if(ImGui::ImageButton( Global::GL_Textures["maintenance_person"]->ID() , size)) { }
+                ImGui::SameLine();
+                if(ImGui::ImageButton( Global::GL_Textures["restricted_person"]->ID() , size)) { }
+                ImGui::SameLine();
+                if(ImGui::ImageButton( Global::GL_Textures["add_person"]->ID() , size)) { }
+                ImGui::SameLine();
+                if(ImGui::ImageButton( Global::GL_Textures["delete_person"]->ID() , size)) { }
+                ImGui::SameLine();
+                static bool user_is_logger = Global::system_user.get_is_logged();
+                if(ImGui::ImageButton( user_is_logger ? Global::GL_Textures["logout"]->ID() : Global::GL_Textures["login"]->ID(), size))
                 {
-                    Global::system_user.set_is_logged(true);
-                    ImGui::CloseCurrentPopup();
+                    user_is_logger = !user_is_logger;
+                    Global::system_user.set_is_logged(user_is_logger);
                 }
             }
 
