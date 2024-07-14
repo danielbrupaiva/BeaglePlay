@@ -25,11 +25,27 @@ int main(int argc, char* argv[])
     // UI instantiated
     static App::UI app{spec, App::eBackend::OPENGLES, "ES 3.0"};
     // Load GL textures resources
+    //https://www.flaticon.com/br/packs/functional-ui
     Global::GL_Textures.insert({"logo", std::make_unique<Image>("./resources/logo.png", Image::Format::None)});
+
     Global::GL_Textures.insert({"profile", std::make_unique<Image>("./resources/profile.png", Image::Format::None)});
-    Global::GL_Textures.insert({"settings", std::make_unique<Image>("./resources/settings.png", Image::Format::None)});
-    Global::GL_Textures.insert({"view_black_password", std::make_unique<Image>("./resources/view_black.png", Image::Format::None)});
-    Global::GL_Textures.insert({"hidden_black_password", std::make_unique<Image>("./resources/hidden_black.png", Image::Format::None)});
+    Global::GL_Textures.insert({"maintenance_person", std::make_unique<Image>("./resources/maintenance_person.png", Image::Format::None)});
+    Global::GL_Textures.insert({"restricted_person", std::make_unique<Image>("./resources/restricted_person.png", Image::Format::None)});
+    Global::GL_Textures.insert({"verify_person", std::make_unique<Image>("./resources/verify_person.png", Image::Format::None)});
+    Global::GL_Textures.insert({"add_person", std::make_unique<Image>("./resources/add_person.png", Image::Format::None)});
+    Global::GL_Textures.insert({"delete_person", std::make_unique<Image>("./resources/delete_person.png", Image::Format::None)});
+
+    Global::GL_Textures.insert({"view_password", std::make_unique<Image>("./resources/view.png", Image::Format::None)});
+    Global::GL_Textures.insert({"hidden_password", std::make_unique<Image>("./resources/hidden.png", Image::Format::None)});
+
+    Global::GL_Textures.insert({"login", std::make_unique<Image>("./resources/login.png", Image::Format::None)});
+    Global::GL_Textures.insert({"logout", std::make_unique<Image>("./resources/logout.png", Image::Format::None)});
+
+    Global::GL_Textures.insert({"hammer", std::make_unique<Image>("./resources/hammer.png", Image::Format::None)});
+    Global::GL_Textures.insert({"hammer_cristal", std::make_unique<Image>("./resources/hammer_cristal.png", Image::Format::None)});
+    Global::GL_Textures.insert({"hammer_red", std::make_unique<Image>("./resources/hammer_red.png", Image::Format::None)});
+
+    Global::GL_Textures.insert({"close_reject", std::make_unique<Image>("./resources/close_reject.png", Image::Format::None)});
     // Setup FSM
     Global::FSM.push_back(std::make_unique<Screen1>("Screen1", spec.window_size, spec.bg_color));
     Global::FSM.push_back(std::make_unique<Screen2>("Screen2", spec.window_size, spec.bg_color));
