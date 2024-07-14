@@ -46,6 +46,9 @@ int main(int argc, char* argv[])
     Global::GL_Textures.insert({"hammer_red", std::make_unique<Image>("./resources/hammer_red.png", Image::Format::None)});
 
     Global::GL_Textures.insert({"close_reject", std::make_unique<Image>("./resources/close_reject.png", Image::Format::None)});
+
+    Global::GL_Textures.insert({"warning", std::make_unique<Image>("./resources/warning.png", Image::Format::None)});
+    Global::GL_Textures.insert({"danger", std::make_unique<Image>("./resources/danger.png", Image::Format::None)});
     // Setup FSM
     Global::FSM.push_back(std::make_unique<Screen1>("Screen1", spec.window_size, spec.bg_color));
     Global::FSM.push_back(std::make_unique<Screen2>("Screen2", spec.window_size, spec.bg_color));

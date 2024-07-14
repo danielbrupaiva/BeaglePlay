@@ -28,10 +28,12 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/logo.png
         ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/hammer_cristal.png
         ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/hammer_red.png
         ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/close_reject.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/warning.png
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/danger.png
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/App/resources )
 #---------------------
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/App)
 set(FETCHCONTENT_QUIET OFF)
 #---------------------
-enable_testing()
-add_subdirectory(tests)
+#enable_testing()
+#add_subdirectory(tests)

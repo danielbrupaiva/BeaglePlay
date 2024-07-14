@@ -14,6 +14,16 @@ public:
     {
         m_control_size = ImGui::GetContentRegionAvail();
 
+        static ImVec2 size{60.0f, 60.0f};
+//        ImVec2 buttonPosition(m_control_size.x - size.x - ImGui::GetStyle().WindowPadding.x,
+//                              m_control_size.y - size.y - ImGui::GetStyle().WindowPadding.y);
+//        ImGui::SetCursorPos(buttonPosition);
+        if(ImGui::ImageButton(Global::GL_Textures["danger"]->ID() , size)){}
+        ImGui::SameLine();
+        if(ImGui::ImageButton(Global::GL_Textures["warning"]->ID() , size)){}
+        ImGui::SameLine();
+        if(ImGui::ImageButton(Global::GL_Textures["hammer_red"]->ID() , size)){}
+
         ImGui::PushStyleColor(ImGuiCol_Button,          ImVec4(0.173f, 0.173f, 0.173f, 0.0f));
         ImGui::PushStyleColor(ImGuiCol_ButtonHovered,   ImVec4(0.271f, 0.271f, 0.271f, 0.0f));
         ImGui::PushStyleColor(ImGuiCol_ButtonActive,    ImVec4(0.271f, 0.271f, 0.271f, 0.0f));
@@ -91,6 +101,5 @@ public:
                                 (ImGui::GetContentRegionAvail().y - img_size.y) * 0.0f};
         ImGui::SetCursorPos(position);
         ImGui::Image(Global::GL_Textures["logo"]->ID(), img_size);
-
     }
 };
