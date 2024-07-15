@@ -1,10 +1,23 @@
 #pragma once
 
 #include <iostream>
+#include <algorithm>
+#include <vector>
+
 #include "ui.hpp"
 #include "IScreen.hpp"
 
 class Screen2 : public IScreen{
+
+    std::vector<Button> buttons = {
+        {1, "BUTTON#1", false, &button_1_callback},
+        {2, "BUTTON#2", false, &button_2_callback},
+        {3, "BUTTON#3", false, &button_3_callback},
+        {4, "BUTTON#4", false, &button_4_callback},
+        {5, "BUTTON#5", false, &button_5_callback},
+        {6, "BUTTON#6", false, &button_6_callback}
+    };
+
 public:
     Screen2(std::string_view name, const ImVec2 &window_size, const ImVec4 &bg_color)
         : IScreen{name, window_size, bg_color}
@@ -13,9 +26,8 @@ public:
     void render(App::UI& app) override
     {
         {/**Operation buttons **/
-            static const uint8_t number_of_buttons = 6;
-
-            static ImVec2 size{ (ImGui::GetWindowWidth() - 2 * ImGui::GetStyle().FramePadding.x - (number_of_buttons - 1 ) * ImGui::GetStyle().ItemSpacing.x ) / (float) number_of_buttons,
+            static const uint32_t NUM_BUTTONS = 6;
+            static ImVec2 size{ (ImGui::GetWindowWidth() - 2 * ImGui::GetStyle().FramePadding.x - (NUM_BUTTONS - 1 ) * ImGui::GetStyle().ItemSpacing.x ) / (float) NUM_BUTTONS,
                                 ImGui::GetWindowHeight() * 0.12f};
 
             ImGui::SetCursorPosY(ImGui::GetWindowHeight() - size.y - ImGui::GetStyle().FramePadding.y);
