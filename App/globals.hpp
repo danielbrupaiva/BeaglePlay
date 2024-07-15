@@ -22,8 +22,11 @@ static Core::Logger logger{"App", spdlog::level::debug};
 struct Button{
     uint32_t id;
     std::string label;
-    bool state;
-    std::function<void()> callback;
+    bool state = false;
+    std::function<void()> callback = nullptr;
+    ImVec2 size{0,0};
+    ImVec2 position{0,0};
+    Image* image = nullptr;
 };
 
 namespace Global {
