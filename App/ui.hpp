@@ -125,7 +125,7 @@ private:
         colors[ImGuiCol_SliderGrabActive]       = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
         colors[ImGuiCol_Button]                 = ImVec4(0.173f, 0.173f, 0.173f, 1.0f);
         colors[ImGuiCol_ButtonHovered]          = ImVec4(0.271f, 0.271f, 0.271f, 1.0f);
-        colors[ImGuiCol_ButtonActive]           = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
+        colors[ImGuiCol_ButtonActive]           = ImVec4(0.173f, 0.173f, 0.173f, 1.0f);
         colors[ImGuiCol_Header]                 = ImVec4(0.26f, 0.59f, 0.98f, 0.31f);
         colors[ImGuiCol_HeaderHovered]          = ImVec4(0.26f, 0.59f, 0.98f, 0.80f);
         colors[ImGuiCol_HeaderActive]           = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);

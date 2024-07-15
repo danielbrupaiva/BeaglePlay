@@ -34,9 +34,9 @@ public:
         }
 
         {
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.173f, 0.173f, 0.173f, 0.0f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.271f, 0.271f, 0.271f, 0.0f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.271f, 0.271f, 0.271f, 0.0f));
+            ImGui::PushStyleColor(ImGuiCol_Button,          ImVec4(0.173f, 0.173f, 0.173f, 0.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered,   ImVec4(0.271f, 0.271f, 0.271f, 0.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive,    ImVec4(0.173f, 0.173f, 0.173f, 0.0f));
 
             static ImVec2 size{Global::GL_Textures["logo"]->resize(m_window_size)};
             static ImVec2 position {(ImGui::GetContentRegionAvail().x - size.x) * 0.5f,
