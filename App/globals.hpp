@@ -8,7 +8,23 @@
 #include "ui.hpp"
 #include "IScreen.hpp"
 
+// Macro for maximum of two values
+#define MAX(x, y) ((x) > (y) ? (x) : (y))
+// Macro for minimum of two values
+#define MIN(x, y) ((x) < (y) ? (x) : (y))
+// Macro for average of two values
+#define AVG(x, y) (((x) + (y)) / 2)
+
+#define TOGGLE(var) (var = ! var)
+
 static Core::Logger logger{"App", spdlog::level::debug};
+
+struct button{
+    uint32_t id;
+    std::string label;
+    bool state;
+    std::function<void()> callback;
+};
 
 namespace Global {
 //GLOBAL VARIABLES
@@ -17,7 +33,7 @@ static Core::User system_user;
 static std::map< std::string, std::unique_ptr<Image> > GL_Textures;
 //FSM definition
 enum class eSystemState { SCREEN1, SCREEN2, SCREEN3, SCREEN4, SCREEN5 };
-static eSystemState current_state = eSystemState::SCREEN1;
+static eSystemState current_state = eSystemState::SCREEN2;
 static std::vector<std::unique_ptr<IScreen>> FSM;
 
 };//namespace Global
