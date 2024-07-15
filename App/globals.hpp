@@ -19,7 +19,7 @@
 
 static Core::Logger logger{"App", spdlog::level::debug};
 
-struct button{
+struct Button{
     uint32_t id;
     std::string label;
     bool state;
