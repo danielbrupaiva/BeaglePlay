@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <fmt/format.h>
 
 #include "ui.hpp"
 #include "IScreen.hpp"
@@ -26,6 +27,29 @@ public:
 
     void render(App::UI& app) override
     {
+        m_control_size = ImGui::GetContentRegionAvail();
+        static float value = 0.0f;
+        ImGui::VSliderFloat("##", ImVec2(50,500), &value, 0.0f, 1000.0f, "%.0f", ImGuiSliderFlags_AlwaysClamp);
+
+        {/**Circular Gauge**/
+            float radius = 220.0f;
+            float thickness = 36.0f;
+            const float MAX_VALUE = 1000.0f;
+            const uint32_t NUM_SEGMENT = 100;
+            ImVec2 position{ m_window_size.x *1/4 , m_window_size.y/2};
+            ImVec4 gauge_color(0.0f, 0.8f, 0.0f, 1.0f);
+            float start_angle = IM_PI * 0.5f;
+            float final_angle = start_angle + 1.5f * IM_PI;
+            drawCircularGauge(position, radius, thickness, value, MAX_VALUE, start_angle, final_angle, NUM_SEGMENT, gauge_color);
+
+            ImVec2 position2{ m_window_size.x *3/4 , m_window_size.y/2};
+            float start_angle2 = IM_PI * 0.5f;
+            float final_angle2 = start_angle + 1.5f * IM_PI;
+            invDrawCircularGauge(position2, radius, thickness, value, MAX_VALUE, final_angle2, start_angle2, NUM_SEGMENT, gauge_color);
+
+
+        }
+
         {/**Operation buttons **/
             static ImVec2 size{ (ImGui::GetWindowWidth() - 2 * ImGui::GetStyle().FramePadding.x - (float)(buttons.size() - 1) * ImGui::GetStyle().ItemSpacing.x ) / (float)buttons.size(),
                                 ImGui::GetWindowHeight() * 0.12f};
