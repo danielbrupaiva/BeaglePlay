@@ -95,10 +95,10 @@ private:
         style->ScrollbarSize                = 20.0f;
         style->GrabMinSize                  = 20.0f;
         /* Padding and Spacing*/
-        style->WindowPadding                = ImVec2(8.0f, 8.0f);
-        style->FramePadding                 = ImVec2(8.0f, 8.0f);
-        style->ItemSpacing                  = ImVec2(8.0f, 8.0f);
-        style->ItemInnerSpacing             = ImVec2(8.0f, 8.0f);
+        style->WindowPadding                = ImVec2(4.0f, 4.0f);
+        style->FramePadding                 = ImVec2(4.0f, 4.0f);
+        style->ItemSpacing                  = ImVec2(4.0f, 4.0f);
+        style->ItemInnerSpacing             = ImVec2(4.0f, 4.0f);
         style->IndentSpacing                = 0.0f;
 
         ImVec4* colors = style->Colors;
