@@ -40,8 +40,8 @@ public:
                 {   // Calculate position for the line and text
                     ImVec2 pos = ImGui::GetItemRectMin();
                     static float lineThickness = 8.0f;
-                    ImVec2 lineStart = ImVec2(pos.x + ImGui::GetStyle().FramePadding.x, pos.y + ImGui::GetStyle().FramePadding.y);
-                    ImVec2 lineEnd = ImVec2(pos.x + size.x - ImGui::GetStyle().FramePadding.x, pos.y + ImGui::GetStyle().FramePadding.y);
+                    ImVec2 lineStart = ImVec2(pos.x + 2 * ImGui::GetStyle().FramePadding.x, pos.y + 2 * ImGui::GetStyle().FramePadding.y);
+                    ImVec2 lineEnd = ImVec2(pos.x + size.x - 2 * ImGui::GetStyle().FramePadding.x, pos.y + 2 * ImGui::GetStyle().FramePadding.y);
                     ImGui::GetWindowDrawList()->AddLine(lineStart, lineEnd, IM_COL32(0, 204, 0, 255), lineThickness);
                 }
                 if(button.id != buttons.end()->id){
