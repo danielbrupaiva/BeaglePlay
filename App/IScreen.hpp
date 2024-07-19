@@ -5,6 +5,15 @@
 
 class IScreen{
 protected:
+    struct Button{
+        uint32_t id;
+        std::string label;
+        bool state = false;
+        std::function<void()> callback = nullptr;
+        ImVec2 size{0,0};
+        ImVec2 position{0,0};
+        Image* image = nullptr;
+    };
     ImVec2 m_window_size;
     ImVec4 m_bg_color;
     std::string m_name;
