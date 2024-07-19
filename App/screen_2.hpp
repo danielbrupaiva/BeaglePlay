@@ -14,12 +14,13 @@ public:
         : IScreen{name, window_size, bg_color}
     {
         buttons = {
-            {1, "BUTTON#1", false, &button_1_callback, {204, 86.4000015}},
-            {2, "BUTTON#2", false, &button_2_callback, {204, 86.4000015}},
-            {3, "BUTTON#3", false, &button_3_callback, {204, 86.4000015}},
-            {4, "BUTTON#4", false, &button_4_callback, {204, 86.4000015}},
-            {5, "BUTTON#5", false, &button_5_callback, {204, 86.4000015}},
-            {6, "BUTTON#6", false, &button_6_callback, {204, 86.4000015}}
+            /**Operation buttons **/
+            {1, "BUTTON#1", false, &button_1_callback},
+            {2, "BUTTON#2", false, &button_2_callback},
+            {3, "BUTTON#3", false, &button_3_callback},
+            {4, "BUTTON#4", false, &button_4_callback},
+            {5, "BUTTON#5", false, &button_5_callback},
+            {6, "BUTTON#6", false, &button_6_callback}
         };
     }
 
