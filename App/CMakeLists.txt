@@ -5,6 +5,7 @@ if(CMAKE_BINARY_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
 endif()
 #---------------------
 set(PROJECT_NAME App)
+set(CMAKE_CXX_STANDARD 20)
 project(${PROJECT_NAME} C CXX)
 message("${BoldGreen}-- ${PROJECT_NAME} BUILD ${ColourReset}")
 #---------------------
