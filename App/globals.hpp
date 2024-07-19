@@ -19,16 +19,6 @@
 
 static Core::Logger logger{"App", spdlog::level::debug};
 
-struct Button{
-    uint32_t id;
-    std::string label;
-    bool state = false;
-    std::function<void()> callback = nullptr;
-    ImVec2 size{0,0};
-    ImVec2 position{0,0};
-    Image* image = nullptr;
-};
-
 namespace Global {
 //GLOBAL VARIABLES
 static std::shared_ptr<Core::Database> db = Core::Database::create("localhost", "5432", "imgui", "1234", "project");
