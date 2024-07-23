@@ -73,30 +73,38 @@
 
 ### PQXX (NOTE install postgres first)
 
-        $ git clone -b 7.8.1 https://github.com/jtv/libpqxx.git
-        $ cd libpqxx
-        $ sudo su
-        $ cmake -S . -B build -DCMAKE_CXX_STANDARD=20 -DBUILD_DOC=OFF -DBUILD_TEST=OFF -DSKIP_BUILD_TEST=ON
-        $ cmake --build build
-        $ sudo cmake --install build
+    $ git clone -b 7.8.1 https://github.com/jtv/libpqxx.git
+    $ cd libpqxx
+    $ sudo su
+    $ cmake -S . -B build -DCMAKE_CXX_STANDARD=20 -DBUILD_DOC=OFF -DBUILD_TEST=OFF -DSKIP_BUILD_TEST=ON
+    $ cmake --build build
+    $ sudo cmake --install build
 
 ### SPDLOG
 
-        $ git clone -b v1.13.0 https://github.com/gabime/spdlog.git
-        $ cd spdlog
-        $ sudo su
-        $ cmake -S . -B build
-        $ cmake --build build
-        $ sudo cmake --install build
+    $ git clone -b v1.13.0 https://github.com/gabime/spdlog.git
+    $ cd spdlog
+    $ sudo su
+    $ cmake -S . -B build
+    $ cmake --build build
+    $ sudo cmake --install build
 
 ### CATCH2
 
-        $ git clone -b v3.4.0 https://github.com/catchorg/Catch2.git
-        $ cd Catch2
-        $ sudo su
-        $ cmake -S . -B build
-        $ cmake --build build
-        $ sudo cmake --install build
+    $ git clone -b v3.4.0 https://github.com/catchorg/Catch2.git
+    $ cd Catch2
+    $ sudo su
+    $ cmake -S . -B build
+    $ cmake --build build
+    $ sudo cmake --install build
+
+### LIBMODBUS
+  
+    $ git clone -b v3.1.10 --recursive https://github.com/stephane/libmodbus.git
+    $ cd libmodbus
+    $ sudo ./autogen.sh
+    $ sudo ./configure 
+    $ sudo make install    
 
 ### QT dependencies (future usage)
 
