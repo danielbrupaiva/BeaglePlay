@@ -18,7 +18,7 @@ set(CMAKE_CXX_COMPILER_WORKS ON)
 set(CMAKE_CXX_COMPILER /usr/bin/aarch64-linux-gnu-g++)
 message("${BoldGreen}-- CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER} ${ColourReset}")
 # define C/CXX flags
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${TARGET_SYSROOT}/usr/include -I${TARGET_SYSROOT}/usr/lib -I${TARGET_SYSROOT}/usr/lib/${TARGET_ARCHITECTURE}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${TARGET_SYSROOT}/usr/include -I${TARGET_SYSROOT}/usr/local/include -I${TARGET_SYSROOT}/usr/lib -I${TARGET_SYSROOT}/usr/lib/${TARGET_ARCHITECTURE}")
 message("${BoldGreen}-- CMAKE_C_FLAGS: ${CMAKE_C_FLAGS} ${ColourReset}")
 set(CMAKE_CXX_FLAGS ${CMAKE_C_FLAGS})
 message("${BoldGreen}-- CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS} ${ColourReset}")
