@@ -29,14 +29,26 @@ public:
     {
         m_control_size = ImGui::GetContentRegionAvail();
         ImGui::Begin("Slide");
-        ImVec2 size{50,500};
+        ImVec2 size{50, 500};
         static float value = 0.0f;
         static float meters = 0.0f;
         ImGui::VSliderFloat("##value", size, &value, 0.0f, 1000.0f, "%.0f", ImGuiSliderFlags_AlwaysClamp);
         ImGui::SameLine();
-        ImGui::VSliderFloat("##meter", size, &meters, 0.0f, 10000.0f, "%.0f", ImGuiSliderFlags_AlwaysClamp);
+        ImGui::VSliderFloat("##meter", size, &meters, 0.0f, 1000.0f, "%.0f", ImGuiSliderFlags_AlwaysClamp);
         ImGui::End();
 
+//        {
+//            ImVec2 size{480, 200};
+//            ImVec2 position{ (m_window_size.x - size.x) * 0.5f, (m_window_size.y/2 + 45.0f)};
+//            ImGui::SetNextWindowPos(position);
+//            ImGui::SetNextWindowSize(size, ImGuiCond_Always);
+//            ImGui::BeginChild("##", size, true);
+//            uint32_t target_count = 10;
+//            uint32_t real_count = 10;
+//            ImGui::Text("TARGET:%d", target_count);
+//            ImGui::Text("REAL:  %d", real_count);
+//            ImGui::EndChild();
+//        }
         {/**Circular Gauge**/
             float radius = 220.0f;
             float thickness = 36.0f;
@@ -44,13 +56,13 @@ public:
             ImVec2 position{ m_window_size.x *1/4 , m_window_size.y/2};
             float start_angle = IM_PI * 0.5f;
             float final_angle = start_angle + 1.5f * IM_PI;
-            ImVec4 gauge_color{0.0f, 0.8f, 0.0f, 1.0f};
+            ImVec4 gauge_color{0.996f, 0.804f, 0.102f, 1.0f}; //fecd1a
             DrawCircularGauge("Speed", "m/min", position, radius, thickness, value, MAX_VALUE, start_angle, final_angle, 100, gauge_color);
         }
         {
             float radius = 220.0f;
             float thickness = 36.0f;
-            const float MAX_VALUE = 10000.0f;
+            const float MAX_VALUE = 1000.0f;
             ImVec2 position2{ m_window_size.x *3/4 , m_window_size.y/2};
             float start_angle2 = 0.5f * IM_PI;
             float final_angle2 = start_angle2 - 1.5f * IM_PI;

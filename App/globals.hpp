@@ -27,5 +27,6 @@ static std::map< std::string, std::unique_ptr<Image> > GL_Textures;
 enum class eSystemState { SCREEN1, SCREEN2, SCREEN3, SCREEN4, SCREEN5 };
 static eSystemState current_state = eSystemState::SCREEN2;
 static std::vector<std::unique_ptr<IScreen>> FSM;
-
+//PLC Modbus
+static Modbus plc{"127.0.0.1", 1502};
 };//namespace Global

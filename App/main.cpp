@@ -73,8 +73,6 @@ void debug_screen(App::UI& app)
     if(show_demo_window)
         ImGui::ShowDemoWindow(&show_demo_window);
 
-//    ImGui::Image(Global::GL_Textures["logo"]->ID(), ImVec2(1089, 720));
-
     ImGui::Begin("Debug");
     {
         if(ImGui::Button("IMGUI"))
