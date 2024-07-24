@@ -105,4 +105,45 @@ void debug_screen(App::UI& app)
         }
 
     }ImGui::End();
+
+    ImGui::Begin("MODBUS");
+    {
+        static std::vector<uint8_t > coils { false, false, false, false, false, false, false, false };
+        static std::vector<uint16_t> registers { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+        if(ImGui::Button("RESET"))
+        {
+            coils.assign({ false, false, false, false, false, false, false, false });
+            Global::plc.write_bits(0, (int) coils.size(), coils.data());
+            registers.assign({ 0, 0, 0, 0, 0, 0, 0, 0 });
+            Global::plc.write_registers(0, (int) registers.size(), registers.data());
+        }
+
+        if(ImGui::Button("WRITE COILS"))
+        {
+            static uint8_t index = 0;
+
+            logger.debug("coil[" + std::to_string(index) + "]: " + std::to_string(coils[index]));
+            coils[index] = TOGGLE(coils[index]);
+
+            Global::plc.write_bits(0, (int) coils.size(), coils.data());
+
+            index++;
+            if(index == coils.size()) { index = 0; }
+        }
+
+        if(ImGui::Button("REGISTERS"))
+        {
+            static uint8_t index = 0;
+
+            logger.debug("register[" + std::to_string(index) + "]: " + std::to_string(registers[index]));
+            registers[index]++;
+
+            Global::plc.write_registers(0, (int) registers.size(), registers.data());
+
+            index++;
+            if(index == coils.size()) { index = 0; }
+        }
+
+    }ImGui::End();
 }
