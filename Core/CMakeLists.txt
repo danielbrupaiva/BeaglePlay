@@ -12,6 +12,7 @@ set(SOURCES
         database.hpp database.cpp
         user.hpp
         logger.hpp
+        modbus.hpp
 )
 #---------------------
 add_library(${PROJECT_NAME} STATIC )

@@ -3,6 +3,7 @@
 #include "logger.hpp"
 #include "user.hpp"
 #include "database.hpp"
+#include "modbus.hpp"
 #include "image.hpp"
 
 #include "ui.hpp"
@@ -16,8 +17,6 @@
 #define AVG(x, y) (((x) + (y)) / 2)
 
 #define TOGGLE(var) (var = ! var)
-
-static Core::Logger logger{"App", spdlog::level::debug};
 
 namespace Global {
 //GLOBAL VARIABLES

@@ -72,3 +72,5 @@ namespace Core {
         inline void set_filename(std::string_view _filename) { m_filename = _filename; };
     };
 };//Core namespace
+
+static Core::Logger logger{"App", spdlog::level::debug};
