@@ -26,15 +26,15 @@ public:
             modbus_free(m_context);
         }
         m_is_server_connected = false;
-        logger.debug("Modbus connection closed");
+        logger.debug(TAG, "Modbus connection closed");
     }
     explicit Modbus( const std::string_view ip, const int32_t port )
         : m_server_ip{ip}, m_server_port{port}
     {
-        logger.debug("Modbus constructed");
+        logger.debug(TAG, "Modbus constructed");
 
         m_context = modbus_new_tcp(m_server_ip.c_str(), m_server_port);
-        logger.debug("Modbus context created");
+        logger.debug(TAG, "Modbus context created");
 
         if( modbus_connect(m_context) == -1 )
         {
@@ -42,7 +42,7 @@ public:
             logger.error(TAG, msg);
             throw std::runtime_error(TAG + ": " + msg);
         }
-        logger.debug("Modbus connection established with server: " + m_server_ip + ":" + std::to_string(m_server_port));
+        logger.debug(TAG, "Modbus connection established with server: " + m_server_ip + ":" + std::to_string(m_server_port));
         m_is_server_connected = true;
     }
 
