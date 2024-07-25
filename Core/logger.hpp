@@ -73,4 +73,4 @@ namespace Core {
     };
 };//Core namespace
 
-static Core::Logger logger{"App", spdlog::level::debug};
+inline Core::Logger logger{"App", spdlog::level::debug};
