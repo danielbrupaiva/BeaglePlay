@@ -8,11 +8,12 @@ class User
 public:
     enum class eSecurity_level{ADMIN,SUPERVISOR,USER};
 private:
-    uint32_t m_id;
-    std::string m_name;
-    std::string m_password;
-    eSecurity_level m_security_level;
-    bool m_is_logged;
+    const std::string       TAG                     = "USER";
+    uint32_t                m_id                    = 0;
+    std::string             m_name                  = {};
+    std::string             m_password              = {};
+    eSecurity_level         m_security_level        = eSecurity_level::USER;
+    bool                    m_is_logged             = false;
 public:
     explicit User(){};
     explicit User(const uint32_t _id,
@@ -21,8 +22,12 @@ public:
                   const eSecurity_level _security_level = eSecurity_level::USER,
                   const bool _is_logged = false)
         : m_id{_id}, m_name{_name}, m_password{_password}, m_security_level{_security_level}, m_is_logged{_is_logged}
-    {};
-    ~User(){};
+    {
+        logger.debug(TAG, "User id:" + std::to_string(m_id) + " name: " + m_name + " constructed");
+    };
+    ~User(){
+        logger.debug(TAG, "User id:" + std::to_string(m_id) + " name: " + m_name + " destroyed");
+    };
 
     void set_user(const int _id,
                   const std::string& _name,
