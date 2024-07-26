@@ -9,6 +9,7 @@ project(${PROJECT_NAME} C CXX)
 message("${BoldGreen}-- ${PROJECT_NAME} BUILD ${ColourReset}")
 #---------------------
 set(SOURCES
+        utils.hpp
         database.hpp database.cpp
         user.hpp
         logger.hpp
