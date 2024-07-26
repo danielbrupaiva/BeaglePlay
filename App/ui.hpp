@@ -52,7 +52,6 @@ private:
         if(!m_api)
         {
             throw std::runtime_error("No API avaiable! Could not initialize IMGUI");;
-            return EXIT_FAILURE;
         }
 
         IMGUI_CHECKVERSION();
