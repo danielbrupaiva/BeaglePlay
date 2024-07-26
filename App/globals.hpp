@@ -20,14 +20,32 @@ static eSystemState current_state = eSystemState::SCREEN2;
 static std::vector<std::unique_ptr<IScreen>> FSM;
 //PLC Modbus
 static std::map<std::string, PLC::Modbus::Data> variable_list = {
-    {"var0", {PLC::Modbus::DataType::COIL, 0, false}},
-    {"var1", {PLC::Modbus::DataType::COIL, 1, false}},
-    {"var2", {PLC::Modbus::DataType::COIL, 2, false}},
-    {"var3", {PLC::Modbus::DataType::COIL, 3, false}},
-    {"var4", {PLC::Modbus::DataType::HOLDING_REGISTER, 0, 0}},
-    {"var5", {PLC::Modbus::DataType::HOLDING_REGISTER, 1, 0}},
-    {"var6", {PLC::Modbus::DataType::HOLDING_REGISTER, 2, 0}},
-    {"var7", {PLC::Modbus::DataType::HOLDING_REGISTER, 3, 0}},
+    {"bit0", {PLC::Modbus::Data::Type::COIL, 0U, false}},
+    {"bit1", {PLC::Modbus::Data::Type::COIL, 1U, false}},
+    {"bit2", {PLC::Modbus::Data::Type::COIL, 2U, false}},
+    {"bit3", {PLC::Modbus::Data::Type::COIL, 3U, false}},
+    {"bit4", {PLC::Modbus::Data::Type::COIL, 4U, false}},
+    {"bit5", {PLC::Modbus::Data::Type::COIL, 5U, false}},
+    {"bit6", {PLC::Modbus::Data::Type::COIL, 6U, false}},
+    {"bit7", {PLC::Modbus::Data::Type::COIL, 7U, false}},
+    {"reg0", {PLC::Modbus::Data::Type::HOLDING_REGISTER, 0U, 0}},
+    {"reg1", {PLC::Modbus::Data::Type::HOLDING_REGISTER, 1U, 0}},
+    {"reg2", {PLC::Modbus::Data::Type::HOLDING_REGISTER, 2U, 0}},
+    {"reg3", {PLC::Modbus::Data::Type::HOLDING_REGISTER, 3U, 0}},
+    {"reg4", {PLC::Modbus::Data::Type::HOLDING_REGISTER, 4U, 0}},
+    {"reg5", {PLC::Modbus::Data::Type::HOLDING_REGISTER, 5U, 0}},
+    {"reg6", {PLC::Modbus::Data::Type::HOLDING_REGISTER, 6U, 0}},
+    {"reg7", {PLC::Modbus::Data::Type::HOLDING_REGISTER, 7U, 0}},
+};
+static std::vector<PLC::Modbus::Data> variables = {
+    {PLC::Modbus::Data::Type::COIL, 0U, false},
+    {PLC::Modbus::Data::Type::COIL, 1U, false},
+    {PLC::Modbus::Data::Type::COIL, 2U, false},
+    {PLC::Modbus::Data::Type::COIL, 3U, false},
+    {PLC::Modbus::Data::Type::HOLDING_REGISTER, 0U, 0U},
+    {PLC::Modbus::Data::Type::HOLDING_REGISTER, 1U, 0U},
+    {PLC::Modbus::Data::Type::HOLDING_REGISTER, 2U, 0U},
+    {PLC::Modbus::Data::Type::HOLDING_REGISTER, 3U, 0U}
 };
 static PLC::Modbus plc{"TM241", "127.0.0.1", 1502, variable_list};
 };//namespace Global
