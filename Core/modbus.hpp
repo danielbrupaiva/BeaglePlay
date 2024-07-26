@@ -46,7 +46,7 @@ private:
     modbus_t *                      m_context               = nullptr;
     std::string                     m_server_ip             = "127.0.0.1";
     int32_t                         m_server_port           = 502;
-    uint8_t                         m_is_connected   = false;
+    uint8_t                         m_is_connected          = false;
     std::map<std::string, Data>     m_variables             = {};
 
 public:
@@ -91,7 +91,19 @@ public:
         if( context_type == ContextType::TCP )
         {
             m_context = modbus_new_tcp(ip.c_str(), port);
+            if(m_context == nullptr)
+            {
+                std::string msg = "Fail to create modbus context";
+                logger.error(m_TAG, msg);
+                throw std::runtime_error(m_TAG + ": " + msg);
+            }
             logger.debug(m_TAG, "Modbus context created");
+        }
+        else
+        {
+            std::string msg = "Unsupported context type";
+            logger.error(m_TAG, msg);
+            throw std::invalid_argument(m_TAG + ": " + msg);
         }
     }
 
@@ -104,7 +116,8 @@ public:
         {
             std::string msg = "Fail to connect to server";
             logger.error(m_TAG, msg);
-            throw std::runtime_error(m_TAG + ": " + msg);
+            logger.error(m_TAG, modbus_strerror(errno));
+            throw std::runtime_error(modbus_strerror(errno));
         }
         m_is_connected = true;
         logger.debug(m_TAG, "Modbus connection established with server: " + ip + ":" + std::to_string(port));
