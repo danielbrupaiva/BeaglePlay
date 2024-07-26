@@ -34,12 +34,11 @@ class Modbus
 {
 public:
     enum class ContextType { TCP };
-    enum class DataType { COIL, DISCRETE_INPUT, INPUT_REGISTER, HOLDING_REGISTER };
-
     struct Data{
-        DataType data_type;
-        uint16_t address;
-        uint16_t value;
+        enum class Type { COIL, DISCRETE_INPUT, INPUT_REGISTER, HOLDING_REGISTER };
+        Type        type;
+        uint16_t    address;
+        uint16_t    value;
     };
 private:
     const std::string               m_TAG                   = "PLC";
@@ -134,6 +133,69 @@ public:
         logger.debug(m_TAG, "Modbus connection closed");
     }
 
+    int32_t read_plc_variables( std::vector<Data>& data )
+    {
+        int32_t rc = -1;
+        if(m_context == nullptr)
+        {
+            std::string msg = "Invalid modbus context";
+            logger.error(m_TAG, msg);
+            throw std::runtime_error(m_TAG + ": " + msg);
+        }
+        if( NOT(m_is_connected) )
+        {
+            std::string msg = "PLC not connected";
+            logger.error(m_TAG, msg);
+            throw std::runtime_error(m_TAG + ": " + msg);
+        }
+
+        std::string msg;
+        std::for_each(data.begin(), data.end(), [&](Data& data){
+            switch (data.type)
+            {
+                case Data::Type::COIL :
+                {
+                    rc = modbus_read_bits(m_context, data.address, 1, reinterpret_cast<uint8_t *>(&data.value));
+                    msg = "Success read modbus Data::Type::COIL value: " + std::to_string(data.value);
+                    logger.debug(m_TAG, msg);
+                    break;
+                }
+                case Data::Type::DISCRETE_INPUT :
+                {
+                    rc = modbus_read_input_bits(m_context, data.address, 1, reinterpret_cast<uint8_t *>(&data.value));
+                    msg = "Success read modbus Data::Type::DISCRETE_INPUT value: " + std::to_string(data.value);
+                    logger.debug(m_TAG, msg);
+                    break;
+                }
+                case Data::Type::HOLDING_REGISTER :
+                {
+                    rc = modbus_read_registers(m_context, data.address, 1, &data.value);
+                    msg = "Success read modbus Data::Type::HOLDING_REGISTER value: "+ std::to_string(data.value);
+                    logger.debug(m_TAG, msg);
+                    break;
+                }
+                case Data::Type::INPUT_REGISTER :
+                {
+                    rc = modbus_read_input_registers(m_context, data.address, 1, &data.value);
+                    msg = "Success read modbus Data::Type::INPUT_REGISTER value: "+ std::to_string(data.value);
+                    logger.debug(m_TAG, msg);
+                    break;
+                }
+                default:
+                    throw std::invalid_argument("Data type not supported");
+            }
+        });
+
+        if(rc == -1)
+        {
+            msg = "Modbus error during" + msg;
+            logger.error(m_TAG, msg);
+            logger.error(m_TAG, modbus_strerror(errno));
+            throw std::runtime_error(modbus_strerror(errno));
+        }
+        return rc;
+    }
+    
 public:
     int32_t read_bits(int addr, int nb, uint8_t * buffer)
     {
