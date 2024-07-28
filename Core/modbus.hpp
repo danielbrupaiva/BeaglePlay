@@ -133,7 +133,7 @@ public:
         logger.debug(m_TAG, "Modbus connection closed");
     }
 
-    int32_t read_plc_variables( std::vector<Data>& data )
+    int32_t read_plc_variables( std::map<std::string, PLC::Modbus::Data>& data )
     {
         int32_t rc = -1;
         if(m_context == nullptr)
@@ -150,34 +150,34 @@ public:
         }
 
         std::string msg;
-        std::for_each(data.begin(), data.end(), [&](Data& data){
-            switch (data.type)
+        std::for_each(data.begin(), data.end(), [&](std::pair<const std::string, Data>& data){
+            switch (data.second.type)
             {
                 case Data::Type::COIL :
                 {
-                    rc = modbus_read_bits(m_context, data.address, 1, reinterpret_cast<uint8_t *>(&data.value));
-                    msg = "Success read modbus Data::Type::COIL value: " + std::to_string(data.value);
+                    rc = modbus_read_bits(m_context, data.second.address, 1, reinterpret_cast<uint8_t *>(&data.second.value));
+                    msg = "Success read modbus Data::Type::COIL value: " + std::to_string(data.second.value);
                     logger.debug(m_TAG, msg);
                     break;
                 }
                 case Data::Type::DISCRETE_INPUT :
                 {
-                    rc = modbus_read_input_bits(m_context, data.address, 1, reinterpret_cast<uint8_t *>(&data.value));
-                    msg = "Success read modbus Data::Type::DISCRETE_INPUT value: " + std::to_string(data.value);
+                    rc = modbus_read_input_bits(m_context, data.second.address, 1, reinterpret_cast<uint8_t *>(&data.second.value));
+                    msg = "Success read modbus Data::Type::DISCRETE_INPUT value: " + std::to_string(data.second.value);
                     logger.debug(m_TAG, msg);
                     break;
                 }
                 case Data::Type::HOLDING_REGISTER :
                 {
-                    rc = modbus_read_registers(m_context, data.address, 1, &data.value);
-                    msg = "Success read modbus Data::Type::HOLDING_REGISTER value: "+ std::to_string(data.value);
+                    rc = modbus_read_registers(m_context, data.second.address, 1, &data.second.value);
+                    msg = "Success read modbus Data::Type::HOLDING_REGISTER value: "+ std::to_string(data.second.value);
                     logger.debug(m_TAG, msg);
                     break;
                 }
                 case Data::Type::INPUT_REGISTER :
                 {
-                    rc = modbus_read_input_registers(m_context, data.address, 1, &data.value);
-                    msg = "Success read modbus Data::Type::INPUT_REGISTER value: "+ std::to_string(data.value);
+                    rc = modbus_read_input_registers(m_context, data.second.address, 1, &data.second.value);
+                    msg = "Success read modbus Data::Type::INPUT_REGISTER value: "+ std::to_string(data.second.value);
                     logger.debug(m_TAG, msg);
                     break;
                 }
@@ -195,7 +195,7 @@ public:
         }
         return rc;
     }
-    
+
 public:
     int32_t read_bits(int addr, int nb, uint8_t * buffer)
     {
