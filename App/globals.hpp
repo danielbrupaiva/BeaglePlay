@@ -37,15 +37,6 @@ static std::map<std::string, PLC::Modbus::Data> variable_list = {
     {"reg6", {PLC::Modbus::Data::Type::HOLDING_REGISTER, 6U, 0}},
     {"reg7", {PLC::Modbus::Data::Type::HOLDING_REGISTER, 7U, 0}},
 };
-static std::vector<PLC::Modbus::Data> variables = {
-    {PLC::Modbus::Data::Type::COIL, 0U, false},
-    {PLC::Modbus::Data::Type::COIL, 1U, false},
-    {PLC::Modbus::Data::Type::COIL, 2U, false},
-    {PLC::Modbus::Data::Type::COIL, 3U, false},
-    {PLC::Modbus::Data::Type::HOLDING_REGISTER, 0U, 0U},
-    {PLC::Modbus::Data::Type::HOLDING_REGISTER, 1U, 0U},
-    {PLC::Modbus::Data::Type::HOLDING_REGISTER, 2U, 0U},
-    {PLC::Modbus::Data::Type::HOLDING_REGISTER, 3U, 0U}
-};
-static PLC::Modbus plc{"TM241", "127.0.0.1", 1502, variable_list};
+
+PLC::Modbus plc{"TM241", "127.0.0.1", 1502, variable_list};
 };//namespace Global
