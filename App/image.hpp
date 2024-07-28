@@ -52,7 +52,7 @@ private:
     }
 
 public:
-    Image(const std::string_view filename, Format format)
+    Image(const std::string_view filename, Format format = Format::None)
         : m_filename{filename}, m_format{format}
     {
         LoadTexture();
