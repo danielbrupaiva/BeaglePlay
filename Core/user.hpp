@@ -22,12 +22,8 @@ public:
                   const eSecurity_level _security_level = eSecurity_level::USER,
                   const bool _is_logged = false)
         : m_id{_id}, m_name{_name}, m_password{_password}, m_security_level{_security_level}, m_is_logged{_is_logged}
-    {
-        logger.debug(TAG, "User id:" + std::to_string(m_id) + " name: " + m_name + " constructed");
-    };
-    ~User(){
-        logger.debug(TAG, "User id:" + std::to_string(m_id) + " name: " + m_name + " destroyed");
-    };
+    {};
+    ~User(){};
 
     void set_user(const int _id,
                   const std::string& _name,

@@ -30,9 +30,8 @@ public:
         m_control_size = ImGui::GetContentRegionAvail();
         ImGui::Begin("Slide");
         ImVec2 size{50, 500};
-        static float value = 0.0f;
+        float value = Global::variable_list["reg0"].value;
         static float meters = 0.0f;
-        ImGui::VSliderFloat("##value", size, &value, 0.0f, 1000.0f, "%.0f", ImGuiSliderFlags_AlwaysClamp);
         ImGui::SameLine();
         ImGui::VSliderFloat("##meter", size, &meters, 0.0f, 1000.0f, "%.0f", ImGuiSliderFlags_AlwaysClamp);
         ImGui::End();
