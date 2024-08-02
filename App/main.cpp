@@ -57,11 +57,13 @@ int main(int argc, char* argv[]) {
     // Container of threads
     std::vector<std::jthread> workers;
     // PLC data loader
+    // PLC keep a live
     workers.emplace_back([&](){
-        while (!app.is_close()){
-            if( Global::plc.read_plc_variables(Global::variable_list["reg0"]) == -1) {
+        while (!app.is_close()) {
+            if( Global::plc.read_plc_variables(Global::variable_list["bit0"]) == -1) {
                 app.close();
             }
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         }
     });
 
