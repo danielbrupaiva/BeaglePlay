@@ -72,6 +72,7 @@ int main(int argc, char* argv[]) {
         try {
             app.run([&]() {
                 Global::FSM[static_cast<int>(Global::current_state)]->render(app);
+                debug_screen(app);
             });
         } catch (...) {
             logger.error("Main thread error");
