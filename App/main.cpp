@@ -117,6 +117,5 @@ void debug_screen(App::UI& app) {
             app.close();
         }
     }ImGui::End();
-
 }
 
