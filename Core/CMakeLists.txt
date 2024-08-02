@@ -10,6 +10,7 @@ message("${BoldGreen}-- ${PROJECT_NAME} BUILD ${ColourReset}")
 #---------------------
 set(SOURCES
         utils.hpp
+        connection_pool.hpp
         database.hpp database.cpp
         user.hpp
         logger.hpp
