@@ -59,12 +59,10 @@ int main(int argc, char* argv[]) {
     // PLC data loader
     // PLC keep a live
     workers.emplace_back([&](){
-        while (!app.is_close()) {
-            if( Global::plc.read_plc_variables(Global::variable_list["bit0"]) == -1) {
-                app.close();
-            }
+        while (!app.is_close() && Global::plc.read_plc_variables(Global::variable_list["bit0"]) != -1 ) {
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         }
+        app.close();
     });
 
     // Main thread
