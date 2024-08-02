@@ -116,11 +116,6 @@ void debug_screen(App::UI& app) {
         {
             app.close();
         }
-
-    }ImGui::End();
-
-    ImGui::Begin("MODBUS");
-    {
     }ImGui::End();
 
 }
