@@ -58,22 +58,15 @@ jobs:
         run: |
           sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
           wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-          sudo apt-get update
-          git clone -b REL_16_STABLE git://git.postgresql.org/git/postgresql.git
-          cd postgresql
-          mkdir build 
-          cd build 
-          ../configure
-          make -j$(nproc)
-          sudo make install
-          cd
+          sudo apt update
+          sudo apt -y install libpq-dev postgresql-16
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
-          -DBUILD_FROM_SRC:BOOL=ON
+          -DBUILD_FROM_SRC:BOOL=OFF
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
