@@ -61,6 +61,26 @@ jobs:
           sudo apt update
           sudo apt -y install libpq-dev postgresql-16
 
+      - name: Install SpdLog
+        run: |
+          git clone -b v1.13.0 https://github.com/gabime/spdlog.git
+          cd spdlog
+          sudo su
+          cmake -S . -B build
+          cmake --build build
+          sudo cmake --install build
+          cd
+
+      - name: Install CATCH2
+        run: |
+          git clone -b v3.4.0 https://github.com/catchorg/Catch2.git
+          cd Catch2
+          sudo su
+          cmake -S . -B build
+          cmake --build build
+          sudo cmake --install build
+          cd
+
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
