@@ -49,7 +49,7 @@ jobs:
         run:  |
           sudo apt install ca-certificates 
           sudo apt update && sudo apt full-upgrade -y
-          sudo apt install -y libtool pkg-config build-essential autoconf automake make ninja-build cmake gcc git bison python3 libreadline-dev gawk texinfo bison file wget libssl-dev curl xorg-dev libwayland-dev libxkbcommon-dev wayland-protocols extra-cmake-modules libglm-dev
+          sudo apt install -y libtool pkg-config build-essential autoconf automake make ninja-build cmake gcc git bison python3 libreadline-dev gawk texinfo bison file wget libssl-dev curl xorg-dev libwayland-dev libxkbcommon-dev wayland-protocols extra-cmake-modules libglm-dev libreadline-dev
 
       - name: Install OpenGL dependencies
         run: sudo apt-get install -y libgl1-mesa-dev
@@ -59,7 +59,14 @@ jobs:
           sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
           wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
           sudo apt-get update
-          sudo apt-get -y install postgresql-16
+          git clone -b REL_16_STABLE git://git.postgresql.org/git/postgresql.git
+          cd postgresql
+          mkdir build 
+          cd build 
+          ../configure
+          make -j$(nproc)
+          sudo make install
+          cd
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
