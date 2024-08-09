@@ -21,18 +21,19 @@
 //                                  0x10 (16)   modbus_write_registers          Write Multiple Holding 16-bit registers
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 
-#ifndef MODBUS_HPP
-#define MODBUS_HPP
+#pragma once
 
 #include <iostream>
 #include <map>
 #include "logger.hpp"
+#include "utils.hpp"
+#include "connection_pool.hpp"
 #include "modbus/modbus.h"
 
-namespace PLC
+namespace Core
 {
-class Modbus
-{
+namespace PLC {
+class Modbus : public ConnectionPool<modbus_t> {
 public:
     enum class ContextType { TCP };
     struct Data{
@@ -41,6 +42,7 @@ public:
         uint16_t    address;
         uint16_t    value;
     };
+
 private:
     const std::string               m_TAG                   = "PLC";
     modbus_t *                      m_context               = nullptr;
@@ -60,19 +62,21 @@ public:
         logger.debug(m_TAG, "Modbus destroyed");
     }
 
-    explicit Modbus( const std::string& TAG, const std::string_view ip, const int32_t port)
-        : m_TAG{TAG}, m_server_ip{ip}, m_server_port{port} {
-        logger.debug(TAG, "Modbus constructed");
-        create_context(ContextType::TCP, m_server_ip, m_server_port);
-        connect(m_context, m_server_ip, m_server_port);
-    }
+    explicit Modbus(const std::string &TAG,const std::string_view ip, const int32_t port, uint32_t pool_size)
+        : m_TAG{TAG}, m_server_ip{ip}, m_server_port{port}, ConnectionPool{pool_size}
+        {
+            logger.debug(TAG, "Modbus constructed");
+            create_context(ContextType::TCP, m_server_ip, m_server_port);
+            connect(m_context, m_server_ip, m_server_port);
+        }
 
-    explicit Modbus( const std::string& TAG, const std::string_view ip, const int32_t port, const std::map<std::string, Data>& variables )
-        : m_TAG{TAG}, m_server_ip{ip}, m_server_port{port}, m_variables{variables} {
-        logger.debug(TAG, "Modbus constructed");
-        create_context(ContextType::TCP, m_server_ip, m_server_port);
-        connect(m_context, m_server_ip, m_server_port);
-    }
+    explicit Modbus( const std::string& TAG, const std::string_view ip, const int32_t port, uint32_t pool_size, const std::map<std::string, Data>& variables )
+        : m_TAG{TAG}, m_server_ip{ip}, m_server_port{port}, ConnectionPool(pool_size), m_variables{variables}
+        {
+            logger.debug(TAG, "Modbus constructed");
+            create_context(ContextType::TCP, m_server_ip, m_server_port);
+            connect(m_context, m_server_ip, m_server_port);
+        }
 
 public:
 
@@ -93,7 +97,9 @@ public:
             throw std::invalid_argument(m_TAG + ": " + msg);
         }
     }
+
     int32_t connect() {
+        logger.debug(m_TAG, "connect()");
         return connect(m_context, m_server_ip, m_server_port);
     }
 
@@ -281,5 +287,4 @@ public:
     inline const std::map<std::string, Data> &get_variables() const { return m_variables; }
 };
 }; // namespace Modbus
-
-#endif //MODBUS_HPP
+}; // namespace Core

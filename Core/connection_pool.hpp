@@ -31,16 +31,17 @@ public:
     explicit ConnectionPool(uint32_t pool_size)
         : m_pool_size{pool_size}
     {
-        init_connection_pool();
+        logger.debug(m_TAG, "Connection Pool()");
     };
 
     std::shared_ptr< ConnectionPool<T> > get() { return this->shared_from_this(); };
+
     /* init connection pool */
     void init_connection_pool() {
-        connect();
+        logger.debug(m_TAG, "init connection pool");
+        for ( uint32_t index = 0; index < get_pool_size(); index++ ) {
+        }
     };
-    /* connect to server */
-    virtual uint32_t connect() = 0;
 
     /*get connection from the pool*/
     std::shared_ptr<T> get_connection(uint32_t timeout) {
@@ -75,6 +76,9 @@ public:
         /*notify*/
         m_condition.notify_one();
     };
+
+public:
+    [[nodiscard]] inline uint32_t get_pool_size() const { return m_pool_size; }
 };
 
 };//namespace Core
