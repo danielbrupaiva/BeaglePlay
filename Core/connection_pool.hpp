@@ -39,7 +39,7 @@ public:
 
     void init_connection_pool(const uint32_t pool_size) {
         for(size_t index = 0; index < pool_size; index++){
-            auto connection = std::make_shared<T>(ContextType::TCP, m_server_ip, m_server_port);
+            auto connection = std::make_shared<T>(PLC::ContextType::TCP, m_server_ip, m_server_port);
             if(connection){
                 m_connections.push(connection);
             }
@@ -50,6 +50,7 @@ public:
                 throw std::runtime_error(modbus_strerror(errno));
             }
         }
+        logger.debug(m_TAG, "Connection pool initialized");
     };
     /*get connection from the pool*/
     std::shared_ptr<T> get_connection(uint32_t timeout) {

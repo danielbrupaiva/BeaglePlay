@@ -56,7 +56,7 @@ public:
             float start_angle = IM_PI * 0.5f;
             float final_angle = start_angle + 1.5f * IM_PI;
             ImVec4 gauge_color{0.996f, 0.804f, 0.102f, 1.0f}; //fecd1a
-            DrawCircularGauge("Speed", "m/min", position, radius, thickness, value, MAX_VALUE, start_angle, final_angle, 100, gauge_color);
+            DrawCircularGauge("Speed", "m/min", position, radius, thickness, &value, MAX_VALUE, start_angle, final_angle, 100, gauge_color);
         }
         {
             float radius = 220.0f;
@@ -66,7 +66,7 @@ public:
             float start_angle2 = 0.5f * IM_PI;
             float final_angle2 = start_angle2 - 1.5f * IM_PI;
             ImVec4 gauge_color = ImGui::GetStyleColorVec4(ImGuiCol_SliderGrabActive);
-            DrawCircularGauge("Distance", "m", position2, radius, thickness, meters, MAX_VALUE, start_angle2, final_angle2, 100, gauge_color);
+            DrawCircularGauge("Distance", "m", position2, radius, thickness, &meters, MAX_VALUE, start_angle2, final_angle2, 100, gauge_color);
         }
         {/**Operation buttons **/
             static ImVec2 size{ (ImGui::GetWindowWidth() - 2 * ImGui::GetStyle().FramePadding.x - (float)(buttons.size() - 1) * ImGui::GetStyle().ItemSpacing.x ) / (float)buttons.size(),

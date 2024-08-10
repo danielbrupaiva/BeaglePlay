@@ -59,18 +59,18 @@ int main(int argc, char* argv[]) {
     std::vector<std::jthread> workers;
     // PLC data loader
     // PLC keep a live
-//    workers.emplace_back([&](){
-//        while (!app.is_close() && Global::plc.read_plc_variables(Global::variable_list["bit0"]) != -1 ) {
-//            Global::plc.read_plc_variables(Global::variable_list["reg0"]);
-//            std::this_thread::sleep_for(std::chrono::milliseconds(500));
-//        }
-//        app.close();
-//    });
+    workers.emplace_back([&](){
+        while (!app.is_close()) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
+        app.close();
+    });
 
     // Main thread
     while(!app.is_close()) {
         try {
             app.run([&]() {
+                Global::plc.read_plc_variable(&Global::variable_list["reg0"]);
                 Global::FSM[static_cast<int>(Global::current_state)]->render(app);
                 debug_screen(app);
             });
@@ -78,6 +78,7 @@ int main(int argc, char* argv[]) {
             logger.error("Main thread error");
         }
     }
+
     return EXIT_SUCCESS;
 }
 

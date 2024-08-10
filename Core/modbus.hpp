@@ -36,14 +36,6 @@ namespace PLC {
 
 class Modbus : public ConnectionPool<Connection>
 {
-public:
-    struct Data{
-        enum class Type { COIL, DISCRETE_INPUT, INPUT_REGISTER, HOLDING_REGISTER };
-        Type        type;
-        uint16_t    address;
-        uint16_t    value;
-    };
-
 private:
     const std::string   m_TAG   =   "PLC";
 public:
@@ -55,9 +47,30 @@ public:
         : m_TAG{TAG}, ConnectionPool<Connection>(ip, port, pool_size)
         {
             logger.debug(TAG, "Modbus constructed");
-
         }
 
+    int32_t read_plc_variable( Data* data ) {
+        //get connection from the pool
+        auto connection = get_connection(100);
+        connection->read_plc_variable(data);
+        // return connection to the pool
+        release_connection(std::move(connection));
+    }
+    int32_t read_plc_variables( std::map<std::string, Data> *&data ) {
+        //get connection from the pool
+        auto connection = get_connection(100);
+        connection->read_plc_variables(data);
+        // return connection to the pool
+        release_connection(std::move(connection));
+    }
+
+    void write_plc_variable( Data& data ) {
+        //get connection from the pool
+        auto connection = get_connection(100);
+
+        // return connection to the pool
+        release_connection(std::move(connection));
+    }
 };
 }; // namespace Modbus
 }; // namespace Core
