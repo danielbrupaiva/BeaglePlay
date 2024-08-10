@@ -18,31 +18,39 @@
 namespace Core {
 
 template <typename T>
-class ConnectionPool : public std::enable_shared_from_this< ConnectionPool<T> >
+class ConnectionPool
 {
     const std::string                   m_TAG = "ConnectionPool";
     std::mutex                          m_mutex;
     std::condition_variable             m_condition;
     std::queue<std::shared_ptr<T>>      m_connections;
-    uint32_t                            m_pool_size = 5U;
+    uint32_t                            m_pool_size;
+    std::string                         m_server_ip;
+    int32_t                             m_server_port;
 
 public:
     ~ConnectionPool(){};
-    explicit ConnectionPool(uint32_t pool_size)
-        : m_pool_size{pool_size}
+    explicit ConnectionPool(const std::string_view server_ip, const int32_t server_port, const uint32_t pool_size)
+        : m_server_port{server_port}, m_server_ip{server_ip}, m_pool_size{pool_size}
     {
         logger.debug(m_TAG, "Connection Pool()");
-    };
+        init_connection_pool(m_pool_size);
+    }
 
-    std::shared_ptr< ConnectionPool<T> > get() { return this->shared_from_this(); };
-
-    /* init connection pool */
-    void init_connection_pool() {
-        logger.debug(m_TAG, "init connection pool");
-        for ( uint32_t index = 0; index < get_pool_size(); index++ ) {
+    void init_connection_pool(const uint32_t pool_size) {
+        for(size_t index = 0; index < pool_size; index++){
+            auto connection = std::make_shared<T>(ContextType::TCP, m_server_ip, m_server_port);
+            if(connection){
+                m_connections.push(connection);
+            }
+            else{
+                std::string msg = "Fail to create connection pool";
+                logger.error(m_TAG, msg);
+                logger.error(m_TAG, modbus_strerror(errno));
+                throw std::runtime_error(modbus_strerror(errno));
+            }
         }
     };
-
     /*get connection from the pool*/
     std::shared_ptr<T> get_connection(uint32_t timeout) {
         /*lock thread*/

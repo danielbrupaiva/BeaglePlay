@@ -10,11 +10,12 @@ message("${BoldGreen}-- ${PROJECT_NAME} BUILD ${ColourReset}")
 #---------------------
 set(SOURCES
         utils.hpp
-        connection_pool.hpp
-        database.hpp database.cpp
-        user.hpp
         logger.hpp
+        connection.hpp
+        connection_pool.hpp
         modbus.hpp
+        user.hpp
+        database.hpp database.cpp
 )
 #---------------------
 add_library(${PROJECT_NAME} STATIC )
