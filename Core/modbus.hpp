@@ -27,15 +27,16 @@
 #include <map>
 #include "logger.hpp"
 #include "utils.hpp"
-#include "connection_pool.hpp"
 #include "modbus/modbus.h"
+#include "connection.hpp"
+#include "connection_pool.hpp"
 
-namespace Core
-{
+namespace Core {
 namespace PLC {
-class Modbus : public ConnectionPool<modbus_t> {
+
+class Modbus : public ConnectionPool<Connection>
+{
 public:
-    enum class ContextType { TCP };
     struct Data{
         enum class Type { COIL, DISCRETE_INPUT, INPUT_REGISTER, HOLDING_REGISTER };
         Type        type;
@@ -44,247 +45,19 @@ public:
     };
 
 private:
-    const std::string               m_TAG                   = "PLC";
-    modbus_t *                      m_context               = nullptr;
-    std::string                     m_server_ip             = "127.0.0.1";
-    int32_t                         m_server_port           = 502;
-    uint8_t                         m_is_connected          = false;
-    std::map<std::string, Data>     m_variables             = {};
-    std::mutex                      m_mutex;
-
+    const std::string   m_TAG   =   "PLC";
 public:
     ~Modbus() {
-        if(m_context) {
-            // disconnect to plc and free resources
-            disconnect(m_context);
-            modbus_free(m_context);
-        }
         logger.debug(m_TAG, "Modbus destroyed");
     }
 
     explicit Modbus(const std::string &TAG,const std::string_view ip, const int32_t port, uint32_t pool_size)
-        : m_TAG{TAG}, m_server_ip{ip}, m_server_port{port}, ConnectionPool{pool_size}
+        : m_TAG{TAG}, ConnectionPool<Connection>(ip, port, pool_size)
         {
             logger.debug(TAG, "Modbus constructed");
-            create_context(ContextType::TCP, m_server_ip, m_server_port);
-            connect(m_context, m_server_ip, m_server_port);
+
         }
 
-    explicit Modbus( const std::string& TAG, const std::string_view ip, const int32_t port, uint32_t pool_size, const std::map<std::string, Data>& variables )
-        : m_TAG{TAG}, m_server_ip{ip}, m_server_port{port}, ConnectionPool(pool_size), m_variables{variables}
-        {
-            logger.debug(TAG, "Modbus constructed");
-            create_context(ContextType::TCP, m_server_ip, m_server_port);
-            connect(m_context, m_server_ip, m_server_port);
-        }
-
-public:
-
-    void create_context(ContextType context_type, const std::string& ip, const int32_t port) {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        if( context_type == ContextType::TCP ) {
-            m_context = modbus_new_tcp(ip.c_str(), port);
-            if(m_context == nullptr) {
-                std::string msg = "Fail to create modbus context";
-                logger.error(m_TAG, msg);
-                throw std::runtime_error(m_TAG + ": " + msg);
-            }
-            logger.debug(m_TAG, "Modbus context created");
-        }
-        else {
-            std::string msg = "Unsupported context type";
-            logger.error(m_TAG, msg);
-            throw std::invalid_argument(m_TAG + ": " + msg);
-        }
-    }
-
-    int32_t connect() {
-        logger.debug(m_TAG, "connect()");
-        return connect(m_context, m_server_ip, m_server_port);
-    }
-
-    int32_t connect(modbus_t* context, const std::string& ip, const int32_t port) {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        int rc = -1;
-        if( context ) { rc = modbus_connect( context ); }
-
-        if( rc == -1 ) {
-            std::string msg = "Fail to connect to server";
-            logger.error(m_TAG, msg);
-            logger.error(m_TAG, modbus_strerror(errno));
-            throw std::runtime_error(modbus_strerror(errno));
-        }
-        m_is_connected = true;
-        logger.debug(m_TAG, "Modbus connection established with server: " + ip + ":" + std::to_string(port));
-        return rc;
-    }
-    // Disconnect to plc context ONLY.
-    void disconnect(modbus_t* context) {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        if(context) {
-            modbus_close(context);
-        }
-        m_is_connected = false;
-        logger.debug(m_TAG, "Modbus connection closed");
-    }
-    bool is_connected() {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        int rc = modbus_connect(m_context);
-        if ( rc == -1 ) {
-            logger.error(m_TAG, "No connection with PLC");
-            modbus_close(m_context); // Ensure the connection is closed if failed
-            return false;
-        }
-        return true;
-    }
-
-    std::map<std::string, Data> read_all_coils(std::map<std::string, PLC::Modbus::Data>& data) {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        std::map<std::string, Data> coils;
-        std::copy_if(data.begin(), data.end(), std::inserter(coils, coils.end()), [](const std::pair<const std::string, Data>& entry) { return entry.second.type == Data::Type::COIL; });
-        return coils;
-    }
-
-    int32_t read_all_plc_variables() {
-        return read_plc_variables(m_variables);
-    }
-
-    int32_t read_plc_variables( std::map<std::string, PLC::Modbus::Data>& data ) {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        int32_t rc = -1;
-        if(m_context == nullptr) {
-            std::string msg = "Invalid modbus context";
-            logger.error(m_TAG, msg);
-            throw std::runtime_error(m_TAG + ": " + msg);
-        }
-        if( NOT(m_is_connected) ) {
-            std::string msg = "PLC not connected";
-            logger.error(m_TAG, msg);
-            throw std::runtime_error(m_TAG + ": " + msg);
-        }
-
-        std::string msg;
-        std::for_each(data.begin(), data.end(), [&](std::pair<const std::string, Data>& data){
-            switch (data.second.type) {
-                case Data::Type::COIL :
-                    rc = modbus_read_bits(m_context, data.second.address, 1, reinterpret_cast<uint8_t *>(&data.second.value));
-                    break;
-                case Data::Type::DISCRETE_INPUT :
-                    rc = modbus_read_input_bits(m_context, data.second.address, 1, reinterpret_cast<uint8_t *>(&data.second.value));
-                    break;
-                case Data::Type::HOLDING_REGISTER :
-                    rc = modbus_read_registers(m_context, data.second.address, 1, &data.second.value);
-                    break;
-                case Data::Type::INPUT_REGISTER :
-                    rc = modbus_read_input_registers(m_context, data.second.address, 1, &data.second.value);
-                    break;
-                default:
-                    logger.error(m_TAG, modbus_strerror(errno));
-                    throw std::invalid_argument("Data type not supported");
-            }
-        });
-
-        if(rc == -1) {
-            msg = "Modbus error during" + msg;
-            logger.error(m_TAG, msg);
-            logger.error(m_TAG, modbus_strerror(errno));
-            throw std::runtime_error(modbus_strerror(errno));
-        }
-        return rc;
-    }
-    int32_t read_plc_variables( PLC::Modbus::Data& data ) {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        int32_t rc = -1;
-        if(m_context == nullptr)
-        {
-            std::string msg = "Invalid modbus context";
-            logger.error(m_TAG, msg);
-            throw std::runtime_error(m_TAG + ": " + msg);
-        }
-        if( NOT(m_is_connected) )
-        {
-            std::string msg = "PLC not connected";
-            logger.error(m_TAG, msg);
-            throw std::runtime_error(m_TAG + ": " + msg);
-        }
-
-        std::string msg;
-        switch (data.type) {
-            case Data::Type::COIL :
-                rc = modbus_read_bits(m_context, data.address, 1, reinterpret_cast<uint8_t *>(&data.value));
-                break;
-            case Data::Type::DISCRETE_INPUT :
-                rc = modbus_read_input_bits(m_context, data.address, 1, reinterpret_cast<uint8_t *>(&data.value));
-                break;
-            case Data::Type::HOLDING_REGISTER :
-                rc = modbus_read_registers(m_context, data.address, 1, &data.value);
-                break;
-            case Data::Type::INPUT_REGISTER :
-                rc = modbus_read_input_registers(m_context, data.address, 1, &data.value);
-                break;
-            default:
-                logger.error(m_TAG, modbus_strerror(errno));
-                throw std::invalid_argument("Data type not supported");
-        }
-
-        if(rc == -1) {
-            msg = "Modbus error during" + msg;
-            logger.error(m_TAG, msg);
-            logger.error(m_TAG, modbus_strerror(errno));
-            throw std::runtime_error(modbus_strerror(errno));
-        }
-        return rc;
-    }
-
-public:
-    int32_t read_bits(int addr, int nb, uint8_t * buffer) {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        int rc = -1;
-        if(m_is_connected) {
-            rc = modbus_read_bits(m_context, addr, nb, buffer);
-            if(rc == -1) {
-                auto msg = "Modbus error during coil(s) read";
-                logger.error(m_TAG, msg);
-                throw std::runtime_error(m_TAG + ": " + msg);
-            }
-        }
-        logger.debug(m_TAG, "Success coil(s) read");
-        return rc;
-    }
-
-    int32_t write_bits(const int addr, const int nb, const uint8_t * data ) {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        int32_t rc = -1;
-        if(m_is_connected) {
-            rc = modbus_write_bits(m_context, addr, nb, data);
-            if(rc == -1) {
-                auto msg = "Modbus error during coil(s) write";
-                logger.error(m_TAG, msg);
-                throw std::runtime_error(m_TAG + ": " + msg);
-            }
-        }
-        logger.debug(m_TAG, "Success coil(s) write");
-        return rc;
-    }
-
-    int32_t write_registers(const int addr, const int nb, const uint16_t * data) {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        int32_t rc = -1;
-        if(m_is_connected) {
-            rc = modbus_write_registers(m_context, addr, nb, data);
-            if(rc == -1)
-            {
-                auto msg = "Modbus error during register(s) write";
-                logger.error(m_TAG, msg);
-                throw std::runtime_error(msg);
-            }
-        }
-        logger.debug(m_TAG, "Success register(s) write");
-        return rc;
-    }
-public:
-    inline void set_variables(const std::map<std::string, Data> &variables) { m_variables = variables; }
-    inline const std::map<std::string, Data> &get_variables() const { return m_variables; }
 };
 }; // namespace Modbus
 }; // namespace Core
