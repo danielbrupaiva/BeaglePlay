@@ -38,5 +38,5 @@ static std::map<std::string, Core::PLC::Modbus::Data> variable_list = {
     {"reg7", {Core::PLC::Modbus::Data::Type::HOLDING_REGISTER, 7U, 0}},
 };
 
-Core::PLC::Modbus plc{"TM241", "127.0.0.1", 1502, 5U, variable_list};
+Core::PLC::Modbus plc{"TM241", "127.0.0.1", 1502, 5U};
 };//namespace Global
