@@ -14,6 +14,7 @@ static void debug_screen(App::UI& app);
 
 static void load_gl_textures_resources(std::map< std::string, std::unique_ptr<Image> >& GL_Textures) {
     //https://www.flaticon.com/br/packs/functional-ui
+    GL_Textures.insert({"logo", std::make_unique<Image>("./resources/logo.png")});
     GL_Textures.insert({"profile", std::make_unique<Image>("./resources/profile.png")});
     GL_Textures.insert({"maintenance_person", std::make_unique<Image>("./resources/maintenance_person.png")});
     GL_Textures.insert({"restricted_person", std::make_unique<Image>("./resources/restricted_person.png")});
@@ -58,12 +59,13 @@ int main(int argc, char* argv[]) {
     std::vector<std::jthread> workers;
     // PLC data loader
     // PLC keep a live
-    workers.emplace_back([&](){
-        while (!app.is_close() && Global::plc.read_plc_variables(Global::variable_list["bit0"]) != -1 ) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        }
-        app.close();
-    });
+//    workers.emplace_back([&](){
+//        while (!app.is_close() && Global::plc.read_plc_variables(Global::variable_list["bit0"]) != -1 ) {
+//            Global::plc.read_plc_variables(Global::variable_list["reg0"]);
+//            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+//        }
+//        app.close();
+//    });
 
     // Main thread
     while(!app.is_close()) {
