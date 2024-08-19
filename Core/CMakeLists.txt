@@ -22,6 +22,8 @@ add_library(${PROJECT_NAME} STATIC )
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES} )
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} )
 #---------------------
+include(IMGUI)
+include(stb)
 include(Spdlog)
 include(PQXX)
 include(fmt)
