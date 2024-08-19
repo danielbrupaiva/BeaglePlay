@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
     while(!app.is_close()) {
         try {
             app.run([&]() {
-                Global::plc.read_plc_variable(&Global::variable_list["reg0"]);
+                Global::plc.read_plc_variable(Global::variable_list["reg0"]);
                 Global::FSM[static_cast<int>(Global::current_state)]->render(app);
                 debug_screen(app);
             });
