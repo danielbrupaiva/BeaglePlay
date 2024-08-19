@@ -77,7 +77,7 @@ public:
         return connection;
     };
 
-    void release_connection(std::shared_ptr<T>&& connection) {
+    void release_connection(std::shared_ptr<T>& connection) {
         /*lock thread*/
         std::unique_lock<std::mutex> lock(m_mutex);
         /*return the connection to the pool*/

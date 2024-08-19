@@ -67,7 +67,7 @@ public:
         m_is_connected = false;
     };
 
-    int32_t read_plc_variables(std::map<std::string, Data> *data) {
+    int32_t read_plc_variables(std::map<std::string, Data> &data) {
         std::lock_guard<std::mutex> lock(m_mutex);
         int32_t rc = -1;
         if (m_context == nullptr) {

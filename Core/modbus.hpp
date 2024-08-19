@@ -49,19 +49,19 @@ public:
             logger.debug(TAG, "Modbus constructed");
         }
 
-    int32_t read_plc_variable( Data* data ) {
+    int32_t read_plc_variable( Data& data ) {
         //get connection from the pool
         auto connection = get_connection(100);
         connection->read_plc_variable(data);
         // return connection to the pool
-        release_connection(std::move(connection));
+        release_connection(connection);
     }
-    int32_t read_plc_variables( std::map<std::string, Data> *&data ) {
+    int32_t read_plc_variables( std::map<std::string, Data> &data ) {
         //get connection from the pool
         auto connection = get_connection(100);
         connection->read_plc_variables(data);
         // return connection to the pool
-        release_connection(std::move(connection));
+        release_connection(connection);
     }
 
     void write_plc_variable( Data& data ) {
@@ -69,7 +69,7 @@ public:
         auto connection = get_connection(100);
 
         // return connection to the pool
-        release_connection(std::move(connection));
+        release_connection(connection);
     }
 };
 }; // namespace Modbus
