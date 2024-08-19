@@ -84,4 +84,3 @@ Module.symvers
 *.cmd
 .tmp_versions/
 *.swp
-

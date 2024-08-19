@@ -82,7 +82,7 @@ public:
         }
 
         std::string msg;
-        std::for_each(data->begin(), data->end(), [&](std::pair<const std::string, Data> &data){
+        std::for_each(data.begin(), data.end(), [&](std::pair<const std::string, Data> &data){
             switch (data.second.type) {
                 case Data::Type::COIL :rc = modbus_read_bits(m_context,
                                                              data.second.address,
@@ -118,7 +118,7 @@ public:
         }
         return rc;
     }
-    int32_t read_plc_variable(Data *data) {
+    int32_t read_plc_variable(Data &data) {
         std::lock_guard<std::mutex> lock(m_mutex);
         int32_t rc = -1;
         if (m_context == nullptr) {
@@ -133,22 +133,22 @@ public:
         }
 
         std::string msg = "reading data type";
-        switch (data->type) {
+        switch (data.type) {
             case Data::Type::COIL :
                 msg = msg + " COIL";
-                rc = modbus_read_bits(m_context, data->address, 1, reinterpret_cast<uint8_t*>(&data->value));
+                rc = modbus_read_bits(m_context, data.address, 1, reinterpret_cast<uint8_t*>(&data.value));
                 break;
             case Data::Type::DISCRETE_INPUT :
                 msg = msg + " DISCRETE INPUT";
-                rc = modbus_read_input_bits(m_context, data->address, 1, reinterpret_cast<uint8_t *>(&data->value));
+                rc = modbus_read_input_bits(m_context, data.address, 1, reinterpret_cast<uint8_t *>(&data.value));
                 break;
             case Data::Type::HOLDING_REGISTER :
                 msg = msg + " HOLDING REGISTER";
-                rc = modbus_read_registers(m_context, data->address, 1, &data->value);
+                rc = modbus_read_registers(m_context, data.address, 1, &data.value);
                 break;
             case Data::Type::INPUT_REGISTER :
                 msg = msg + " INPUT REGISTER";
-                rc = modbus_read_input_registers(m_context, data->address, 1, &data->value);
+                rc = modbus_read_input_registers(m_context, data.address, 1, &data.value);
                 break;
             default:
                 throw std::invalid_argument("Data type not supported");
