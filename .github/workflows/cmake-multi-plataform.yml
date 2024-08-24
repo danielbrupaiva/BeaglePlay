@@ -54,32 +54,32 @@ jobs:
       - name: Install OpenGL dependencies
         run: sudo apt-get install -y libgl1-mesa-dev
 
-#      - name: Install PQXX dependencies
-#        run: |
-#          sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-#          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-#          sudo apt update
-#          sudo apt -y install libpq-dev postgresql-16
-#
-#      - name: Install SpdLog
-#        run: |
-#          git clone -b v1.13.0 https://github.com/gabime/spdlog.git
-#          cd spdlog
-#          sudo su
-#          cmake -S . -B build
-#          cmake --build build
-#          sudo cmake --install build
-#          cd
-#
-#      - name: Install CATCH2
-#        run: |
-#          git clone -b v3.4.0 https://github.com/catchorg/Catch2.git
-#          cd Catch2
-#          sudo su
-#          cmake -S . -B build
-#          cmake --build build
-#          sudo cmake --install build
-#          cd
+      - name: Install PQXX dependencies
+        run: |
+          sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+          sudo apt update
+          sudo apt -y install libpq-dev postgresql-16
+
+      - name: Install SpdLog
+        run: |
+          git clone -b v1.13.0 https://github.com/gabime/spdlog.git
+          cd spdlog
+          sudo su
+          cmake -S . -B build
+          cmake --build build
+          sudo cmake --install build
+          cd
+
+      - name: Install CATCH2
+        run: |
+          git clone -b v3.4.0 https://github.com/catchorg/Catch2.git
+          cd Catch2
+          sudo su
+          cmake -S . -B build
+          cmake --build build
+          sudo cmake --install build
+          cd
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
