@@ -1,7 +1,3 @@
 [submodule "vendor/stb"]
 	path = vendor/stb
 	url = https://github.com/nothings/stb.git
-[submodule "vendor/imgui"]
-	path = vendor/imgui
-	url = https://github.com/danielbrupaiva/imgui.git
-	branch = cmake
