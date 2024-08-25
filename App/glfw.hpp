@@ -24,7 +24,33 @@ class GLFW {
     };
 
     App::Spec m_spec;
-    std::unique_ptr<GLFWwindow, WindowDeleter> m_window;
+    GLFWwindow* m_window;
+
+    /*
+ * WindowHints
+ * Code from glfwpp lib at glfwpp/windows.h
+ * */
+    static constexpr int dontCare = GLFW_DONT_CARE;
+    enum class ClientApi;
+    enum class ContextCreationApi;
+    enum class ContextRobustness;
+    enum class ContextReleaseBehavior;
+    enum class OpenGlProfile;
+
+    struct WindowHints;
+
+public:
+    ~GLFW(){
+        shutdown();
+    }
+    explicit GLFW(App::Spec& spec): m_spec{spec}, m_window{nullptr}
+    {
+        init();
+    }
+    // Prevent copying
+    GLFW(const GLFW &) = delete;
+    explicit GLFW(const GLFWwindow &mWindow);
+    GLFW &operator=(const GLFW &) = delete;
 
     int8_t init();
     void shutdown();
@@ -52,18 +78,6 @@ class GLFW {
     GLFWPP_ERROR_CLASS(VersionUnavailableError, Error);
     GLFWPP_ERROR_CLASS(PlatformError, Error);
     GLFWPP_ERROR_CLASS(FormatUnavailableError, Error);
-    /*
-     * WindowHints
-     * Code from glfwpp lib at glfwpp/windows.h
-     * */
-    static constexpr int dontCare = GLFW_DONT_CARE;
-    enum class ClientApi;
-    enum class ContextCreationApi;
-    enum class ContextRobustness;
-    enum class ContextReleaseBehavior;
-    enum class OpenGlProfile;
-
-    struct WindowHints;
 
     [[nodiscard]] inline GLFWwindow* get_window() const { return m_window; }
     inline bool is_close() { return glfwWindowShouldClose(m_window); };
