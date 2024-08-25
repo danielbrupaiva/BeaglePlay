@@ -65,18 +65,9 @@ class GLFW {
 
     struct WindowHints;
 
-public:
-    explicit GLFW(App::Spec& spec): m_spec{spec}, m_window{nullptr}
-    {
-        init();
-    }
-    // Prevent copying
-    GLFW(const GLFW &) = delete;
-    GLFW &operator=(const GLFW &) = delete;
-
-    inline GLFWwindow * get_window() { return GLFW::m_window.get(); }
-    inline bool is_close() { return glfwWindowShouldClose(m_window.get()); };
-    inline void close() { glfwSetWindowShouldClose(m_window.get(), GLFW_TRUE); };
+    [[nodiscard]] inline GLFWwindow* get_window() const { return m_window; }
+    inline bool is_close() { return glfwWindowShouldClose(m_window); };
+    inline void close() { glfwSetWindowShouldClose(m_window, GLFW_TRUE); };
 };
 
 } //App namespace

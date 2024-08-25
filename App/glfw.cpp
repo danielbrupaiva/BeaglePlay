@@ -206,15 +206,13 @@ void App::GLFW::glfw_error_callback(int errorCode_, const char *what_)
 
 void App::GLFW::shutdown()
 {
-    if (m_window) { glfwDestroyWindow((GLFWwindow*)m_window.get()); }
+    if (m_window) { glfwDestroyWindow(m_window); }
     glfwTerminate();
 };
 
 int8_t App::GLFW::init()
 {
-
     glfwSetErrorCallback(glfw_error_callback);
-
     if (!glfwInit()) { throw GLFW::Error("Could not initialize GLFW"); }
 
     WindowHints hints;
@@ -224,16 +222,11 @@ int8_t App::GLFW::init()
     hints.contextVersionMinor = 0;
     hints.apply();
 
-    m_window = std::unique_ptr<GLFWwindow, WindowDeleter>(glfwCreateWindow((int32_t) m_spec.window_size.x,
-                                                                           (int32_t) m_spec.window_size.y,
-                                                                           m_spec.title.c_str(),
-                                                                           glfwGetPrimaryMonitor(),
-                                                                           nullptr), WindowDeleter());
+    m_window = glfwCreateWindow((int32_t) m_spec.window_size.x, (int32_t) m_spec.window_size.y, m_spec.title.c_str(), glfwGetPrimaryMonitor(), nullptr);
     if (nullptr == m_window) { throw std::runtime_error("GLFW window not created"); }
-
-    glfwMakeContextCurrent(m_window.get());
+    glfwMakeContextCurrent(m_window);
 
     glfwSwapInterval(m_spec.enable_vsync); // Enable vsync
 
     return EXIT_SUCCESS;
-};
+}
