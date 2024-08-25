@@ -15,7 +15,7 @@
 namespace App{
 
 class UI{
-    App::Spec& m_spec;
+    App::Spec m_spec;
     std::unique_ptr<GLFW> m_api;
     std::unique_ptr<Backend> m_backend;
     bool m_entire_viewport = true;

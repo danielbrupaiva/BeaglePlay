@@ -23,7 +23,7 @@ class GLFW {
         };
     };
 
-    App::Spec& m_spec;
+    App::Spec m_spec;
     std::unique_ptr<GLFWwindow, WindowDeleter> m_window;
 
     int8_t init();
