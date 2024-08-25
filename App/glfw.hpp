@@ -8,7 +8,7 @@
 namespace App{
 
 struct Spec{
-    char* title;
+    std::string title;
     ImVec2 window_size;
     ImVec4 bg_color;
     int enable_vsync;

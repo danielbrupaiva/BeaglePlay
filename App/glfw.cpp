@@ -226,7 +226,7 @@ int8_t App::GLFW::init()
 
     m_window = std::unique_ptr<GLFWwindow, WindowDeleter>(glfwCreateWindow((int32_t) m_spec.window_size.x,
                                                                            (int32_t) m_spec.window_size.y,
-                                                                           m_spec.title,
+                                                                           m_spec.title.c_str(),
                                                                            glfwGetPrimaryMonitor(),
                                                                            nullptr), WindowDeleter());
     if (nullptr == m_window) { throw std::runtime_error("GLFW window not created"); }

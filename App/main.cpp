@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
     logger.info("[{}] {}", TAG,"APP start");
 
     App::Spec spec = {
-        .title = (char*)"IMGUI APP OpenGL3 / GLFW3",
+        .title = "IMGUI APP OpenGL3 / GLFW3",
         .window_size = ImVec2(1280,720),
         .bg_color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f),
         .enable_vsync = 1
