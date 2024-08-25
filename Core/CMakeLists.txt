@@ -26,6 +26,5 @@ include(IMGUI)
 include(stb)
 include(Spdlog)
 include(PQXX)
-include(fmt)
 include(modbus)
 #---------------------
