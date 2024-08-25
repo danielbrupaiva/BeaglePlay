@@ -33,7 +33,7 @@ public:
     explicit ConnectionPool(const std::string_view server_ip, const int32_t server_port, const uint32_t pool_size)
         : m_server_port{server_port}, m_server_ip{server_ip}, m_pool_size{pool_size}
     {
-        logger.debug(m_TAG, "Connection Pool()");
+        logger.debug("[{}] {}", m_TAG, "Connection Pool()");
         init_connection_pool(m_pool_size);
     }
 
@@ -45,12 +45,12 @@ public:
             }
             else{
                 std::string msg = "Fail to create connection pool";
-                logger.error(m_TAG, msg);
-                logger.error(m_TAG, modbus_strerror(errno));
+                logger.error("[{}] {}", m_TAG, msg);
+                logger.error("[{}] {}", m_TAG, modbus_strerror(errno));
                 throw std::runtime_error(modbus_strerror(errno));
             }
         }
-        logger.debug(m_TAG, "Connection pool initialized");
+        logger.debug("[{}] {}", m_TAG, "Connection pool initialized");
     };
     /*get connection from the pool*/
     std::shared_ptr<T> get_connection(uint32_t timeout) {
@@ -66,7 +66,7 @@ public:
         else{
             if( m_condition.wait_for(lock, std::chrono::milliseconds(timeout),[&](){ return m_connections.empty(); })){
                 std::string msg = "Connection pool timeout exceed";
-                logger.error(m_TAG, msg);
+                logger.error("[{}] {}", m_TAG, msg);
                 throw std::runtime_error(msg);
             }
             else{

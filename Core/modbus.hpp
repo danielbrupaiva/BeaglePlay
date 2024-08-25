@@ -40,13 +40,13 @@ private:
     const std::string   m_TAG   =   "PLC";
 public:
     ~Modbus() {
-        logger.debug(m_TAG, "Modbus destroyed");
+        logger.debug("[{}] {}", m_TAG, "Modbus destroyed");
     }
 
     explicit Modbus(const std::string &TAG,const std::string_view ip, const int32_t port, uint32_t pool_size)
         : m_TAG{TAG}, ConnectionPool<Connection>(ip, port, pool_size)
         {
-            logger.debug(TAG, "Modbus constructed");
+            logger.debug("[{}] {}", TAG, "Modbus constructed");
         }
 
     int32_t read_plc_variable( Data& data ) {

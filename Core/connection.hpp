@@ -44,7 +44,7 @@ public:
     ~Connection() {
         disconnect();
         modbus_free(m_context);
-        logger.debug(m_TAG, "Modbus connection released");
+        logger.debug("[{}] {}", m_TAG, "Modbus connection released");
     };
 
     Connection(const ContextType contextType, const std::string_view ip, const int32_t port)
@@ -52,7 +52,7 @@ public:
     {
         m_context = create_context(m_context_type);
         m_is_connected = connect();
-        logger.debug(m_TAG,"Modbus connection created");
+        logger.debug("[{}] {}", m_TAG,"Modbus connection created");
     };
 
     std::shared_ptr<Connection> get() { return this->shared_from_this(); };
@@ -77,7 +77,7 @@ public:
         }
         if (NOT(m_is_connected)) {
             std::string msg = "PLC not connected";
-            logger.error(m_TAG, msg);
+            logger.error("[{}] {}", m_TAG, msg);
             throw std::runtime_error(m_TAG + ": " + msg);
         }
 
@@ -105,15 +105,15 @@ public:
                                                                                   1,
                                                                                   &data.second.value);
                     break;
-                default:logger.error(m_TAG, modbus_strerror(errno));
+                default:logger.error("[{}] {}",m_TAG, modbus_strerror(errno));
                     throw std::invalid_argument("Data type not supported");
             }
         });
 
         if (rc == -1) {
             msg = "Modbus error during" + msg;
-            logger.error(m_TAG, msg);
-            logger.error(m_TAG, modbus_strerror(errno));
+            logger.error("[{}] {}", m_TAG, msg);
+            logger.error("[{}] {}", m_TAG, modbus_strerror(errno));
             throw std::runtime_error(modbus_strerror(errno));
         }
         return rc;
@@ -123,12 +123,12 @@ public:
         int32_t rc = -1;
         if (m_context == nullptr) {
             std::string msg = "Invalid modbus context";
-            logger.error(m_TAG, msg);
+            logger.error("[{}] {}", m_TAG, msg);
             throw std::runtime_error(m_TAG + ": " + msg);
         }
         if (NOT(m_is_connected)) {
             std::string msg = "PLC not connected";
-            logger.error(m_TAG, msg);
+            logger.error("[{}] {}", m_TAG, msg);
             throw std::runtime_error(m_TAG + ": " + msg);
         }
 
@@ -155,8 +155,8 @@ public:
         }
         if (rc == -1) {
             msg = "Modbus error during " + msg;
-            logger.error(m_TAG, msg);
-            logger.error(m_TAG, modbus_strerror(errno));
+            logger.error("[{}] {}", m_TAG, msg);
+            logger.error("[{}] {}", m_TAG, modbus_strerror(errno));
             throw std::runtime_error(modbus_strerror(errno));
         }
         return rc;
@@ -171,14 +171,14 @@ private:
             context = modbus_new_tcp(m_server_ip.c_str(), m_server_port);
             if (context == nullptr) {
                 std::string msg = "Fail to create modbus context";
-                logger.error(m_TAG, msg);
+                logger.error("[{}] {}", m_TAG, msg);
                 throw std::runtime_error(m_TAG + ": " + msg);
             }
-            logger.debug(m_TAG, "Modbus context created");
+            logger.debug("[{}] {}", m_TAG, "Modbus context created");
         }
         else {
             std::string msg = "Context type not supported";
-            logger.error(m_TAG, msg);
+            logger.error("[{}] {}", m_TAG, msg);
             throw std::invalid_argument(m_TAG + ": " + msg);
         }
         return context;
@@ -191,12 +191,12 @@ private:
             rc = modbus_connect(context);
             if (rc == -1) {
                 std::string msg = "Fail to connect to server";
-                logger.error(m_TAG, msg);
-                logger.error(m_TAG, modbus_strerror(errno));
+                logger.error("[{}] {}", m_TAG, msg);
+                logger.error("[{}] {}", m_TAG, modbus_strerror(errno));
                 throw std::runtime_error(modbus_strerror(errno));
             }
         }
-        logger.debug(m_TAG, "PLC connected");
+        logger.debug("[{}] {}", m_TAG, "PLC connected");
         return true;
     };
 };
