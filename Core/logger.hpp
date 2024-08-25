@@ -97,3 +97,4 @@ public:
     inline void set_filename(std::string_view _filename) { m_filename = _filename; };
 };
 };//Core namespace
+inline Core::Logger logger{"App", spdlog::level::debug};
