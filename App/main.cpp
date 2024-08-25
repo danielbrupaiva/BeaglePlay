@@ -42,7 +42,7 @@ static void set_fsm_states(std::vector<std::unique_ptr<IScreen>>& FSM, App::Spec
 }
 
 int main(int argc, char* argv[]) {
-    logger.info("[{}] {}", TAG,"APP start");
+    logger.info("{} {}", TAG,"APP start");
 
     App::Spec spec = {
         .title = "IMGUI APP OpenGL3 / GLFW3",
