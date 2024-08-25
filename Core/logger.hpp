@@ -55,37 +55,79 @@ public:
     inline void set_log_level(spdlog::level::level_enum _level) { m_logger->set_level(_level); };
     /* Logger message*/
     inline void trace(const std::string_view _msg) { m_logger->trace(_msg); };
-    inline void trace(const std::string& _TAG, const std::string_view _msg) { trace("[" + _TAG + "] "+ _msg.data()); };
+    inline void trace(const std::string& _TAG, const std::string& _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->trace(s);
+    };
+    inline void trace(const std::string& _TAG, const char* _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->trace(s);
+    };
     template <typename... Args>
     inline void trace(spdlog::format_string_t<Args...> fmt, Args &&...args) {
         m_logger->trace(fmt, std::forward<Args>(args)...);
     };
     inline void debug(const std::string_view _msg) { m_logger->debug(_msg); };
-    inline void debug(const std::string& _TAG, const std::string_view _msg) { debug("[" + _TAG + "] "+ _msg.data()); };
+    inline void debug(const std::string& _TAG, const std::string& _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->debug(s);
+    };
+    inline void debug(const std::string& _TAG, const char* _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->debug(s);
+    };
     template <typename... Args>
     inline void debug(spdlog::format_string_t<Args...> fmt, Args &&...args) {
         m_logger->debug(fmt, std::forward<Args>(args)...);
     };
     inline void info(const std::string_view _msg) { m_logger->info(_msg); };
-    inline void info(const std::string& _TAG, const std::string_view _msg) { info("[" + _TAG + "] "+ _msg.data()); };
+    inline void info(const std::string& _TAG, const std::string& _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->info(s);
+    };
+    inline void info(const std::string& _TAG, const char* _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->info(s);
+    };
     template <typename... Args>
     inline void info(spdlog::format_string_t<Args...> fmt, Args &&...args) {
         m_logger->info(fmt, std::forward<Args>(args)...);
     };
     inline void warn(const std::string_view _msg) { m_logger->warn(_msg); };
-    inline void warn(const std::string& _TAG, const std::string_view _msg) { warn("[" + _TAG + "] "+ _msg.data()); };
+    inline void warn(const std::string& _TAG, const std::string& _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->warn(s);
+    };
+    inline void warn(const std::string& _TAG, const char* _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->warn(s);
+    };
     template <typename... Args>
     inline void warn(spdlog::format_string_t<Args...> fmt, Args &&...args) {
         m_logger->warn(fmt, std::forward<Args>(args)...);
     };
     inline void error(const std::string_view _msg) { m_logger->error(_msg); };
-    inline void error(const std::string& _TAG, const std::string_view _msg) { error("[" + _TAG + "] "+ _msg.data()); };
+    inline void error(const std::string& _TAG, const std::string& _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->error(s);
+    };
+    inline void error(const std::string& _TAG, const char* _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->error(s);
+    };
     template <typename... Args>
     inline void error(spdlog::format_string_t<Args...> fmt, Args &&...args) {
-        m_logger->error(fmt, std::forward<Args>(args)...);
+           m_logger->error(fmt, std::forward<Args>(args)...);
     };
     inline void critical(const std::string_view _msg) { m_logger->critical(_msg); };
-    inline void critical(const std::string& _TAG, const std::string_view _msg) { critical("[" + _TAG + "] "+ _msg.data()); };
+    inline void critical(const std::string& _TAG, const std::string& _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->critical(s);
+    };
+    inline void critical(const std::string& _TAG, const char* _msg) {
+        auto s = fmt::format("[{}] {}", _TAG, _msg);
+        m_logger->critical(s);
+    };
     template <typename... Args>
     inline void critical(spdlog::format_string_t<Args...> fmt, Args &&...args) {
         m_logger->critical(fmt, std::forward<Args>(args)...);

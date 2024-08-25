@@ -52,7 +52,7 @@ public:
     {
         m_context = create_context(m_context_type);
         m_is_connected = connect();
-        logger.debug(m_TAG, "Modbus connection created");
+        logger.debug(m_TAG,"Modbus connection created");
     };
 
     std::shared_ptr<Connection> get() { return this->shared_from_this(); };
@@ -72,7 +72,7 @@ public:
         int32_t rc = -1;
         if (m_context == nullptr) {
             std::string msg = "Invalid modbus context";
-            logger.error(m_TAG, msg);
+            logger.error("{} {}", m_TAG, msg);
             throw std::runtime_error(m_TAG + ": " + msg);
         }
         if (NOT(m_is_connected)) {
