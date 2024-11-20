@@ -11,8 +11,6 @@ Key features:
 - OpenGL ES3.0 + GLFW3 renderer graphics backend
 - PostgreSQL database (PQXX)
 - Modbus TCP/IP connection
-- CAN-BUS connection (to be implemented)
-- Remote access via OpenVPN (to be implemented)
 
 ## Targets
 
